@@ -1,3 +1,4 @@
-const iconGray = "#7A7E7F"
+const ICON_GRAY = "#7A7E7F"
+const LAYOUT_COLOR = "#F5F5F5"
 
-export {iconGray}
+export {ICON_GRAY, LAYOUT_COLOR }

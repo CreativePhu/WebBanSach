@@ -1,5 +1,5 @@
 import React from 'react';
-import {iconGray} from "../colors";
+import {ICON_GRAY} from "../colors";
 
 function Navbar() {
     return (
@@ -31,8 +31,8 @@ function Navbar() {
                                             <div
                                                 className={"d-flex flex-column justify-content-center align-items-center"}>
                                                 <i className="bi bi-cart-fill"
-                                                   style={{fontSize: "20px", color: iconGray}}></i>
-                                                <span style={{fontSize: "14px", color: iconGray}}>Giỏ Hàng</span>
+                                                   style={{fontSize: "20px", color: ICON_GRAY}}></i>
+                                                <span style={{fontSize: "14px", color: ICON_GRAY}}>Giỏ Hàng</span>
                                             </div>
                                         </a>
                                     </li>
@@ -41,8 +41,8 @@ function Navbar() {
                                             <div
                                                 className={"d-flex flex-column justify-content-center align-items-center"}>
                                                 <i className="bi bi-person-fill"
-                                                   style={{fontSize: "20px", color: iconGray}}></i>
-                                                <span style={{fontSize: "14px", color: iconGray}}>Tài Khoản</span>
+                                                   style={{fontSize: "20px", color: ICON_GRAY}}></i>
+                                                <span style={{fontSize: "14px", color: ICON_GRAY}}>Tài Khoản</span>
                                             </div>
                                         </a>
                                     </li>
