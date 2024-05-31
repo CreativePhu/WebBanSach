@@ -8,7 +8,7 @@ function Navbar() {
                 <nav className="navbar navbar-expand-lg">
                     <div className="container-fluid">
                         <div className={"row w-100"}>
-                            <div className={"col-3 d-flex align-items-center"}>
+                            <div className={"col-3 d-flex justify-content-start align-items-center"}>
                                 <a className="navbar-brand" href="#">
                                     <img
                                         src={require("../images/banner.png")}
