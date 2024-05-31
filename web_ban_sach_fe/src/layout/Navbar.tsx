@@ -11,20 +11,20 @@ function Navbar() {
                             <div className={"col-3 d-flex align-items-center"}>
                                 <a className="navbar-brand" href="#">
                                     <img
-                                        src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/fahasa-logo.png"
+                                        src={require("../images/banner.png")}
                                         alt="Bootstrap" style={{width: "220px", height: "auto"}}/>
                                 </a>
                             </div>
                             <div className={"col-6 d-flex justify-content-center"}>
                                 <form className="d-flex w-100" role="search">
-                                    <input className="form-control me-2" type="search" placeholder="Search"
+                                    <input className="form-control me-2" type="search" placeholder="Nhập từ khóa tìm kiếm ..."
                                            aria-label="Search"/>
                                     <button className="btn bg-danger px-4" type="submit">
                                         <i className="bi bi-search" style={{color: "white"}}></i>
                                     </button>
                                 </form>
                             </div>
-                            <div className={"col-3 d-flex align-items-center"}>
+                            <div className={"col-3 d-flex justify-content-end align-items-center"}>
                                 <ul className="nav justify-content-end">
                                     <li className="nav-item">
                                         <a className="nav-link px-3 py-0" aria-current="page" href="#">
