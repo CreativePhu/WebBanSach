@@ -2,18 +2,20 @@ import React from "react";
 
 interface HeroSectionProps {
     listImage: string[],
-    listImage1: string[]
+    listImage1: string[],
+    listImage2: string[],
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({listImage, listImage1}) => {
+const HeroSection: React.FC<HeroSectionProps> = ({listImage, listImage1, listImage2}) => {
 
     const [images, setImages] = React.useState<string[]>(listImage)
     const [images1, setImages1] = React.useState<string[]>(listImage1)
+    const [images2, setImages2] = React.useState<string[]>(listImage2)
 
     return (
         <div className="hero-section container">
             <div className={"row"}>
-                <div className={"col-8"}>
+                <div className={"col-8 pe-1"}>
                     <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
                         <div className="carousel-inner">
                             {
@@ -46,14 +48,31 @@ const HeroSection: React.FC<HeroSectionProps> = ({listImage, listImage1}) => {
                     {
                         images1.map((image, index) => {
                             return (
-                                <img
-                                    src={image}
-                                    className="rounded-4" alt="..."
-                                />
+                                <div className={"row"}>
+                                    <img
+                                        src={image}
+                                        alt="..."
+                                        style={{ borderRadius: "4%"}}
+                                    />
+                                </div>
                             )
                         })
                     }
                 </div>
+            </div>
+            <div className={"row mt-4"}>
+                {
+                    images2.map((image, index) => {
+                        return (
+                            <div className={"col-3"}>
+                                <img
+                                    src={image}
+                                    className="rounded-4" alt="..."
+                                />
+                            </div>
+                        )
+                    })
+                }
             </div>
         </div>
     );

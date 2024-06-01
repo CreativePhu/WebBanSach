@@ -18,11 +18,17 @@ export default function Content() {
         require("../images/image_hero_section/img2.png"),
         require("../images/image_hero_section/img3.png"),
     ])
+    const [listImage2, setListImage2] = React.useState<string[]>([
+        require("../images/image_hero_section/img9.png"),
+        require("../images/image_hero_section/img10.png"),
+        require("../images/image_hero_section/img11.png"),
+        require("../images/image_hero_section/img12.png"),
+    ])
 
     return (
         <div className={"content py-4"}
              style={{minHeight: "100vh", backgroundColor: LAYOUT_COLOR}}>
-            <HeroSection listImage={listImage} listImage1={listImage1}/>
+            <HeroSection listImage={listImage} listImage1={listImage1} listImage2={listImage2}/>
         </div>
     )
 }
