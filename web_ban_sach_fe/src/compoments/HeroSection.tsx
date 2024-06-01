@@ -13,15 +13,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({listImage, listImage1, listIma
     const [images2, setImages2] = React.useState<string[]>(listImage2)
 
     return (
-        <div className="hero-section container">
+        <div id={"hero-section"} className="container">
             <div className={"row"}>
-                <div className={"col-8 pe-1"}>
+                <div className={"col-8 pe-0 ps-0"}>
                     <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
                         <div className="carousel-inner">
                             {
                                 images.map((image, index) => {
                                     return (
-                                        <div className={`carousel-item ${index === 0 ? "active" : ""}`}>
+                                        <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>
                                             <img
                                                 src={image}
                                                 className="d-block w-100 rounded-4" alt="..."
@@ -44,15 +44,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({listImage, listImage1, listIma
                         </button>
                     </div>
                 </div>
-                <div className={"col-4 d-flex flex-column justify-content-between"}>
+                <div className={"col-4 pe-0 d-flex flex-column justify-content-between"}>
                     {
                         images1.map((image, index) => {
                             return (
-                                <div className={"row"}>
+                                <div key={index} className={"row"}>
                                     <img
                                         src={image}
                                         alt="..."
-                                        style={{ borderRadius: "4%"}}
+                                        style={{borderRadius: "4%"}}
                                     />
                                 </div>
                             )
@@ -60,16 +60,16 @@ const HeroSection: React.FC<HeroSectionProps> = ({listImage, listImage1, listIma
                     }
                 </div>
             </div>
-            <div className={"row mt-4"}>
+            <div className={"row mt-4 d-flex justify-content-between"}>
                 {
                     images2.map((image, index) => {
                         return (
-                            <div className={"col-3"}>
                                 <img
+                                    className={"p-0"}
                                     src={image}
-                                    className="rounded-4" alt="..."
+                                    alt="..."
+                                    style={{borderRadius: "4%", width: "calc(96%/4)"}}
                                 />
-                            </div>
                         )
                     })
                 }

@@ -3,7 +3,7 @@ import {ICON_GRAY} from "../colors";
 
 function Navbar() {
     return (
-        <div className="container-fluid py-2" style={{backgroundColor: "white"}}>
+        <div id={"navbar"} className="container-fluid py-2" style={{backgroundColor: "white"}}>
             <div className={"container"}>
                 <nav className="navbar navbar-expand-lg">
                     <div className="container-fluid">
