@@ -3,6 +3,8 @@ import {LAYOUT_COLOR} from "../colors";
 import HeroSection from "../compoments/HeroSection";
 import Event from "../compoments/Event";
 import ImageEvent from "../data_type/ImageEvent";
+import ProductHot from "../compoments/product-hot/ProductHot";
+import Book from "../data_type/Book";
 
 export default function Content() {
 
@@ -73,12 +75,58 @@ export default function Content() {
         },
 
     ])
+    const [imageBackgroundProductHot, setImageBackgroundProductHot] = React.useState<string>(require("../images/background/flash_sale.png"))
+    const [listProductHot, setListProductHot] = React.useState<Book[]>([
+        {
+            title: "Sách hay nên đọc",
+            price: 100000,
+            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
+            discount: 0.1
+        },
+        {
+            title: "Sách hay nên đọc",
+            price: 100000,
+            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
+            discount: 0.1
+        },
+        {
+            title: "Sách hay nên đọc",
+            price: 100000,
+            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
+            discount: 0.1
+        },
+        {
+            title: "Sách hay nên đọc",
+            price: 100000,
+            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
+            discount: 0.1
+        },
+        {
+            title: "Sách hay nên đọc",
+            price: 100000,
+            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
+            discount: 0.1
+        },
+        {
+            title: "Sách hay nên đọc",
+            price: 100000,
+            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
+            discount: 0.1
+        },
+        {
+            title: "Sách hay nên đọc",
+            price: 100000,
+            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
+            discount: 0.1
+        }
+    ])
 
     return (
         <div id={"content"} className={"py-4"}
              style={{minHeight: "100vh", backgroundColor: LAYOUT_COLOR}}>
             <HeroSection listImage={listImageHeroSection} listImage1={listImageHeroSection1} listImage2={listImageHeroSection2}/>
             <Event listImage={listImageEvent}/>
+            <ProductHot imageBackground={imageBackgroundProductHot} listBook={listProductHot}/>
         </div>
     )
 }

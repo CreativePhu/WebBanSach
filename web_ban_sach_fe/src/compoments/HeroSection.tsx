@@ -65,10 +65,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({listImage, listImage1, listIma
                     images2.map((image, index) => {
                         return (
                                 <img
-                                    className={"p-0"}
+                                    key={index}
+                                    className={"p-0 rounded-3"}
                                     src={image}
                                     alt="..."
-                                    style={{borderRadius: "4%", width: "calc(96%/4)"}}
+                                    style={{width: "calc(96%/4)"}}
                                 />
                         )
                     })

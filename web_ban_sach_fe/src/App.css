@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+/*my config*/
+.hidden-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.cussor-pointer {
+  cursor: pointer;
+}
+
+.transition-product-hot {
+  transition: ease transform 0.5s;
+}
