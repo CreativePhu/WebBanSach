@@ -60,7 +60,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({listImage, listImage1, listIma
                     }
                 </div>
             </div>
-            <div className={"row mt-4 d-flex justify-content-between"}>
+            <div className={"row mt-4 d-none d-sm-flex justify-content-sm-between"}>
                 {
                     images2.map((image, index) => {
                         return (
