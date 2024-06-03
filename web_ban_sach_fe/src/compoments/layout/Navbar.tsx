@@ -8,14 +8,14 @@ function Navbar() {
                 <nav className="navbar navbar-expand-lg">
                     <div className="container-fluid">
                         <div className={"row w-100"}>
-                            <div className={"col-3 d-flex justify-content-start align-items-center"}>
+                            <div className={"col-md-12 col-lg-3 col-xl-3 d-flex justify-content-start align-items-center"}>
                                 <a className="navbar-brand" href="#">
                                     <img
                                         src={"images/banner.png"}
                                         alt="Bootstrap" style={{width: "220px", height: "auto"}}/>
                                 </a>
                             </div>
-                            <div className={"col-6 d-flex justify-content-center"}>
+                            <div className={"col-md-12 col-lg-6 col-xl-6 d-flex justify-content-center"}>
                                 <form className="d-flex w-100" role="search">
                                     <input className="form-control me-2" type="search" placeholder="Nhập từ khóa tìm kiếm ..."
                                            aria-label="Search"/>
@@ -24,7 +24,7 @@ function Navbar() {
                                     </button>
                                 </form>
                             </div>
-                            <div className={"col-3 d-flex justify-content-end align-items-center"}>
+                            <div className={"d-none d-lg-block col-lg-3 col-xl-3 d-flex justify-content-end align-items-center"}>
                                 <ul className="nav justify-content-end">
                                     <li className="nav-item">
                                         <a className="nav-link px-3 py-0" aria-current="page" href="#">

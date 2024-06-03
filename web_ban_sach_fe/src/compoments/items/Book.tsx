@@ -1,5 +1,5 @@
 import React from "react";
-import Book from "../data_type/Book";
+import Book from "../../data_type/Book";
 
 interface BookProps {
     book: Book

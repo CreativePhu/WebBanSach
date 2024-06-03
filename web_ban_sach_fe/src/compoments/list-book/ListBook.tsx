@@ -1,6 +1,6 @@
 import React from "react";
 import Book from "../../data_type/Book";
-import BookProduct from "../Book";
+import BookProduct from "../items/Book";
 
 interface ListBookProps {
     listBook: Book[];

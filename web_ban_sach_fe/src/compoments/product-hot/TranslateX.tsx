@@ -1,5 +1,5 @@
 import React from "react";
-import BookProduct from "../Book";
+import BookProduct from "../items/Book";
 import Book from "../../data_type/Book";
 
 interface TranslateXProps {

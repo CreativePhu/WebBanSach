@@ -1,5 +1,5 @@
 import React from "react";
-import ImageEvent from "../data_type/ImageEvent";
+import ImageEvent from "../../data_type/ImageEvent";
 
 interface EventProps {
     listImage: ImageEvent[];
