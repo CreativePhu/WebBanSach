@@ -21,7 +21,7 @@ const TranslateX:React.FC<TranslateXProps> = ({listBook}) => {
     // xu ly su kien click scroll san pham hot sang trai
     const handleRightButtonClick = () => {
         if (scrollContainerRef.current) {
-            setScrollPosition(scrollPosition + scrollContainerRef.current.offsetWidth);
+            setScrollPosition(scrollPosition + (scrollContainerRef.current.offsetWidth + 13));
             if (currentPage < page) {
                 setCurrentPage(currentPage + 1);
             }
@@ -31,7 +31,7 @@ const TranslateX:React.FC<TranslateXProps> = ({listBook}) => {
     // xu ly su kien click scroll san pham hot sang phai
     const handleLeftButtonClick = () => {
         if (scrollContainerRef.current) {
-            setScrollPosition(scrollPosition - scrollContainerRef.current.offsetWidth);
+            setScrollPosition(scrollPosition - (scrollContainerRef.current.offsetWidth + 13));
             if (currentPage > 1) {
                 setCurrentPage(currentPage - 1);
             }
@@ -42,7 +42,7 @@ const TranslateX:React.FC<TranslateXProps> = ({listBook}) => {
         <div className={"container mt-4 p-0 position-relative"}>
             <div className={"overflow-hidden"}>
                 <div ref={scrollContainerRef} className={"d-flex flex-row transition-product-hot"}
-                     style={{transform: `translateX(-${scrollPosition > 0 ? scrollPosition + 13 : scrollPosition}px)`}}>
+                     style={{transform: `translateX(-${scrollPosition}px)`}}>
                     {
                         listBook.map((book, index) => {
                             return (

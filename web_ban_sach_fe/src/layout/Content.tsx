@@ -118,6 +118,42 @@ export default function Content() {
             price: 100000,
             image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
             discount: 0.1
+        },
+        {
+            title: "Sách hay nên đọc",
+            price: 100000,
+            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
+            discount: 0.1
+        },
+        {
+            title: "Sách hay nên đọc",
+            price: 100000,
+            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
+            discount: 0.1
+        },
+        {
+            title: "Sách hay nên đọc",
+            price: 100000,
+            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
+            discount: 0.1
+        },
+        {
+            title: "Sách hay nên đọc",
+            price: 100000,
+            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
+            discount: 0.1
+        },
+        {
+            title: "Sách hay nên đọc",
+            price: 100000,
+            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
+            discount: 0.1
+        },
+        {
+            title: "Sách hay nên đọc",
+            price: 100000,
+            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
+            discount: 0.1
         }
     ])
 
