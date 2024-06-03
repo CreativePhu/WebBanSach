@@ -13,7 +13,7 @@ const BookProduct : React.FC<BookProps> = ({book}) => {
     }
 
     return (
-        <div className="card me-3 flex-grow-0 flex-shrink-0"
+        <div className="card me-3 flex-grow-0 flex-shrink-0 my-3"
              style={{flexBasis: "auto", width: "calc(95%/5)"}}>
             <div className={"w-100 mt-3 d-flex justify-content-center align-items-center"}
                  style={{height: "190px"}}>
@@ -23,7 +23,7 @@ const BookProduct : React.FC<BookProps> = ({book}) => {
                 </a>
             </div>
             <div className="card-body">
-                <a href={"#"} className="card-title d-block mb-1"
+                <a href={"#"} className="card-title d-block mb-3"
                    style={{textDecoration: "none"}}>{book.title}
                 </a>
                 <div

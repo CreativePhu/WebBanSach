@@ -5,6 +5,7 @@ import Event from "../compoments/Event";
 import ImageEvent from "../data_type/ImageEvent";
 import ProductHot from "../compoments/product-hot/ProductHot";
 import Book from "../data_type/Book";
+import ListBook from "../compoments/list-book/ListBook";
 
 export default function Content() {
 
@@ -163,6 +164,7 @@ export default function Content() {
             <HeroSection listImage={listImageHeroSection} listImage1={listImageHeroSection1} listImage2={listImageHeroSection2}/>
             <Event listImage={listImageEvent}/>
             <ProductHot imageBackground={imageBackgroundProductHot} listBook={listProductHot}/>
+            <ListBook listBook={listProductHot} />
         </div>
     )
 }
