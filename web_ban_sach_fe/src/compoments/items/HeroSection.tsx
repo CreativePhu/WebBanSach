@@ -15,7 +15,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({listImage, listImage1, listIma
     return (
         <div id={"hero-section"} className="container">
             <div className={"row"}>
-                <div className={"col-8 pe-0 ps-0"}>
+                <div className={"col-lg-12 col-xl-8 pe-0 ps-0"}>
                     <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
                         <div className="carousel-inner">
                             {
@@ -44,7 +44,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({listImage, listImage1, listIma
                         </button>
                     </div>
                 </div>
-                <div className={"col-4 pe-0 d-flex flex-column justify-content-between"}>
+                <div className={"d-none d-xl-block col-xl-4 pe-0 d-flex flex-column justify-content-between"}>
                     {
                         images1.map((image, index) => {
                             return (
