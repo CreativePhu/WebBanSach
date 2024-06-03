@@ -1,5 +1,5 @@
 import React from 'react';
-import {ICON_GRAY} from "../colors";
+import {ICON_GRAY} from "../../colors";
 
 function Navbar() {
     return (
@@ -11,7 +11,7 @@ function Navbar() {
                             <div className={"col-3 d-flex justify-content-start align-items-center"}>
                                 <a className="navbar-brand" href="#">
                                     <img
-                                        src={require("../images/banner.png")}
+                                        src={"images/banner.png"}
                                         alt="Bootstrap" style={{width: "220px", height: "auto"}}/>
                                 </a>
                             </div>
