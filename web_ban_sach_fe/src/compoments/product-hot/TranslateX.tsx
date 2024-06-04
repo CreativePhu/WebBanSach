@@ -21,7 +21,7 @@ const TranslateX:React.FC<TranslateXProps> = ({listBook}) => {
     // xu ly su kien click scroll san pham hot sang trai
     const handleRightButtonClick = () => {
         if (scrollContainerRef.current) {
-            setScrollPosition(scrollPosition + (scrollContainerRef.current.offsetWidth + 13));
+            setScrollPosition(scrollPosition + (scrollContainerRef.current.offsetWidth + 10));
             if (currentPage < page) {
                 setCurrentPage(currentPage + 1);
             }
@@ -31,7 +31,7 @@ const TranslateX:React.FC<TranslateXProps> = ({listBook}) => {
     // xu ly su kien click scroll san pham hot sang phai
     const handleLeftButtonClick = () => {
         if (scrollContainerRef.current) {
-            setScrollPosition(scrollPosition - (scrollContainerRef.current.offsetWidth + 13));
+            setScrollPosition(scrollPosition - (scrollContainerRef.current.offsetWidth + 10));
             if (currentPage > 1) {
                 setCurrentPage(currentPage - 1);
             }
@@ -40,7 +40,7 @@ const TranslateX:React.FC<TranslateXProps> = ({listBook}) => {
 
     return (
         <div className={"container mt-4 p-0 position-relative"}>
-            <div className={"overflow-hidden"}>
+            <div className={"overflow-x-scroll hidden-scrollbar"}>
                 <div ref={scrollContainerRef} className={"d-flex flex-row transition-product-hot"}
                      style={{transform: `translateX(-${scrollPosition}px)`}}>
                     {
@@ -60,7 +60,7 @@ const TranslateX:React.FC<TranslateXProps> = ({listBook}) => {
                     "bg-white " +
                     "position-absolute top-50 start-100 " +
                     "translate-middle " +
-                    "d-flex justify-content-center align-items-center " +
+                    "d-none d-xxl-flex justify-content-center align-items-center " +
                     "cussor-pointer " +
                     "shadow p-3 mb-5 bg-body-tertiary " +
                     "rounded " +
