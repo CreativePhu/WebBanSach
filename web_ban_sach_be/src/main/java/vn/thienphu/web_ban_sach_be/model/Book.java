@@ -11,8 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "books")
-public class Books {
+@Table(name = "book")
+public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
@@ -32,38 +32,38 @@ public class Books {
 
     @ManyToMany
     @JoinTable(
-            name = "book_authors",
+            name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
-    private List<Authors> authors;
+    private List<Author> authors;
 
     @ManyToMany
     @JoinTable(
-            name = "book_categories",
+            name = "book_category",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private List<Categories> categories;
+    private List<Category> categories;
 
     @ManyToOne
     @JoinColumn(name = "publisher_id", nullable = false)
-    private Publishers publisher;
+    private Publisher publisher;
 
     @OneToMany(mappedBy = "book")
-    private List<OrderDetails> orderDetails;
+    private List<OrderDetail> orderDetails;
 
     @OneToMany(mappedBy = "book")
-    private List<Reviews> reviews;
+    private List<Review> reviews;
 
     @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
-    private List<BookImages> bookImages;
+    private List<BookImage> bookImages;
 
     @ManyToMany
     @JoinTable(
-            name = "book_discounts",
+            name = "book_discount",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "discount_id")
     )
-    private List<Discounts> discounts;
+    private List<Discount> discounts;
 }

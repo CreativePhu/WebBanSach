@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "book_images")
-public class BookImages {
+@Table(name = "book_image")
+public class BookImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_image_id")
@@ -24,5 +24,5 @@ public class BookImages {
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
-    private Books book;
+    private Book book;
 }

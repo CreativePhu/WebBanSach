@@ -14,8 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "orders")
-public class Orders {
+@Table(name = "user_order")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
@@ -37,12 +37,12 @@ public class Orders {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Users user;
+    private User user;
 
     @OneToOne
     @JoinColumn(name = "shipping_address_id")
-    private ShippingAddresses shippingAddress;
+    private ShippingAddress shippingAddress;
 
     @OneToMany(mappedBy = "order")
-    private List<OrderDetails> orderDetails;
+    private List<OrderDetail> orderDetails;
 }

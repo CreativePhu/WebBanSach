@@ -11,8 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "publishers")
-public class Publishers {
+@Table(name = "publisher")
+public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "publisher_id")
@@ -22,5 +22,5 @@ public class Publishers {
     private String publisherName;
 
     @OneToMany(mappedBy = "publisher")
-    private List<Books> books;
+    private List<Book> books;
 }

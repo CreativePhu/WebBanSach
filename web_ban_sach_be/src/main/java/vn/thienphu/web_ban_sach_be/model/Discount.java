@@ -12,8 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "discounts")
-public class Discounts {
+@Table(name = "discount")
+public class Discount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "discount_id")
@@ -32,5 +32,5 @@ public class Discounts {
     private Date endDate;
 
     @ManyToMany(mappedBy = "discounts")
-    private List<Books> books;
+    private List<Book> books;
 }

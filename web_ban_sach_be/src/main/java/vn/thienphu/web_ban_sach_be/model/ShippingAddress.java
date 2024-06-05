@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "shipping_addresses")
-public class ShippingAddresses {
+@Table(name = "shipping_address")
+public class ShippingAddress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "shipping_address_id")
@@ -27,9 +27,9 @@ public class ShippingAddresses {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Users user;
+    private User user;
 
     @OneToOne
-    private Orders order;
+    private Order order;
 
 }

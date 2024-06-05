@@ -11,16 +11,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "roles")
-public class Roles {
+@Table(name = "category")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
-    private long roleID;
+    @Column(name = "category_id")
+    private long categoryID;
 
-    @Column(name = "role_name", length = 50, nullable = false, unique = true)
-    private String roleName;
+    @Column(name = "category_name", length = 50, nullable = false, unique = true)
+    private String categoryName;
 
-    @ManyToMany(mappedBy = "roles")
-    private List<Users> users;
+    @ManyToMany(mappedBy = "categories")
+    private List<Book> books;
 }

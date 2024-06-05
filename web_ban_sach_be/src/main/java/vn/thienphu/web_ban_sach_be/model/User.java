@@ -12,8 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
-public class Users {
+@Table(name = "user")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -45,18 +45,18 @@ public class Users {
 
     @ManyToMany
     @JoinTable(
-            name = "user_roles",
+            name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<Roles> roles;
+    private List<Role> roles;
 
     @OneToMany(mappedBy = "user")
-    private List<ShippingAddresses> shippingAddresses;
+    private List<ShippingAddress> shippingAddresses;
 
     @OneToMany(mappedBy = "user")
-    private List<Orders> orders;
+    private List<Order> orders;
 
     @OneToMany(mappedBy = "user")
-    private List<Reviews> reviews;
+    private List<Review> reviews;
 }
