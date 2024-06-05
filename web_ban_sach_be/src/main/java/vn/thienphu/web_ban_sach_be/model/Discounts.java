@@ -19,6 +19,9 @@ public class Discounts {
     @Column(name = "discount_id")
     private long discountId;
 
+    @Column(name = "discount_name", length = 255, nullable = false)
+    private String discountName;
+
     @Column(name = "discount_percentage", nullable = false)
     private int discountPercentage;
 
