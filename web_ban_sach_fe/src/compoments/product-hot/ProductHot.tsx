@@ -1,18 +1,13 @@
 import React from "react";
-import Book from "../../data_type/Book";
+import BookInf from "../../data_type/BookInf";
 import BookProduct from "../items/Book";
 import TranslateX from "./TranslateX";
 
-interface ProductHotProps {
-    imageBackground: string;
-    listBook: Book[];
-}
-
-const ProductHot: React.FC<ProductHotProps> = ({imageBackground, listBook}) => {
+const ProductHot: React.FC = () => {
 
     return (
         <div id={"product-hot"} className={"container-fluid mt-4 py-4"}
-             style={{minHeight: "450px", background: `url(${imageBackground}) no-repeat center center`, backgroundColor: "#ff6c6b"}}>
+             style={{minHeight: "450px", background: "url(/images/background/flash_sale.png) no-repeat center center", backgroundColor: "#ff6c6b"}}>
             <div className={"container d-flex justify-content-between align-items-center py-1 px-3 bg-white rounded-3"}>
                 <span className={"d-flex flex-row align-items-center"}>
                     <i className="bi bi-journal-bookmark-fill fs-2 text-danger"></i>
@@ -24,7 +19,7 @@ const ProductHot: React.FC<ProductHotProps> = ({imageBackground, listBook}) => {
                     <i className="bi bi-chevron-right fs-4"></i>
                 </a>
             </div>
-            <TranslateX listBook={listBook} />
+            <TranslateX />
         </div>
     )
 }

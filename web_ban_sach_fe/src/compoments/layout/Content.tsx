@@ -2,9 +2,9 @@ import React from "react";
 import {LAYOUT_COLOR} from "../../colors";
 import HeroSection from "../items/HeroSection";
 import Event from "../items/Event";
-import ImageEvent from "../../data_type/ImageEvent";
+import ImageEventInf from "../../data_type/ImageEventInf";
 import ProductHot from "../product-hot/ProductHot";
-import Book from "../../data_type/Book";
+import BookInf from "../../data_type/BookInf";
 import ListBook from "../list-book/ListBook";
 
 export default function Content() {
@@ -29,7 +29,7 @@ export default function Content() {
         "images/hero_section/img11.png",
         "images/hero_section/img12.png",
     ])
-    const [listImageEvent, setListImageEvent] = React.useState<ImageEvent[]>([
+    const [listImageEvent, setListImageEvent] = React.useState<ImageEventInf[]>([
         {
             url: "/images/event/sieu_sale_he.png",
             title: "Siêu Sale Hè",
@@ -76,95 +76,14 @@ export default function Content() {
         },
 
     ])
-    const [imageBackgroundProductHot, setImageBackgroundProductHot] = React.useState<string>("/images/background/flash_sale.png")
-    const [listProductHot, setListProductHot] = React.useState<Book[]>([
-        {
-            title: "Sách hay nên đọc",
-            price: 100000,
-            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
-            discount: 0.1
-        },
-        {
-            title: "Sách hay nên đọc",
-            price: 100000,
-            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
-            discount: 0.1
-        },
-        {
-            title: "Sách hay nên đọc",
-            price: 100000,
-            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
-            discount: 0.1
-        },
-        {
-            title: "Sách hay nên đọc",
-            price: 100000,
-            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
-            discount: 0.1
-        },
-        {
-            title: "Sách hay nên đọc",
-            price: 100000,
-            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
-            discount: 0.1
-        },
-        {
-            title: "Sách hay nên đọc",
-            price: 100000,
-            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
-            discount: 0.1
-        },
-        {
-            title: "Sách hay nên đọc",
-            price: 100000,
-            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
-            discount: 0.1
-        },
-        {
-            title: "Sách hay nên đọc",
-            price: 100000,
-            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
-            discount: 0.1
-        },
-        {
-            title: "Sách hay nên đọc",
-            price: 100000,
-            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
-            discount: 0.1
-        },
-        {
-            title: "Sách hay nên đọc",
-            price: 100000,
-            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
-            discount: 0.1
-        },
-        {
-            title: "Sách hay nên đọc",
-            price: 100000,
-            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
-            discount: 0.1
-        },
-        {
-            title: "Sách hay nên đọc",
-            price: 100000,
-            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
-            discount: 0.1
-        },
-        {
-            title: "Sách hay nên đọc",
-            price: 100000,
-            image: "https://cdn0.fahasa.com/media/catalog/product/f/u/full-bia-ao.jpg",
-            discount: 0.1
-        }
-    ])
 
     return (
         <div id={"content"} className={"py-4"}
              style={{minHeight: "100vh", backgroundColor: LAYOUT_COLOR}}>
             <HeroSection listImage={listImageHeroSection} listImage1={listImageHeroSection1} listImage2={listImageHeroSection2}/>
             <Event listImage={listImageEvent}/>
-            <ProductHot imageBackground={imageBackgroundProductHot} listBook={listProductHot}/>
-            <ListBook listBook={listProductHot} />
+            <ProductHot />
+            <ListBook />
         </div>
     )
 }

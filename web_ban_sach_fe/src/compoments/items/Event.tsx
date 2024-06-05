@@ -1,8 +1,8 @@
 import React from "react";
-import ImageEvent from "../../data_type/ImageEvent";
+import ImageEventInf from "../../data_type/ImageEventInf";
 
 interface EventProps {
-    listImage: ImageEvent[];
+    listImage: ImageEventInf[];
 }
 
 const Event: React.FC<EventProps> = ({listImage}) => {
