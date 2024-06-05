@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -36,7 +36,7 @@ public class Books {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
-    private Set<Authors> authors;
+    private List<Authors> authors;
 
     @ManyToMany
     @JoinTable(
@@ -44,20 +44,20 @@ public class Books {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<Categories> categories;
+    private List<Categories> categories;
 
     @ManyToOne
     @JoinColumn(name = "publisher_id", nullable = false)
     private Publishers publisher;
 
     @OneToMany(mappedBy = "book")
-    private Set<OrderDetails> orderDetails;
+    private List<OrderDetails> orderDetails;
 
     @OneToMany(mappedBy = "book")
-    private Set<Reviews> reviews;
+    private List<Reviews> reviews;
 
-    @OneToMany(mappedBy = "book")
-    private Set<BookImages> bookImages;
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    private List<BookImages> bookImages;
 
     @ManyToMany
     @JoinTable(
@@ -65,5 +65,5 @@ public class Books {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "discount_id")
     )
-    private Set<Discounts> discounts;
+    private List<Discounts> discounts;
 }

@@ -8,7 +8,7 @@ import vn.thienphu.web_ban_sach_be.model.enums.OrderStatus;
 import vn.thienphu.web_ban_sach_be.model.enums.PaymentMethod;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -44,5 +44,5 @@ public class Orders {
     private ShippingAddresses shippingAddress;
 
     @OneToMany(mappedBy = "order")
-    private Set<OrderDetails> orderDetails;
+    private List<OrderDetails> orderDetails;
 }

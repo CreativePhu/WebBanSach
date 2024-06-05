@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -49,14 +49,14 @@ public class Users {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Roles> roles;
+    private List<Roles> roles;
 
     @OneToMany(mappedBy = "user")
-    private Set<ShippingAddresses> shippingAddresses;
+    private List<ShippingAddresses> shippingAddresses;
 
     @OneToMany(mappedBy = "user")
-    private Set<Orders> orders;
+    private List<Orders> orders;
 
     @OneToMany(mappedBy = "user")
-    private Set<Reviews> reviews;
+    private List<Reviews> reviews;
 }

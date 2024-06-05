@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -32,5 +32,5 @@ public class Discounts {
     private Date endDate;
 
     @ManyToMany(mappedBy = "discounts")
-    private Set<Books> books;
+    private List<Books> books;
 }
