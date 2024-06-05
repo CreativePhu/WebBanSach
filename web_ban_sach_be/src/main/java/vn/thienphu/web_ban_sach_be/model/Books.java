@@ -58,4 +58,12 @@ public class Books {
 
     @OneToMany(mappedBy = "book")
     private Set<BookImages> bookImages;
+
+    @ManyToMany
+    @JoinTable(
+            name = "book_discounts",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "discount_id")
+    )
+    private Set<Discounts> discounts;
 }
