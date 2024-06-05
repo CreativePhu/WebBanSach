@@ -64,7 +64,7 @@ const TranslateX:React.FC<TranslateXProps> = ({listBook}) => {
                     "cussor-pointer " +
                     "shadow p-3 mb-5 bg-body-tertiary " +
                     "rounded " +
-                    `${currentPage === page ? "d-none" : ""}`
+                    `${currentPage === page ? "d-xxl-none" : ""}`
                 }
                 style={{width: "40px", height: "40px"}}>
                 <i className="bi bi-chevron-right fs-5"></i>
@@ -77,12 +77,12 @@ const TranslateX:React.FC<TranslateXProps> = ({listBook}) => {
                     "bg-white " +
                     "position-absolute top-50 start-0 translate-middle " +
                     "translate-middle " +
-                    "d-flex justify-content-center " +
+                    "d-none d-xxl-flex justify-content-center " +
                     "align-items-center " +
                     "cussor-pointer " +
                     "shadow p-3 mb-5 bg-body-tertiary " +
                     "rounded " +
-                    `${currentPage === 1 ? "d-none" : ""}`
+                    `${currentPage === 1 ? "d-xxl-none" : ""}`
                 }
                 style={{width: "40px", height: "40px"}}>
                 <i className="bi bi-chevron-left"></i>
