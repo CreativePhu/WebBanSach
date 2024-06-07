@@ -16,7 +16,6 @@ const BookProduct : React.FC<BookProps> = ({book}) => {
     const fetchListImage = async () => {
         try {
             const listImage: BookImageInf[] = await GetBookImageById(book.bookID);
-            console.log(listImage)
             const primaryImage = listImage.find((image) => image.primary === true)
             setIsPrimaryimage(primaryImage?.bookImage || "")
             setLoading(false)

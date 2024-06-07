@@ -1,8 +1,23 @@
 import React from 'react';
 import {ICON_GRAY} from "../../colors";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 function Navbar() {
+
+    const navigate = useNavigate();
+
+    const [searchValue, setSearchValue] = React.useState<string>("")
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchValue(e.target.value)
+    }
+
+    const handleSearchSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault()
+        navigate(`/search?bookTitle=${searchValue}`)
+        setSearchValue("")
+    }
+
     return (
         <div id={"navbar"} className="container-fluid py-2" style={{backgroundColor: "white"}}>
             <div className={"container"}>
@@ -19,8 +34,8 @@ function Navbar() {
                             <div className={"col-md-12 col-lg-6 col-xl-6 d-flex justify-content-center p-0"}>
                                 <form className="d-flex w-100" role="search">
                                     <input className="form-control me-2" type="search" placeholder="Nhập tên sách cần tìm"
-                                           aria-label="Search"/>
-                                    <button className="btn bg-danger px-4" type="submit">
+                                           aria-label="Search" onChange={handleSearchChange} value={searchValue}/>
+                                    <button className="btn bg-danger px-4" type="submit" onClick={handleSearchSubmit}>
                                         <i className="bi bi-search" style={{color: "white"}}></i>
                                     </button>
                                 </form>
