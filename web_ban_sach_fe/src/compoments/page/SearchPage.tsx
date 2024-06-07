@@ -15,6 +15,7 @@ const SearchPage: React.FC = () => {
     const [page, setPage] = React.useState<number>(0)
     const pageSize:number = 12
     const [hasMore, setHasMore] = React.useState<boolean>(true)
+    const [isChangeBookTitle, setIsChangeBookTitle] = React.useState<boolean>(false)
 
     const fetchListBook = async ():Promise<void> => {
         try {
@@ -31,6 +32,7 @@ const SearchPage: React.FC = () => {
         }
     }
 
+    // khi scroll xuong cuoi trang thi se fetch du lieu
     const handleScroll = ():void => {
         if(window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return
         if(hasMore) {
@@ -38,26 +40,29 @@ const SearchPage: React.FC = () => {
         }
     }
 
-    React.useLayoutEffect(() => {
+    // khi page thay doi thi se fetch lai du lieu
+    React.useEffect(() => {
         fetchListBook()
         window.addEventListener("scroll", handleScroll)
         return () => window.removeEventListener("scroll", handleScroll)
     }, [page])
 
-
+    // khi thay doi ten sach thi se cap nhat lai cac trang thai
     React.useLayoutEffect(() => {
         setListBook([]);
         setPage(0);
         setHasMore(true);
+        setIsChangeBookTitle(true);
     }, [bookTitle]);
 
-
-    React.useLayoutEffect(() => {
-        const fetchListBookNew = async () => {
-            await fetchListBook();
+    // doi cac trang thai sau khi thay doi ten sach duoc cap nhat lai se chay useEffect nay
+    React.useEffect(() => {
+        if (isChangeBookTitle) {
+            fetchListBook();
+            setIsChangeBookTitle(false);
         }
-        fetchListBookNew();
-    }, [bookTitle]);
+    }, [isChangeBookTitle]);
+
 
 
     return (
