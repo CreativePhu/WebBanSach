@@ -9,6 +9,7 @@ import Content from "./compoments/layout/Content";
 import {Route, Routes} from "react-router";
 import LoginPage from "./compoments/page/LoginPage";
 import SearchPage from "./compoments/page/SearchPage";
+import BookDetailPage from "./compoments/page/BookDetailPage";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                 <Route path={"/"} element={<Content/>}/>
                 <Route path={"/login"} element={<LoginPage/>}/>
                 <Route path={"/search/*"} element={<SearchPage/>}/>
+                <Route path={"/book-detail/*"} element={<BookDetailPage/>}/>
             </Routes>
             <Footer/>
         </div>

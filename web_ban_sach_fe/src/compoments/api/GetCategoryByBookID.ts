@@ -1,21 +1,22 @@
 import axios from "axios";
 import BookInf from "../../data_type/BookInf";
 import AuthorInf from "../../data_type/AuthorInf";
+import CategoryInf from "../../data_type/CategoryInf";
 
-const GetAuthorByBookID = async (bookId: number):Promise<AuthorInf[]> => {
+const GetAuthorByBookID = async (bookId: number):Promise<CategoryInf[]> => {
     const HOST = process.env.REACT_APP_HOST_BE;
-    const authors: AuthorInf[] = [];
-    const response = await axios.get(`${HOST}/authors/search/findByBooksBookID?bookID=${bookId}`);
-    const data:AuthorInf[] = response.data._embedded.authors;
+    const categories: CategoryInf[] = [];
+    const response = await axios.get(`${HOST}/categories/search/findByBooksBookID?bookID=${bookId}`);
+    const data:CategoryInf[] = response.data._embedded.categories;
 
-    data.forEach((author: AuthorInf) => {
-        authors.push({
-            authorID: author.authorID,
-            authorName: author.authorName,
+    data.forEach((category: CategoryInf) => {
+        categories.push({
+            categoryID: category.categoryID,
+            categoryName: category.categoryName
         });
     });
 
-    return authors;
+    return categories;
 };
 
 export default GetAuthorByBookID;

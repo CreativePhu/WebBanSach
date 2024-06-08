@@ -1,10 +1,7 @@
 import React from "react";
 import BookProduct from "../items/Book";
 import BookInf from "../../data_type/BookInf";
-import axios from "axios";
 import GetTop10BookNew from "../api/GetTop10BookNew";
-import {Simulate} from "react-dom/test-utils";
-import load = Simulate.load;
 
 const TranslateX: React.FC = () => {
 

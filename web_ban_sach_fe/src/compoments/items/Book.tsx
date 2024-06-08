@@ -2,6 +2,7 @@ import React from "react";
 import BookInf from "../../data_type/BookInf";
 import BookImageInf from "../../data_type/BookImageInf";
 import GetBookImageById from "../api/GetBookImageById";
+import {Link} from "react-router-dom";
 
 interface BookProps {
     book: BookInf
@@ -52,16 +53,16 @@ const BookProduct : React.FC<BookProps> = ({book}) => {
                         </div>
                     )
                     ||
-                    <a href={"#"}>
+                    <Link to={`/book-detail?bookId=${book.bookID}`}>
                         <img src={isPrimaryImage} className="card-img-top" alt={`${book.bookTitle}`}
                              style={{maxWidth: "190px", maxHeight: "100%"}}/>
-                    </a>
+                    </Link>
                 }
             </div>
             <div className="card-body">
-                <a href={"#"} className="card-title d-block mb-3"
-                   style={{textDecoration: "none"}}>{book.bookTitle}
-                </a>
+                <Link to={`/book-detail?bookId=${book.bookID}`} className="card-title d-block mb-3"
+                      style={{textDecoration: "none"}}>{book.bookTitle}
+                </Link>
                 <div
                     className="card-text fw-bold text-danger">{formatCurrencyVND(book.bookPrice - (book.bookPrice * 0.1))}
                     <span
