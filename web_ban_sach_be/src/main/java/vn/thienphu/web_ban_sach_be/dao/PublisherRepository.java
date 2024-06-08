@@ -6,4 +6,5 @@ import vn.thienphu.web_ban_sach_be.model.Publisher;
 
 @RepositoryRestResource(path = "publishers")
 public interface PublisherRepository extends JpaRepository<Publisher, Long> {
+    Publisher findByBooksBookID(long bookId);
 }
