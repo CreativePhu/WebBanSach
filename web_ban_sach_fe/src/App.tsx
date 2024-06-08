@@ -10,6 +10,7 @@ import {Route, Routes} from "react-router";
 import LoginPage from "./compoments/page/LoginPage";
 import SearchPage from "./compoments/page/SearchPage";
 import BookDetailPage from "./compoments/page/BookDetailPage";
+import RegisterPage from "./compoments/page/RegisterPage";
 
 function App() {
     return (
@@ -20,6 +21,8 @@ function App() {
                 <Route path={"/login"} element={<LoginPage/>}/>
                 <Route path={"/search/*"} element={<SearchPage/>}/>
                 <Route path={"/book-detail/*"} element={<BookDetailPage/>}/>
+                <Route path={"/register"} element={<RegisterPage/>}/>
+                <Route path={"*"} element={<h1>404 Not Found</h1>}/>
             </Routes>
             <Footer/>
         </div>

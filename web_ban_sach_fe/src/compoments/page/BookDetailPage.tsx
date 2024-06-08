@@ -119,7 +119,7 @@ const BookDetailPage: React.FC = () => {
                                     <button onClick={subBookCount} className={"btn btn-light fw-bold fs-4 px-4"}>-
                                     </button>
                                     <input type={"number"} className={"form-control w-25 fs-5 text-center"}
-                                           defaultValue={1} value={bookCount}
+                                           value={bookCount}
                                            onChange={(e) => setBookCount(Number(e.target.value))}/>
                                     <button onClick={addBookCount} className={"btn btn-light fw-bold fs-4 px-4"}>+
                                     </button>
