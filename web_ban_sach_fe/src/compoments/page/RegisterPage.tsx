@@ -1,8 +1,14 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {REGEX_EMAIL, REGEX_PASSWORD, REGEX_USERNAME} from "../items/Regex";
+import UserRegisterInf from "../../data_type/UserRegisterInf";
+import {UserRegister} from "../api/UserRegister";
+import {Simulate} from "react-dom/test-utils";
+import load = Simulate.load;
 
 const RegisterPage: React.FC = () => {
+
+    const navigate = useNavigate()
 
     const [username, setUsername] = React.useState<string>("");
     const [email, setEmail] = React.useState<string>("");
@@ -13,6 +19,9 @@ const RegisterPage: React.FC = () => {
     const [errorEmail, setErrorEmail] = React.useState<string>("");
     const [errorPassword, setErrorPassword] = React.useState<string>("");
     const [errorRePassword, setErrorRePassword] = React.useState<string>("");
+
+    const [loading, setLoading] = React.useState<boolean>(false);
+    const [error, setError] = React.useState<string>("");
 
     const checkValidateForm = (): boolean => {
         let check = true;
@@ -66,10 +75,24 @@ const RegisterPage: React.FC = () => {
         return check;
     }
 
+    const registerUser = async (user: UserRegisterInf) => {
+        try {
+            setLoading(true)
+            await UserRegister(user);
+            alert("Đăng kí thành công")
+            navigate("/");
+            setLoading(false)
+        }catch (e) {
+            setLoading(false)
+            alert("Đăng kí thất bại");
+        }
+    }
+
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         if (checkValidateForm()) {
-            alert("Đăng kí thành công");
+            const user:UserRegisterInf = {username, email, password}
+            registerUser(user);
         }
     }
 
@@ -118,7 +141,17 @@ const RegisterPage: React.FC = () => {
                         }}/>
                         <span className={"text-danger"}>{errorRePassword}</span>
                     </div>
-                    <button type="submit" className="btn btn-danger w-100 mt-4" onClick={handleSubmit}>Đăng kí</button>
+                    {
+                        !loading
+                            ?
+                            <button type="submit" className="btn btn-danger w-100 mt-4" onClick={handleSubmit}>Đăng kí</button>
+                            :
+                            <div className={"mt-4 w-100 d-flex justify-content-center"}>
+                                <div className="spinner-border text-danger" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                    }
                     <p className={"mt-2 d-flex justify-content-center"}>
                         <span>Bạn đã có tài khoản?</span>
                         <Link className={"text-decoration-none ms-2"} to={"/login"}>Đăng nhập</Link>
