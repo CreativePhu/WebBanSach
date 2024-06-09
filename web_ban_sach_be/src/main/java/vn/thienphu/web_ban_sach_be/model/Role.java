@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,4 +24,13 @@ public class Role {
 
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
+
+    public void addUser(User user) {
+        if(users == null) {
+            users = new ArrayList<>();
+            users.add(user);
+        }else{
+            users.add(user);
+        }
+    }
 }

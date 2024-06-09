@@ -6,4 +6,10 @@ import vn.thienphu.web_ban_sach_be.model.User;
 
 @RepositoryRestResource(path = "users")
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    boolean existsByUserName(String username);
+
+    boolean existsByEmail(String email);
+
+    User findByUserName(String username);
 }

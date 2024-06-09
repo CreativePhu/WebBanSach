@@ -6,4 +6,7 @@ import vn.thienphu.web_ban_sach_be.model.Role;
 
 @RepositoryRestResource(path = "roles")
 public interface RoleRepository extends JpaRepository<Role, Long> {
+
+    public Role findByRoleName(String roleName);
+
 }
