@@ -97,7 +97,7 @@ const BookDetailPage: React.FC = () => {
         <div className={"container-fluid bg-light py-4"}>
             <div className={"container rounded bg-white"}>
                 <div className={"row py-4 px-4"}>
-                    <div className={"col-4 border"}>
+                    <div className={"col-12 col-lg-4 col-sm-12 border"}>
                         <Carousel>
                             {bookImages.map((bookImage: BookImageInf) => (
                                 <div key={bookImage.bookImageID}>
@@ -106,10 +106,10 @@ const BookDetailPage: React.FC = () => {
                             ))}
                         </Carousel>
                     </div>
-                    <div className={"col-8 ps-5"}>
+                    <div className={"col-12 ps-5 mt-sm-3 col-sm-12 col-lg-8"}>
                         <p className={"fs-4"}>{bookDetail?.bookTitle}</p>
                         <div className={"row mt-3"}>
-                            <div className={"col-6"}>
+                            <div className={"col-12 col-lg-6"}>
                                 <span className={"fs-5 fw-bold"}>Nhà xuất bản: </span>
                                 <span className={"fs-6"}>{bookPublisher?.publisherName}</span>
                                 <span
@@ -143,7 +143,7 @@ const BookDetailPage: React.FC = () => {
                                 <span className={"fs-5 fw-bold"}>Mô tả sách:</span>
                                 <p className={"fs-6"}>{bookDetail?.bookDescription}</p>
                             </div>
-                            <div className={"col-12"}>
+                            <div className={"col-12 d-flex justify-content-start d-sm-block justify-sm-content-start"}>
                                 <button className={"btn btn-primary fw-bold fs-4 px-4"}>Thêm vào giỏ hàng</button>
                                 <button className={"btn btn-danger fw-bold fs-4 px-4 ms-3"}>Mua ngay</button>
                             </div>
