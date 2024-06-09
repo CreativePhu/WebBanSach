@@ -16,50 +16,50 @@ const RegisterPage: React.FC = () => {
 
     const checkValidateForm = (): boolean => {
         let check = true;
-        if(!username){
+        if (!username) {
             setErrorUsername("Tên tài khoản không được để trống");
             check = false;
-        }else{
-            if(!REGEX_USERNAME.test(username)){
+        } else {
+            if (!REGEX_USERNAME.test(username)) {
                 setErrorUsername("Tên tài khoản phải có ít nhất ba ký tự và không chứa ký tự đặc biệt");
                 check = false;
-            }else{
+            } else {
                 setErrorUsername("");
             }
         }
 
-        if(!email){
+        if (!email) {
             setErrorEmail("Email không được để trống");
             check = false;
-        }else{
-            if(!REGEX_EMAIL.test(email)){
+        } else {
+            if (!REGEX_EMAIL.test(email)) {
                 setErrorEmail("Email không hợp lệ");
                 check = false;
-            }else{
+            } else {
                 setErrorEmail("");
             }
         }
 
-        if(!password) {
+        if (!password) {
             setErrorPassword("Mật khẩu không được để trống");
             check = false;
-        }else{
-            if(!REGEX_PASSWORD.test(password)){
+        } else {
+            if (!REGEX_PASSWORD.test(password)) {
                 setErrorPassword("Mật khẩu tối thiểu tám ký tự, ít nhất một chữ hoa, một chữ thường, một số và một ký tự đặc biệt");
                 check = false;
-            }else{
+            } else {
                 setErrorPassword("");
             }
         }
 
-        if(!rePassword) {
+        if (!rePassword) {
             setErrorRePassword("Nhập lại mật khẩu không được để trống");
             check = false;
-        }else{
-            if(rePassword !== password) {
+        } else {
+            if (rePassword !== password) {
                 setErrorRePassword("Nhập lại mật khẩu không khớp");
                 check = false;
-            }else{
+            } else {
                 setErrorRePassword("");
             }
         }
@@ -68,7 +68,7 @@ const RegisterPage: React.FC = () => {
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        if(checkValidateForm()){
+        if (checkValidateForm()) {
             alert("Đăng kí thành công");
         }
     }
@@ -81,23 +81,41 @@ const RegisterPage: React.FC = () => {
                     <div className="mb-3">
                         <label htmlFor="taikhoan" className="form-label">Tên tài khoản</label>
                         <input type="text" className="form-control py-2" id="taikhoan"
-                               placeholder={"Tên đăng nhập..."} value={username} onChange={(e) => {setUsername(e.target.value)}}/>
+                               placeholder={"Tên đăng nhập..."} value={username} onInput={() => {
+                            setErrorUsername("")
+                        }} onChange={(e) => {
+                            setUsername(e.target.value)
+                        }}/>
                         <span className={"text-danger"}>{errorUsername}</span>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email</label>
-                        <input type="email" className="form-control py-2" id="email" placeholder={"Email..."} value={email} onChange={(e) => {setEmail(e.target.value)}}/>
+                        <input type="email" className="form-control py-2" id="email" placeholder={"Email..."}
+                               value={email} onInput={() => {
+                            setErrorEmail("")
+                        }} onChange={(e) => {
+                            setEmail(e.target.value)
+                        }}/>
                         <span className={"text-danger"}>{errorEmail}</span>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="matkhau" className="form-label">Mật khẩu</label>
-                        <input type="password" className="form-control py-2" id="matkhau" placeholder={"Mật khẩu..."} value={password} onChange={(e) => {setPassword(e.target.value)}}/>
+                        <input type="password" className="form-control py-2" id="matkhau" placeholder={"Mật khẩu..."}
+                               value={password} onInput={() => {
+                            setErrorPassword("")
+                        }} onChange={(e) => {
+                            setPassword(e.target.value)
+                        }}/>
                         <span className={"text-danger"}>{errorPassword}</span>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="nhaplaimatkhau" className="form-label">Nhập lại mật khẩu</label>
                         <input type="password" className="form-control py-2" id="nhaplaimatkhau"
-                               placeholder={"Nhập lại mật khẩu..."} value={rePassword} onChange={(e) => {setRePassword(e.target.value)}}/>
+                               placeholder={"Nhập lại mật khẩu..."} value={rePassword} onInput={() => {
+                            setErrorRePassword("")
+                        }} onChange={(e) => {
+                            setRePassword(e.target.value)
+                        }}/>
                         <span className={"text-danger"}>{errorRePassword}</span>
                     </div>
                     <button type="submit" className="btn btn-danger w-100 mt-4" onClick={handleSubmit}>Đăng kí</button>

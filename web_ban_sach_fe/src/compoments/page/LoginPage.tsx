@@ -10,17 +10,17 @@ const LoginPage: React.FC = () => {
 
     const checkValidateForm = (): boolean => {
         let check = true;
-        if(!username){
+        if (!username) {
             setErrorUsername("Tên tài khoản không được để trống");
             check = false;
-        }else{
+        } else {
             setErrorUsername("");
         }
 
-        if(!password){
+        if (!password) {
             setErrorPasswrod("Mật khẩu không được để trống");
             check = false;
-        }else{
+        } else {
             setErrorPasswrod("");
         }
 
@@ -29,7 +29,7 @@ const LoginPage: React.FC = () => {
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        if(checkValidateForm()){
+        if (checkValidateForm()) {
             alert("Đăng nhập thành công")
         }
     }
@@ -41,21 +41,24 @@ const LoginPage: React.FC = () => {
                 <form className={"mt-4"}>
                     <div className="mb-3">
                         <label htmlFor="taikhoan" className="form-label">Tài khoản</label>
-                        <input type="text" className="form-control py-2" id="taikhoan" placeholder={"Tên tài khoản"} value={username} onChange={(e) => {setUsername(e.target.value)}}/>
+                        <input type="text" className="form-control py-2" id="taikhoan" placeholder={"Tên tài khoản"}
+                               value={username} onInput={() => {setErrorUsername("")}} onChange={(e) => {
+                            setUsername(e.target.value)}}/>
                         <span className={"text-danger"}>{errorUsername}</span>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="matkhau" className="form-label">Mật khẩu</label>
                         <input type="password" className="form-control py-2" id="matkhau" placeholder={"Mật khẩu"}
-                               value={password} onChange={(e) => {
+                               value={password} onInput={() => {setErrorPasswrod("")}} onChange={(e) => {
                             setPassword(e.target.value)
                         }}/>
                         <span className={"text-danger"}>{errorPassword}</span>
                     </div>
                     <p className={"mt-2"}>
-                    <Link className={"text-decoration-none"} to={""}>Quên mật khẩu?</Link>
+                        <Link className={"text-decoration-none"} to={""}>Quên mật khẩu?</Link>
                     </p>
-                    <button type="submit" className="btn btn-danger w-100 mt-4" onClick={handleSubmit}>Đăng nhập</button>
+                    <button type="submit" className="btn btn-danger w-100 mt-4" onClick={handleSubmit}>Đăng nhập
+                    </button>
                     <p className={"mt-2 d-flex justify-content-center"}>
                         <span>Bạn chưa có tài khoản?</span>
                         <Link className={"text-decoration-none ms-2"} to={"/register"}>Đăng kí</Link>
