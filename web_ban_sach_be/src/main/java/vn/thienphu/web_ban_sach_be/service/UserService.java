@@ -12,6 +12,7 @@ import vn.thienphu.web_ban_sach_be.model.Role;
 import vn.thienphu.web_ban_sach_be.model.User;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -38,12 +39,16 @@ public class UserService {
             return ResponseEntity.badRequest().body("Email đã tồn tại");
         }
 
-        User user = new User(0, userRegisterDTO.getUsername(), passwordEncoder.encode(userRegisterDTO.getPassword()), userRegisterDTO.getUsername(), null, userRegisterDTO.getEmail(), new Date(), new Date());
+        User user = new User(0, userRegisterDTO.getUsername(), passwordEncoder.encode(userRegisterDTO.getPassword()), userRegisterDTO.getUsername(), null, userRegisterDTO.getEmail(), false, generateVerificationCode(),  new Date(), new Date());
         Role role = roleRepository.findByRoleName("CUSTOMER");
         user.addRole(role);
         role.addUser(user);
 
         userRepository.save(user);
         return ResponseEntity.ok("Đăng ký thành công");
+    }
+
+    private String generateVerificationCode() {
+        return UUID.randomUUID().toString();
     }
 }

@@ -14,13 +14,15 @@ import java.util.List;
 @Table(name = "user")
 public class User {
 
-    public User(long userID, String userName, String password, String fullName, String phone, String email, Date createdAt, Date updatedAt) {
+    public User(long userID, String userName, String password, String fullName, String phone, String email, boolean isVerified, String verificationCode, Date createdAt, Date updatedAt) {
         this.userID = userID;
         this.userName = userName;
         this.password = password;
         this.fullName = fullName;
         this.phone = phone;
         this.email = email;
+        this.isVerified = isVerified;
+        this.verificationCode = verificationCode;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -44,6 +46,12 @@ public class User {
 
     @Column(name = "email", length = 50, nullable = false, unique = true)
     private String email;
+
+    @Column(name = "is_verified", nullable = false)
+    private boolean isVerified;
+
+    @Column(name = "verification_code", length = 255)
+    private String verificationCode;
 
     @Column(name = "created_at", length = 255, nullable = false)
     private Date createdAt;
