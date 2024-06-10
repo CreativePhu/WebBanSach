@@ -1,7 +1,8 @@
 import axios from "axios";
+import VerifyOTPInf from "../../data_type/VerifyOTPInf";
 
-export const CheckVerifyOTP = async (otp: string, email: string):Promise<boolean> => {
+export const CheckVerifyOTP = async (body: VerifyOTPInf) => {
     const HOST = process.env.REACT_APP_HOST_BE;
-    const response = await axios.get(`${HOST}/users/search/existsByEmailAndVerificationCode?email=${email}&verificationCode=${otp}`);
+    const response = await axios.post(`${HOST}/users/verify`, body);
     return response.data;
 };

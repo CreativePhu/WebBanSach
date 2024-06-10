@@ -1,8 +1,10 @@
 import React from "react";
-import {Link, useSearchParams} from "react-router-dom";
+import {Link, useNavigate, useSearchParams} from "react-router-dom";
 import {CheckVerifyOTP} from "../api/CheckVerifyOTP";
 
 const ActiveOTPPage: React.FC = () => {
+
+    const navigate = useNavigate()
 
     const [searchParams] = useSearchParams();
     const email = searchParams.get('email') || "";
@@ -28,18 +30,15 @@ const ActiveOTPPage: React.FC = () => {
         try {
             setLoading(true)
             if (checkValidateForm()) {
-                const checkVerify = await CheckVerifyOTP(codeOTP, email);
-                if (checkVerify) {
-                    setLoading(false)
-                    alert("Xác thực thành công");
-                } else {
-                    setLoading(false)
-                    setError("Mã OTP không đúng");
-                }
+                await CheckVerifyOTP({email, verificationCode: codeOTP});
+                setLoading(false)
+                alert("Xác thực thành công");
+                navigate("/")
             }
         } catch (e) {
+            console.log(e)
             setLoading(false)
-            setError("Error Network")
+            setError("Mã OTP không chính xác")
         }
     }
 
