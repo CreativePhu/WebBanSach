@@ -15,12 +15,12 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-public class UserDTImplement implements UserDTService {
+public class UserDTImp implements UserDTService {
 
     private UserRepository userRepository;
 
     @Autowired
-    public UserDTImplement(UserRepository userRepository) {
+    public UserDTImp(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

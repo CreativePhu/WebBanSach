@@ -20,12 +20,14 @@ public class UserService {
     private UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
     private RoleRepository roleRepository;
+    private EmailService emailService;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, RoleRepository roleRepository, EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
+        this.emailService = emailService;
     }
 
     @Transactional
@@ -45,10 +47,17 @@ public class UserService {
         role.addUser(user);
 
         userRepository.save(user);
+        sendVerificationEmail(user.getEmail(), user.getVerificationCode());
+
         return ResponseEntity.ok("Đăng ký thành công");
     }
 
     private String generateVerificationCode() {
         return UUID.randomUUID().toString();
+    }
+
+    private void sendVerificationEmail(String email, String verificationCode) {
+        String subject = "VERIFY YOUR ACCOUNT - Fahasha";
+        emailService.sendEmail("phutot28102002@gmail.com",email, subject, verificationCode);
     }
 }
