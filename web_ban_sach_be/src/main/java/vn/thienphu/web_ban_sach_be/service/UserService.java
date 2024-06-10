@@ -60,4 +60,16 @@ public class UserService {
         String subject = "VERIFY YOUR ACCOUNT - Fahasha";
         emailService.sendEmail("phutot28102002@gmail.com",email, subject, verificationCode);
     }
+
+    public ResponseEntity<?> verifyUser(String email, String verificationCode) {
+        boolean isVerify = userRepository.existsByEmailAndVerificationCode(email, verificationCode);
+        if (isVerify) {
+            User user = userRepository.findByEmail(email);
+            user.setVerificationCode(null);
+            user.setVerified(true);
+            userRepository.save(user);
+            return ResponseEntity.ok("Xác thực thành công");
+        }
+        return ResponseEntity.badRequest().body("Xác thực thất bại");
+    }
 }
