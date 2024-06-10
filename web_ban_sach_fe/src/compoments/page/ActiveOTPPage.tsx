@@ -9,6 +9,7 @@ const ActiveOTPPage: React.FC = () => {
 
     const [codeOTP, setCodeOTP] = React.useState<string>("");
     const [error, setError] = React.useState<string>("");
+    const [loading, setLoading] = React.useState<boolean>(false);
 
     const checkValidateForm = (): boolean => {
         let check = true;
@@ -24,19 +25,28 @@ const ActiveOTPPage: React.FC = () => {
 
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        if (checkValidateForm()) {
-            const checkVerify = await CheckVerifyOTP(codeOTP, email);
-            if (checkVerify) {
-                alert("Xác thực thành công");
-            } else {
-                setError("Mã OTP không đúng");
+        try {
+            setLoading(true)
+            if (checkValidateForm()) {
+                const checkVerify = await CheckVerifyOTP(codeOTP, email);
+                if (checkVerify) {
+                    setLoading(false)
+                    alert("Xác thực thành công");
+                } else {
+                    setLoading(false)
+                    setError("Mã OTP không đúng");
+                }
             }
+        } catch (e) {
+            setLoading(false)
+            setError("Error Network")
         }
     }
 
     return (
         <div className={"container-fluid d-flex flex-column justify-content-center align-items-center bg-light py-5"}>
-            <span className={"text-danger mb-2"}>Đã gửi mã xác thực tới Email: <span className={"text-decoration-underline text-secondary"}>{email}</span></span>
+            <span className={"text-danger mb-2"}>Đã gửi mã xác thực tới Email: <span
+                className={"text-decoration-underline text-secondary"}>{email}</span></span>
             <div className={"bg-white border p-5 rounded-3"} style={{width: "450px"}}>
                 <h1 className={"text-center text-danger fw-bold"}>XÁC THỰC TÀI KHOẢN</h1>
                 <form className={"mt-4"}>
@@ -53,7 +63,18 @@ const ActiveOTPPage: React.FC = () => {
                     <p className={"mt-2"}>
                         <Link className={"text-decoration-none"} to={""}>Gửi lại mã</Link>
                     </p>
-                    <button type="submit" className="btn btn-danger w-100 mt-4" onClick={handleSubmit}>Xác thực</button>
+                    {
+                        !loading
+                            ?
+                            <button type="submit" className="btn btn-danger w-100 mt-4" onClick={handleSubmit}>Xác
+                                thực</button>
+                            :
+                            <div className={"mt-4 w-100 d-flex justify-content-center"}>
+                                <div className="spinner-border text-danger" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                    }
                 </form>
             </div>
         </div>

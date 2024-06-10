@@ -3,8 +3,6 @@ import {Link, useNavigate} from "react-router-dom";
 import {REGEX_EMAIL, REGEX_PASSWORD, REGEX_USERNAME} from "../items/Regex";
 import UserRegisterInf from "../../data_type/UserRegisterInf";
 import {UserRegister} from "../api/UserRegister";
-import {Simulate} from "react-dom/test-utils";
-import load = Simulate.load;
 import {checkUserNameExists} from "../api/CheckUserNameExists";
 import {checkEmailExists} from "../api/CheckEmailExists";
 
