@@ -23,7 +23,7 @@ function App() {
                 <Route path={"/search/*"} element={<SearchPage/>}/>
                 <Route path={"/book-detail/*"} element={<BookDetailPage/>}/>
                 <Route path={"/register"} element={<RegisterPage/>}/>
-                <Route path={"/active-otp"} element={<ActiveOTPPage />}/>
+                <Route path={"/active-otp/*"} element={<ActiveOTPPage />}/>
                 <Route path={"*"} element={<h1>404 Not Found</h1>}/>
             </Routes>
             <Footer/>

@@ -5,6 +5,8 @@ import UserRegisterInf from "../../data_type/UserRegisterInf";
 import {UserRegister} from "../api/UserRegister";
 import {Simulate} from "react-dom/test-utils";
 import load = Simulate.load;
+import {checkUserNameExists} from "../api/CheckUserNameExists";
+import {checkEmailExists} from "../api/CheckEmailExists";
 
 const RegisterPage: React.FC = () => {
 
@@ -23,7 +25,8 @@ const RegisterPage: React.FC = () => {
     const [loading, setLoading] = React.useState<boolean>(false);
     const [error, setError] = React.useState<string>("");
 
-    const checkValidateForm = (): boolean => {
+    const checkValidateForm = async (): Promise<boolean> => {
+        setLoading(true)
         let check = true;
         if (!username) {
             setErrorUsername("Tên tài khoản không được để trống");
@@ -31,6 +34,9 @@ const RegisterPage: React.FC = () => {
         } else {
             if (!REGEX_USERNAME.test(username)) {
                 setErrorUsername("Tên tài khoản phải có ít nhất ba ký tự và không chứa ký tự đặc biệt");
+                check = false;
+            }else if(await checkUserNameExists(username)){
+                setErrorUsername("Tên tài khoản đã tồn tại");
                 check = false;
             } else {
                 setErrorUsername("");
@@ -43,6 +49,9 @@ const RegisterPage: React.FC = () => {
         } else {
             if (!REGEX_EMAIL.test(email)) {
                 setErrorEmail("Email không hợp lệ");
+                check = false;
+            }else if(await checkEmailExists(email)){
+                setErrorEmail("Email đã tồn tại");
                 check = false;
             } else {
                 setErrorEmail("");
@@ -72,32 +81,40 @@ const RegisterPage: React.FC = () => {
                 setErrorRePassword("");
             }
         }
+
+        setLoading(false)
+
         return check;
     }
 
-    const registerUser = async (user: UserRegisterInf) => {
+    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
         try {
-            setLoading(true)
-            await UserRegister(user);
-            alert("Đăng kí thành công")
-            navigate("/");
-            setLoading(false)
+            e.preventDefault();
+            setError("")
+            if (await checkValidateForm()) {
+                setLoading(true)
+                const user: UserRegisterInf = {username, email, password}
+                await UserRegister(user)
+                navigate(`/active-otp?email=${email}`)
+                setLoading(false)
+            }
         }catch (e) {
+            setError("Đăng kí thất bại")
             setLoading(false)
-            alert("Đăng kí thất bại");
-        }
-    }
-
-    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault();
-        if (checkValidateForm()) {
-            const user:UserRegisterInf = {username, email, password}
-            registerUser(user);
         }
     }
 
     return (
-        <div className={"container-fluid d-flex justify-content-center align-items-center bg-light py-5"}>
+        <div className={"container-fluid d-flex flex-column justify-content-center align-items-center bg-light py-5"}>
+            {
+                error
+                    ?
+                    <div className="alert alert-danger" role="alert">
+                        {error}
+                    </div>
+                    :
+                    ""
+            }
             <div className={"bg-white border p-5 rounded-3"} style={{width: "450px"}}>
                 <h1 className={"text-center text-danger fw-bold"}>ĐĂNG KÍ</h1>
                 <form className={"mt-4"}>
@@ -144,7 +161,8 @@ const RegisterPage: React.FC = () => {
                     {
                         !loading
                             ?
-                            <button type="submit" className="btn btn-danger w-100 mt-4" onClick={handleSubmit}>Đăng kí</button>
+                            <button type="submit" className="btn btn-danger w-100 mt-4" onClick={handleSubmit}>Đăng
+                                kí</button>
                             :
                             <div className={"mt-4 w-100 d-flex justify-content-center"}>
                                 <div className="spinner-border text-danger" role="status">

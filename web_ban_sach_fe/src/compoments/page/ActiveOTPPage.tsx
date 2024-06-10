@@ -1,7 +1,11 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
+import {CheckVerifyOTP} from "../api/CheckVerifyOTP";
 
 const ActiveOTPPage: React.FC = () => {
+
+    const [searchParams] = useSearchParams();
+    const email = searchParams.get('email') || "";
 
     const [codeOTP, setCodeOTP] = React.useState<string>("");
     const [error, setError] = React.useState<string>("");
@@ -18,15 +22,21 @@ const ActiveOTPPage: React.FC = () => {
         return check;
     }
 
-    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         if (checkValidateForm()) {
-            alert("Xác thực thành công!")
+            const checkVerify = await CheckVerifyOTP(codeOTP, email);
+            if (checkVerify) {
+                alert("Xác thực thành công");
+            } else {
+                setError("Mã OTP không đúng");
+            }
         }
     }
 
     return (
-        <div className={"container-fluid d-flex justify-content-center align-items-center bg-light py-5"}>
+        <div className={"container-fluid d-flex flex-column justify-content-center align-items-center bg-light py-5"}>
+            <span className={"text-danger mb-2"}>Đã gửi mã xác thực tới Email: <span className={"text-decoration-underline text-secondary"}>{email}</span></span>
             <div className={"bg-white border p-5 rounded-3"} style={{width: "450px"}}>
                 <h1 className={"text-center text-danger fw-bold"}>XÁC THỰC TÀI KHOẢN</h1>
                 <form className={"mt-4"}>
