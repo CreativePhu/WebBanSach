@@ -1,17 +1,17 @@
 import React from "react";
-import BookImageInf from "../../data_type/BookImageInf";
-import BookInf from "../../data_type/BookInf";
+import BookImageInf from "../../data_type/Product/BookImageInf";
+import BookInf from "../../data_type/Product/BookInf";
 import {useSearchParams} from "react-router-dom";
-import GetBookById from "../../api/GetBookById";
-import GetBookImageById from "../../api/GetBookImageById";
+import GetBookById from "../../api/Product/GetBookById";
+import GetBookImageById from "../../api/Product/GetBookImageById";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import AuthorInf from "../../data_type/AuthorInf";
-import GetAuthorByBookId from "../../api/GetAuthorByBookId";
-import CategoryInf from "../../data_type/CategoryInf";
-import GetCategoryByBookID from "../../api/GetCategoryByBookID";
-import PublisherInf from "../../data_type/PublisherInf";
-import GetPublisherByBookID from "../../api/GetPublisherByBookID";
+import AuthorInf from "../../data_type/Product/AuthorInf";
+import GetAuthorByBookId from "../../api/Product/GetAuthorByBookId";
+import CategoryInf from "../../data_type/Product/CategoryInf";
+import GetCategoryByBookID from "../../api/Product/GetCategoryByBookID";
+import PublisherInf from "../../data_type/Product/PublisherInf";
+import GetPublisherByBookID from "../../api/Product/GetPublisherByBookID";
 
 const BookDetailPage: React.FC = () => {
 

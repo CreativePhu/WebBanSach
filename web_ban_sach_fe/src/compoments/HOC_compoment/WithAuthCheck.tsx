@@ -1,6 +1,6 @@
 import React from 'react';
 import {jwtDecode} from 'jwt-decode';
-import {verifyToken} from "../api/VerifyToken";
+import {verifyToken} from "../api/Auth/VerifyToken";
 
 const WithAuthCheck = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
     const AuthCheck: React.FC<P> = (props) => {

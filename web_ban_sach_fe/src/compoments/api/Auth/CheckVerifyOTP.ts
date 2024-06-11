@@ -1,5 +1,5 @@
 import axios from "axios";
-import VerifyOTPInf from "../data_type/VerifyOTPInf";
+import VerifyOTPInf from "../../data_type/Auth/VerifyOTPInf";
 
 export const CheckVerifyOTP = async (body: VerifyOTPInf) => {
     const HOST = process.env.REACT_APP_HOST_BE;

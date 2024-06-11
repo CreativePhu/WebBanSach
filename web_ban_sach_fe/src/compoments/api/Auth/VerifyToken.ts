@@ -1,5 +1,5 @@
 import axios from "axios";
-import UserInf from "../data_type/UserInf";
+import UserInf from "../../data_type/Auth/UserInf";
 
 export const verifyToken = async (token: string):Promise<UserInf> => {
     const HOST = process.env.REACT_APP_HOST_BE;

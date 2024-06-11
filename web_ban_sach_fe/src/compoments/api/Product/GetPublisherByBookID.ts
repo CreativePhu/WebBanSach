@@ -1,7 +1,7 @@
 import axios from "axios";
-import BookInf from "../data_type/BookInf";
-import AuthorInf from "../data_type/AuthorInf";
-import PublisherInf from "../data_type/PublisherInf";
+import BookInf from "../../data_type/Product/BookInf";
+import AuthorInf from "../../data_type/Product/AuthorInf";
+import PublisherInf from "../../data_type/Product/PublisherInf";
 
 const GetAuthorByBookID = async (bookId: number):Promise<PublisherInf> => {
     const HOST = process.env.REACT_APP_HOST_BE;

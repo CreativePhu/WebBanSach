@@ -1,7 +1,7 @@
 import React from "react";
-import BookInf from "../data_type/BookInf";
-import BookImageInf from "../data_type/BookImageInf";
-import GetBookImageById from "../api/GetBookImageById";
+import BookInf from "../data_type/Product/BookInf";
+import BookImageInf from "../data_type/Product/BookImageInf";
+import GetBookImageById from "../api/Product/GetBookImageById";
 import {Link} from "react-router-dom";
 
 interface BookProps {

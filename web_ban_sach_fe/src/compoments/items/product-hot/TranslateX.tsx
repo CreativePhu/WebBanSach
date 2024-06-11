@@ -1,7 +1,7 @@
 import React from "react";
 import BookProduct from "../Book";
-import BookInf from "../../data_type/BookInf";
-import GetTop10BookNew from "../../api/GetTop10BookNew";
+import BookInf from "../../data_type/Product/BookInf";
+import GetTop10BookNew from "../../api/Product/GetTop10BookNew";
 
 const TranslateX: React.FC = () => {
 

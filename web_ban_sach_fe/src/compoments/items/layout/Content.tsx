@@ -2,7 +2,7 @@ import React from "react";
 import {LAYOUT_COLOR} from "../../../colors";
 import HeroSection from "../HeroSection";
 import Event from "../Event";
-import ImageEventInf from "../../data_type/ImageEventInf";
+import ImageEventInf from "../../data_type/Product/ImageEventInf";
 import ListBook from "../list-book/ListBook";
 import ProductHot from "../product-hot/ProductHot"
 

@@ -1,10 +1,10 @@
-import axios from 'axios';
-import BookInf from "../data_type/BookInf";
+import axios from "axios";
+import BookInf from "../../data_type/Product/BookInf";
 
-const GetBooksByPage = async (size: number, page: number):Promise<BookInf[]> => {
+const GetTop10BookNew = async ():Promise<BookInf[]> => {
     const HOST = process.env.REACT_APP_HOST_BE;
     const books:BookInf[] = [];
-    const response = await axios.get(`${HOST}/books?sort=bookID,desc&size=${size}&page=${page}`);
+    const response = await axios.get(`${HOST}/books?sort=bookID,desc&size=10`);
     const data:BookInf[] = response.data._embedded.books;
 
     data.forEach((book:BookInf) => {
@@ -20,4 +20,4 @@ const GetBooksByPage = async (size: number, page: number):Promise<BookInf[]> => 
     return books;
 }
 
-export default GetBooksByPage;
+export default GetTop10BookNew;
