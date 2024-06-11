@@ -1,10 +1,14 @@
 import React from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {UserLogin} from "../../api/Auth/UserLogin";
+import {verifyToken} from "../../api/Auth";
+import {updateUser} from "../../redux/UserSlice";
+import {useAppDispatch} from "../../redux/Hooks";
 
 const LoginPage: React.FC = () => {
 
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const [username, setUsername] = React.useState<string>("");
     const [password, setPassword] = React.useState<string>("");
@@ -33,6 +37,15 @@ const LoginPage: React.FC = () => {
         return check;
     }
 
+    const getUserToken = async (token: string) => {
+        try {
+            const response = await verifyToken(token);
+            dispatch(updateUser(response));
+        } catch (error) {
+            console.log("Lỗi xác thực token");
+        }
+    }
+
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         setLoading(true)
         e.preventDefault();
@@ -41,6 +54,7 @@ const LoginPage: React.FC = () => {
                 const response = await UserLogin({username: username, password: password})
                 const jwt = response.token
                 localStorage.setItem("token", jwt)
+                await getUserToken(jwt)
                 navigate("/")
                 setLoading(false)
             }

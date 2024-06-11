@@ -12,9 +12,8 @@ const WithAuthCheck = <P extends object>(WrappedComponent: React.ComponentType<P
             try {
                 const response = await verifyToken(token);
                 dispatch(updateUser(response));
-
             } catch (error) {
-                console.log(error);
+                console.log("Lỗi xác thực token");
             }
         }
 

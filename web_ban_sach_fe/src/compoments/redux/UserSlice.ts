@@ -3,11 +3,11 @@ import type { RootState } from './Store'
 import UserInf from "../data_type/Auth/UserInf";
 
 interface CounterState {
-    value: UserInf|{}
+    value: UserInf|null
 }
 
 const initialState: CounterState = {
-    value: {},
+    value: null,
 }
 
 export const userSlice = createSlice({
@@ -18,7 +18,7 @@ export const userSlice = createSlice({
             state.value = action.payload;
         },
         resetUser: (state) => {
-            state.value = {};
+            state.value = null;
         }
     },
 })
