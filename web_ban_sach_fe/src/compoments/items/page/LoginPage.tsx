@@ -1,9 +1,10 @@
 import React from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {UserLogin} from "../../api/Auth/UserLogin";
+import {UserLogin} from "../../api/Auth";
 import {verifyToken} from "../../api/Auth";
 import {updateUser} from "../../redux/UserSlice";
 import {useAppDispatch} from "../../redux/Hooks";
+import userInf from "../../data_type/Auth/UserInf";
 
 const LoginPage: React.FC = () => {
 
@@ -37,27 +38,20 @@ const LoginPage: React.FC = () => {
         return check;
     }
 
-    const getUserToken = async (token: string) => {
-        try {
-            const response = await verifyToken(token);
-            dispatch(updateUser(response));
-        } catch (error) {
-            console.log("Lỗi xác thực token");
-        }
-    }
-
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         setLoading(true)
         e.preventDefault();
         try {
             if (checkValidateForm()) {
                 const response = await UserLogin({username: username, password: password})
-                const jwt = response.token
+                const jwt:string = response.token
                 localStorage.setItem("token", jwt)
-                await getUserToken(jwt)
+                const user:userInf = await verifyToken(jwt)
+                dispatch(updateUser(user))
                 navigate("/")
                 setLoading(false)
             }
+            setLoading(false)
         } catch (e) {
             setErrorUsername("Tài khoản hoặc mật khẩu không chính xác")
             setLoading(false)

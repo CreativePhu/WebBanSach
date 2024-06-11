@@ -90,13 +90,23 @@ function Navbar() {
                                                         <i className="bi bi-person-fill fs-4 text-white"></i>
                                                     </button>
                                                     <ul className="dropdown-menu">
-                                                        <li><a className="dropdown-item text-danger" href="#">Action</a>
+                                                        <li>
+                                                            <span
+                                                                className="dropdown-item text-danger fw-bold">{user?.fullName}</span>
                                                         </li>
-                                                        <li><a className="dropdown-item text-danger" href="#">Another
-                                                            action</a>
+                                                        <li>
+                                                            <hr className="dropdown-divider text-danger"/>
                                                         </li>
-                                                        <li><a className="dropdown-item text-danger" href="#">Something
-                                                            else here</a></li>
+                                                        <li>
+                                                            <Link to={"/profile"} className="dropdown-item text-danger">Thông
+                                                                tin cá nhân</Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link to={"/history-order"} className="dropdown-item text-danger">Lich sử mua hàng</Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link to={"/order"} className="dropdown-item text-danger">Giỏ hàng</Link>
+                                                        </li>
                                                         <li>
                                                             <hr className="dropdown-divider text-danger"/>
                                                         </li>

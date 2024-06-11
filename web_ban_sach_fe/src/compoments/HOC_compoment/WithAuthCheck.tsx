@@ -3,10 +3,12 @@ import {jwtDecode} from 'jwt-decode';
 import {verifyToken} from "../api/Auth";
 import {updateUser, resetUser} from "../redux/UserSlice";
 import {useAppDispatch} from '../redux/Hooks'
+import {useNavigate} from "react-router-dom";
 
 const WithAuthCheck = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
     const AuthCheck: React.FC<P> = (props) => {
         const dispatch = useAppDispatch()
+        const navigate = useNavigate();
 
         const getUserToken = async (token: string) => {
             try {

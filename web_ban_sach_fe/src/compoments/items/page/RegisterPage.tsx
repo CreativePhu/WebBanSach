@@ -2,9 +2,9 @@ import React from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {REGEX_EMAIL, REGEX_PASSWORD, REGEX_USERNAME} from "../Regex";
 import UserRegisterInf from "../../data_type/Auth/UserRegisterInf";
-import {UserRegister} from "../../api/Auth/UserRegister";
-import {checkUserNameExists} from "../../api/Auth/CheckUserNameExists";
-import {checkEmailExists} from "../../api/Auth/CheckEmailExists";
+import {UserRegister} from "../../api/Auth";
+import {checkUserNameExists} from "../../api/Auth";
+import {checkEmailExists} from "../../api/Auth";
 
 const RegisterPage: React.FC = () => {
 
