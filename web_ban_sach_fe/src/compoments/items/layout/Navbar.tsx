@@ -13,6 +13,7 @@ function Navbar() {
 
     const [searchValue, setSearchValue] = React.useState<string>("")
     const [showUserDropdown, setShowUserDropdown] = React.useState<boolean>(false)
+    const [isHover, setIsHover] = React.useState<boolean>(false)
 
     React.useLayoutEffect(() => {
         if (user) {
@@ -76,13 +77,32 @@ function Navbar() {
                                     <li className="nav-item">
                                         {
                                             !showUserDropdown ?
-                                                <Link className="nav-link p-3 py-0 pe-0" aria-current="page"
-                                                      to={"/login"}>
+                                                <>
+                                                    <Link id={"user-login"} onMouseEnter={() => setIsHover(true)}
+                                                          onMouseLeave={() => setIsHover(false)}
+                                                          className="nav-link p-3 py-0 pe-0" aria-current="page"
+                                                          to={"/login"}>
+                                                        <div
+                                                            className={"d-flex flex-column justify-content-center align-items-center py-1 px-3"}>
+                                                            <i className="bi bi-person-fill fs-4 text-danger"></i>
+                                                        </div>
+                                                    </Link>
                                                     <div
-                                                        className={"d-flex flex-column justify-content-center align-items-center py-1 px-3"}>
-                                                        <i className="bi bi-person-fill fs-4 text-danger"></i>
+                                                        onMouseEnter={() => setIsHover(true)}
+                                                        onMouseLeave={() => setIsHover(false)}
+                                                        className={`${isHover ? "d-block" : "d-none"} position-absolute d-flex flex-column bg-white shadow-sm p-3 mb-5 bg-body-tertiary rounded`}
+                                                        style={{width: "150px"}}>
+                                                        <Link to={"/login"}
+                                                              className={"text-decoration-none text-danger"}>
+                                                            Đăng nhập
+                                                        </Link>
+                                                        <hr className={"my-2 text-danger"}/>
+                                                        <Link to={"/register"}
+                                                              className={"text-decoration-none text-danger"}>
+                                                            Đăng ký
+                                                        </Link>
                                                     </div>
-                                                </Link>
+                                                </>
                                                 :
                                                 <div className="dropdown d-flex flex-row ms-3">
                                                     <button className="btn btn-danger dropdown-toggle" type="button"
@@ -102,10 +122,13 @@ function Navbar() {
                                                                 tin cá nhân</Link>
                                                         </li>
                                                         <li>
-                                                            <Link to={"/history-order"} className="dropdown-item text-danger">Lich sử mua hàng</Link>
+                                                            <Link to={"/history-order"}
+                                                                  className="dropdown-item text-danger">Lich sử mua
+                                                                hàng</Link>
                                                         </li>
                                                         <li>
-                                                            <Link to={"/order"} className="dropdown-item text-danger">Giỏ hàng</Link>
+                                                            <Link to={"/order"} className="dropdown-item text-danger">Giỏ
+                                                                hàng</Link>
                                                         </li>
                                                         <li>
                                                             <hr className="dropdown-divider text-danger"/>
