@@ -5,8 +5,12 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import vn.thienphu.web_ban_sach_be.dao.UserRepository;
+import vn.thienphu.web_ban_sach_be.model.Role;
+import vn.thienphu.web_ban_sach_be.model.User;
 
 import java.security.Key;
 import java.util.Date;
@@ -16,10 +20,41 @@ import java.util.Map;
 @Service
 public class JWTService {
 
-    public static final String SECRET = "LKJSLJKEKJFSDOIFJALKWJELASKJDFLASJEOIFJASLDFALKSEOIJLKADJSFOKAWENDF";
+    private static final String SECRET = "LKJSLJKEKJFSDOIFJALKWJELASKJDFLASJEOIFJASLDFALKSEOIJLKADJSFOKAWENDF";
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24;
+    private UserRepository userRepository;
+
+    @Autowired
+    public JWTService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
 
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
+        User user = userRepository.findByUserName(username);
+        boolean isAdmin = false;
+        boolean isCustomer = false;
+        boolean isStaff = false;
+
+        if(user != null && !user.getRoles().isEmpty()){
+            for (Role role : user.getRoles()) {
+                if(role.getRoleName().equals("ROLE_ADMIN")){
+                    isAdmin = true;
+                }
+                if(role.getRoleName().equals("ROLE_CUSTOMER")){
+                    isCustomer = true;
+                }
+                if(role.getRoleName().equals("ROLE_STAFF")){
+                    isStaff = true;
+                }
+            }
+        }
+
+        claims.put("isAdmin", isAdmin);
+        claims.put("isCustomer", isCustomer);
+        claims.put("isStaff", isStaff);
+
         return createToken(claims, username);
     }
 
@@ -28,7 +63,7 @@ public class JWTService {
                 .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1 * 60 * 60 * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, hmacShaKeyFor(SECRET))
                 .compact();
     }
