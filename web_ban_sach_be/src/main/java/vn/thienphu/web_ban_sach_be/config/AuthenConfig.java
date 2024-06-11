@@ -1,5 +1,6 @@
 package vn.thienphu.web_ban_sach_be.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -9,8 +10,10 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import vn.thienphu.web_ban_sach_be.service.UserDTService;
 
@@ -18,6 +21,14 @@ import java.util.Arrays;
 
 @Configuration
 public class AuthenConfig {
+
+    private JwtRequestFilter jwtRequestFilter;
+
+    @Autowired
+    public AuthenConfig(JwtRequestFilter jwtRequestFilter) {
+        this.jwtRequestFilter = jwtRequestFilter;
+    }
+
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -53,6 +64,8 @@ public class AuthenConfig {
             corsConfiguration.addAllowedHeader("*");
             return corsConfiguration;
         }));
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
