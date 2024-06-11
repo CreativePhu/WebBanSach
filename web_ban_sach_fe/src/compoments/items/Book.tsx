@@ -1,6 +1,6 @@
 import React from "react";
-import BookInf from "../../data_type/BookInf";
-import BookImageInf from "../../data_type/BookImageInf";
+import BookInf from "../data_type/BookInf";
+import BookImageInf from "../data_type/BookImageInf";
 import GetBookImageById from "../api/GetBookImageById";
 import {Link} from "react-router-dom";
 

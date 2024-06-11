@@ -1,11 +1,10 @@
 import React from "react";
-import {LAYOUT_COLOR} from "../../colors";
-import HeroSection from "../items/HeroSection";
-import Event from "../items/Event";
+import {LAYOUT_COLOR} from "../../../colors";
+import HeroSection from "../HeroSection";
+import Event from "../Event";
 import ImageEventInf from "../../data_type/ImageEventInf";
-import ProductHot from "../product-hot/ProductHot";
-import BookInf from "../../data_type/BookInf";
 import ListBook from "../list-book/ListBook";
+import ProductHot from "../product-hot/ProductHot"
 
 export default function Content() {
 

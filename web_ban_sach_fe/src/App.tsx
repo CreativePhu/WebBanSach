@@ -3,15 +3,15 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import Navbar from "./compoments/layout/Navbar";
-import Footer from "./compoments/layout/Footer";
-import Content from "./compoments/layout/Content";
+import Navbar from "./compoments/items/layout/Navbar";
+import Footer from "./compoments/items/layout/Footer";
+import Content from "./compoments/items/layout/Content";
 import {Route, Routes} from "react-router";
-import LoginPage from "./compoments/page/LoginPage";
-import SearchPage from "./compoments/page/SearchPage";
-import BookDetailPage from "./compoments/page/BookDetailPage";
-import RegisterPage from "./compoments/page/RegisterPage";
-import ActiveOTPPage from "./compoments/page/ActiveOTPPage";
+import LoginPage from "./compoments/items/page/LoginPage";
+import SearchPage from "./compoments/items/page/SearchPage";
+import BookDetailPage from "./compoments/items/page/BookDetailPage";
+import RegisterPage from "./compoments/items/page/RegisterPage";
+import ActiveOTPPage from "./compoments/items/page/ActiveOTPPage";
 
 function App() {
     return (

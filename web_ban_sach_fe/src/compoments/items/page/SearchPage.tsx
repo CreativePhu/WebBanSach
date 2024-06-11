@@ -1,7 +1,7 @@
 import React from "react";
 import BookInf from "../../data_type/BookInf";
-import BookProduct from "../items/Book";
-import FindBookByBookTitle from "../api/FindBookByBookTitle";
+import BookProduct from "../Book";
+import FindBookByBookTitle from "../../api/FindBookByBookTitle";
 import {useSearchParams} from "react-router-dom";
 
 const SearchPage: React.FC = () => {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import BookInf from "../../data_type/BookInf";
+import BookInf from "../data_type/BookInf";
 
 const GetBooksByPage = async (size: number, page: number):Promise<BookInf[]> => {
     const HOST = process.env.REACT_APP_HOST_BE;

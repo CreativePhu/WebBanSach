@@ -1,5 +1,5 @@
 import React from 'react';
-import {ICON_GRAY} from "../../colors";
+import {ICON_GRAY} from "../../../colors";
 import {Link, useNavigate} from "react-router-dom";
 
 function Navbar() {

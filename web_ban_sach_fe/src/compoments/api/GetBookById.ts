@@ -1,6 +1,6 @@
 import axios from "axios";
-import BookInf from "../../data_type/BookInf";
-import bookInf from "../../data_type/BookInf";
+import BookInf from "../data_type/BookInf";
+import bookInf from "../data_type/BookInf";
 
 const FindBookByBookTitle = async (bookId: string):Promise<BookInf|null> => {
     const HOST = process.env.REACT_APP_HOST_BE;

@@ -1,6 +1,4 @@
 import React from "react";
-import BookInf from "../../data_type/BookInf";
-import BookProduct from "../items/Book";
 import TranslateX from "./TranslateX";
 
 const ProductHot: React.FC = () => {

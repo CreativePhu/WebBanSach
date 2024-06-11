@@ -1,7 +1,7 @@
 import React from "react";
 import BookInf from "../../data_type/BookInf";
-import BookProduct from "../items/Book";
-import GetBooks from "../api/GetBooks";
+import BookProduct from "../Book";
+import GetBooks from "../../api/GetBooks";
 import {Simulate} from "react-dom/test-utils";
 import load = Simulate.load;
 
