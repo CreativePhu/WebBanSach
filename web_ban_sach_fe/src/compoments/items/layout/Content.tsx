@@ -6,7 +6,7 @@ import ImageEventInf from "../../data_type/ImageEventInf";
 import ListBook from "../list-book/ListBook";
 import ProductHot from "../product-hot/ProductHot"
 
-export default function Content() {
+function Content() {
 
     const [listImageHeroSection, setListImageHeroSection] = React.useState<string[]>([
         "images/hero_section/img1.png",
@@ -86,3 +86,5 @@ export default function Content() {
         </div>
     )
 }
+
+export default Content

@@ -12,6 +12,7 @@ import SearchPage from "./compoments/items/page/SearchPage";
 import BookDetailPage from "./compoments/items/page/BookDetailPage";
 import RegisterPage from "./compoments/items/page/RegisterPage";
 import ActiveOTPPage from "./compoments/items/page/ActiveOTPPage";
+import withAuthCheck from "./compoments/HOC_compoment/WithAuthCheck";
 
 function App() {
     return (
@@ -31,4 +32,5 @@ function App() {
     );
 }
 
-export default App;
+const AuthenticatedApp = withAuthCheck(App);
+export default AuthenticatedApp
