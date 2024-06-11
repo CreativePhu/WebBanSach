@@ -38,8 +38,13 @@ public class UserController {
         return userService.verifyUser(userVerifyDTO.getEmail(), userVerifyDTO.getVerificationCode());
     }
 
+    @PostMapping("verify-token")
+    private ResponseEntity<?> verifyToken(@RequestBody JwtDTO jwtDTO) {
+        return userService.verifyToken(jwtDTO.getToken());
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginDTO userLoginDTO) {
+    private ResponseEntity<?> login(@RequestBody UserLoginDTO userLoginDTO) {
             try {
                 Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginDTO.getUsername(), userLoginDTO.getPassword()));
                 if(authentication.isAuthenticated()){

@@ -18,6 +18,8 @@ public class EndPoint {
     public static final String[] PUBLIC_POST_ENDPOINT = {
             "/users/register",
             "/users/verify",
+            "/users/verify/token",
+            "/users/login",
     };
 
     public static final String[] ADMIN_GET_ENDPOINT = {
