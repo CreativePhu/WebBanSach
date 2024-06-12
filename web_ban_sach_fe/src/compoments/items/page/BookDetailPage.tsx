@@ -37,7 +37,7 @@ const BookDetailPage: React.FC = () => {
     const [error, setError] = React.useState<string | null>(null);
 
 
-    const fetchBookImages = async () => {
+    const fetchBookData = async () => {
         if (bookId) {
             try {
                 setLoading(true)
@@ -59,18 +59,18 @@ const BookDetailPage: React.FC = () => {
         }
     }
 
-    React.useEffect(() => {
-        fetchBookImages()
-    }, [])
+    React.useEffect( () => {
+        fetchBookData()
+    },[])
 
     // tang so luong sach
-    const addBookCount = (e: any) => {
+    const addBookCount = () => {
         if(bookCount === 10) return;
         setBookCount(bookCount + 1)
     }
 
     // giam so luong sach
-    const subBookCount = (e: any) => {
+    const subBookCount = () => {
         if (bookCount > 1) {
             setBookCount(bookCount - 1)
         }

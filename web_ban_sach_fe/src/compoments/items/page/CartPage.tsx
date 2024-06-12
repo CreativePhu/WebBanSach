@@ -3,6 +3,7 @@ import BookCartInf from "../../data_type/Product/BookCartInf";
 import formatCurrencyVND from "../function/FormatCurrencyVND";
 import {setCounter} from "../../redux/CounterSlice";
 import {useAppDispatch} from "../../redux/Hooks";
+import {Link} from "react-router-dom";
 
 const CartPage: React.FC = () => {
 
@@ -70,6 +71,20 @@ const CartPage: React.FC = () => {
         localStorage.setItem("cart", JSON.stringify(products));
         dispatch(setCounter(products.length))
     }, [products, dispatch])
+
+    if(products.length === 0) {
+        return (
+            <div className={"container-fluid bg-light rounded py-4"}>
+                <div className={"container rounded bg-white d-flex flex-column justify-content-center align-items-center shadow-sm"} style={{minHeight: "500px"}}>
+                    <img
+                        src="/images/cart/cart-empty.png"
+                        alt={"empty cart"} style={{width: "150px", height: "150px"}}/>
+                    <span className={"mt-3 fs-6 fw-semibold"}>Không có sản phẩm nào trong giỏ hàng</span>
+                    <Link className={"btn btn-danger mt-3"} to={"/"}>Mua sắm ngay</Link>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className={"container-fluid bg-light rounded py-4"}>
