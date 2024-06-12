@@ -8,20 +8,27 @@ function Navbar() {
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
+    const count = useAppSelector(state => state.Count.value)
 
     const user: UserInf | null = useAppSelector(state => state.User.value)
 
     const [searchValue, setSearchValue] = React.useState<string>("")
     const [showUserDropdown, setShowUserDropdown] = React.useState<boolean>(false)
     const [isHover, setIsHover] = React.useState<boolean>(false)
+    const [numberCart, setNumberCart] = React.useState<number>(0)
 
-    React.useLayoutEffect(() => {
+    React.useEffect(() => {
         if (user) {
             setShowUserDropdown(true)
         } else {
             setShowUserDropdown(false)
         }
     }, [user])
+
+    React.useEffect(() => {
+        setNumberCart(count)
+        console.log("change" + count)
+    }, [count])
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(e.target.value)
@@ -67,12 +74,12 @@ function Navbar() {
                                 className={"d-none d-lg-block col-lg-3 col-xl-3 d-flex justify-content-end align-items-center p-0"}>
                                 <ul className="nav justify-content-end">
                                     <li className="nav-item">
-                                        <a className="nav-link px-3 py-0 pe-0" aria-current="page" href="#">
-                                            <div
-                                                className={"d-flex flex-column justify-content-center align-items-center py-1 px-3"}>
+                                        <Link className="nav-link me-3 py-1 pe-0" aria-current="page" to={"/cart"}>
+                                            <button type="button" className={`${count > 0 ? "shadow btn btn-outline-light position-relative" : "border-0 bg-white"}`}>
                                                 <i className="bi bi-cart-fill fs-4 text-danger"></i>
-                                            </div>
-                                        </a>
+                                                <span className={`${count <= 0 ? "d-none" : ""} position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger`}>{numberCart}<span className="visually-hidden">unread messages</span></span>
+                                            </button>
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
                                         {
@@ -127,7 +134,7 @@ function Navbar() {
                                                                 hàng</Link>
                                                         </li>
                                                         <li>
-                                                            <Link to={"/order"} className="dropdown-item text-danger">Giỏ
+                                                            <Link to={"/cart"} className="dropdown-item text-danger">Giỏ
                                                                 hàng</Link>
                                                         </li>
                                                         <li>

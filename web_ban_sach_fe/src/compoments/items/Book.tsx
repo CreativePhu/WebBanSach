@@ -3,6 +3,7 @@ import BookInf from "../data_type/Product/BookInf";
 import BookImageInf from "../data_type/Product/BookImageInf";
 import GetBookImageById from "../api/Product/GetBookImageById";
 import {Link} from "react-router-dom";
+import formatCurrencyVND from "./function/FormatCurrencyVND";
 
 interface BookProps {
     book: BookInf
@@ -17,7 +18,7 @@ const BookProduct : React.FC<BookProps> = ({book}) => {
     const fetchListImage = async () => {
         try {
             const listImage: BookImageInf[] = await GetBookImageById(book.bookID);
-            const primaryImage = listImage.find((image) => image.primary === true)
+            const primaryImage = listImage.find((image) => image?.primary === true)
             setIsPrimaryimage(primaryImage?.bookImage || "")
             setLoading(false)
         } catch (e:any) {
@@ -29,11 +30,6 @@ const BookProduct : React.FC<BookProps> = ({book}) => {
     React.useLayoutEffect(() => {
         fetchListImage()
     }, [])
-
-    // chuyen so tien sang dang tien te VND
-    function formatCurrencyVND(amount: number): string {
-        return amount.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
-    }
 
     return (
         <div className="card me-3 flex-grow-0 flex-shrink-0 my-3"

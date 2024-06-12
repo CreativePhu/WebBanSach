@@ -12,8 +12,14 @@ import CategoryInf from "../../data_type/Product/CategoryInf";
 import GetCategoryByBookID from "../../api/Product/GetCategoryByBookID";
 import PublisherInf from "../../data_type/Product/PublisherInf";
 import GetPublisherByBookID from "../../api/Product/GetPublisherByBookID";
+import formatCurrencyVND from "../function/FormatCurrencyVND";
+import BookCartInf from "../../data_type/Product/BookCartInf";
+import {useDispatch} from "react-redux";
+import {setCounter} from "../../redux/CounterSlice";
 
 const BookDetailPage: React.FC = () => {
+
+    const dispatch = useDispatch();
 
     const [searchParams] = useSearchParams();
     const bookId = searchParams.get('bookId');
@@ -54,13 +60,9 @@ const BookDetailPage: React.FC = () => {
         fetchBookImages()
     }, [])
 
-    // chuyen so tien sang dang tien te VND
-    function formatCurrencyVND(amount: number): string {
-        return amount.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
-    }
-
     // tang so luong sach
     const addBookCount = (e: any) => {
+        if(bookCount === 10) return;
         setBookCount(bookCount + 1)
     }
 
@@ -68,6 +70,33 @@ const BookDetailPage: React.FC = () => {
     const subBookCount = (e: any) => {
         if (bookCount > 1) {
             setBookCount(bookCount - 1)
+        }
+    }
+
+    const addBookToCart = (book: BookCartInf) => {
+        const cart = localStorage.getItem("cart");
+        if (cart) {
+            const cartList: BookCartInf[] = JSON.parse(cart);
+            const bookIndex = cartList.findIndex((item) => item.bookID === book.bookID);
+            if (bookIndex === -1) {
+                cartList.push(book);
+            } else {
+                if(cartList[bookIndex].quantity + book.quantity <= 10){
+                    cartList[bookIndex].quantity += book.quantity;
+                } else {
+                    alert("Số lượng sách này trong giỏ hàng không được vượt quá 10 !")
+                    return;
+                }
+            }
+            localStorage.setItem("cart", JSON.stringify(cartList));
+            dispatch(setCounter(cartList.length))
+            alert("Thêm vào giỏ hàng thành công !")
+            setBookCount(1)
+        } else {
+            localStorage.setItem("cart", JSON.stringify([book]));
+            dispatch(setCounter(1))
+            alert("Thêm vào giỏ hàng thành công !")
+            setBookCount(1)
         }
     }
 
@@ -120,6 +149,7 @@ const BookDetailPage: React.FC = () => {
                                     </button>
                                     <input type={"number"} className={"form-control w-25 fs-5 text-center"}
                                            value={bookCount}
+                                           disabled={true}
                                            onChange={(e) => setBookCount(Number(e.target.value))}/>
                                     <button onClick={addBookCount} className={"btn btn-light fw-bold fs-4 px-4"}>+
                                     </button>
@@ -144,7 +174,17 @@ const BookDetailPage: React.FC = () => {
                                 <p className={"fs-6"}>{bookDetail?.bookDescription}</p>
                             </div>
                             <div className={"col-12 d-flex justify-content-start d-sm-block justify-sm-content-start"}>
-                                <button className={"btn btn-primary fw-bold fs-4 px-4"}>Thêm vào giỏ hàng</button>
+                                <button className={"btn btn-primary fw-bold fs-4 px-4"} onClick={() => {
+                                    if (bookDetail) {
+                                        addBookToCart({
+                                            bookID: bookDetail.bookID,
+                                            bookTitle: bookDetail.bookTitle,
+                                            bookPrice: bookDetail.bookPrice,
+                                            bookImage: bookImages[0].bookImage,
+                                            quantity: bookCount
+                                        })
+                                    }
+                                }}>Thêm vào giỏ hàng</button>
                                 <button className={"btn btn-danger fw-bold fs-4 px-4 ms-3"}>Mua ngay</button>
                             </div>
                         </div>

@@ -13,6 +13,7 @@ import BookDetailPage from "./compoments/items/page/BookDetailPage";
 import RegisterPage from "./compoments/items/page/RegisterPage";
 import ActiveOTPPage from "./compoments/items/page/ActiveOTPPage";
 import withAuthCheck from "./compoments/HOC_compoment/WithAuthCheck";
+import CartPage from "./compoments/items/page/CartPage";
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                 <Route path={"/book-detail/*"} element={<BookDetailPage/>}/>
                 <Route path={"/register"} element={<RegisterPage/>}/>
                 <Route path={"/active-otp/*"} element={<ActiveOTPPage />}/>
+                <Route path={"/cart"} element={<CartPage />}/>
                 <Route path={"*"} element={<h1>404 Not Found</h1>}/>
             </Routes>
             <Footer/>
