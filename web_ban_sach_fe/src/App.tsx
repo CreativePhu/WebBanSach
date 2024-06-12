@@ -14,6 +14,8 @@ import RegisterPage from "./compoments/items/page/RegisterPage";
 import ActiveOTPPage from "./compoments/items/page/ActiveOTPPage";
 import withAuthCheck from "./compoments/HOC_compoment/WithAuthCheck";
 import CartPage from "./compoments/items/page/CartPage";
+import {Bounce, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     return (
@@ -30,6 +32,20 @@ function App() {
                 <Route path={"*"} element={<h1>404 Not Found</h1>}/>
             </Routes>
             <Footer/>
+            <ToastContainer
+                position="top-right"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={Bounce}
+            />
+            <ToastContainer />
         </div>
     );
 }

@@ -16,10 +16,13 @@ import formatCurrencyVND from "../function/FormatCurrencyVND";
 import BookCartInf from "../../data_type/Product/BookCartInf";
 import {useDispatch} from "react-redux";
 import {setCounter} from "../../redux/CounterSlice";
+import {Bounce, toast} from "react-toastify";
 
 const BookDetailPage: React.FC = () => {
 
     const dispatch = useDispatch();
+    const messageSuccess = (message: string) => toast.success(message, {autoClose: 2000, transition: Bounce});
+    const messageError = (message: string) => toast.error(message, {autoClose: 2000, transition: Bounce});
 
     const [searchParams] = useSearchParams();
     const bookId = searchParams.get('bookId');
@@ -84,18 +87,18 @@ const BookDetailPage: React.FC = () => {
                 if(cartList[bookIndex].quantity + book.quantity <= 10){
                     cartList[bookIndex].quantity += book.quantity;
                 } else {
-                    alert("Số lượng sách này trong giỏ hàng không được vượt quá 10 !")
+                    messageError("Số lượng sách này trong giỏ hàng không được vượt quá 10 !")
                     return;
                 }
             }
             localStorage.setItem("cart", JSON.stringify(cartList));
             dispatch(setCounter(cartList.length))
-            alert("Thêm vào giỏ hàng thành công !")
+            messageSuccess("Thêm vào giỏ hàng thành công !")
             setBookCount(1)
         } else {
             localStorage.setItem("cart", JSON.stringify([book]));
             dispatch(setCounter(1))
-            alert("Thêm vào giỏ hàng thành công !")
+            messageSuccess("Thêm vào giỏ hàng thành công !")
             setBookCount(1)
         }
     }

@@ -75,9 +75,12 @@ function Navbar() {
                                 <ul className="nav justify-content-end">
                                     <li className="nav-item">
                                         <Link className="nav-link me-3 py-1 pe-0" aria-current="page" to={"/cart"}>
-                                            <button type="button" className={`${count > 0 ? "shadow btn btn-outline-light position-relative" : "border-0 bg-white"}`}>
+                                            <button type="button"
+                                                    className={`${count > 0 ? "shadow btn btn-outline-light position-relative" : "border-0 bg-white"}`}>
                                                 <i className="bi bi-cart-fill fs-4 text-danger"></i>
-                                                <span className={`${count <= 0 ? "d-none" : ""} position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger`}>{numberCart}<span className="visually-hidden">unread messages</span></span>
+                                                <span
+                                                    className={`${count <= 0 ? "d-none" : ""} position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger`}>{numberCart}<span
+                                                    className="visually-hidden">unread messages</span></span>
                                             </button>
                                         </Link>
                                     </li>
