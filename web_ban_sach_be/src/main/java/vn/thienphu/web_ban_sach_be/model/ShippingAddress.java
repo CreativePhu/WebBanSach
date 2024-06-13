@@ -19,11 +19,17 @@ public class ShippingAddress {
     @Column(name = "shipping_address", length = 100, nullable = false)
     private String shippingAddress;
 
-    @Column(name = "shipping_city", length = 50, nullable = false)
-    private String shippingCity;
+    @ManyToOne
+    @JoinColumn(name = "province_id")
+    private Province province;
 
-    @Column(name = "shipping_state", length = 50, nullable = false)
-    private String shippingState;
+    @ManyToOne
+    @JoinColumn(name = "district_id")
+    private District district;
+
+    @ManyToOne
+    @JoinColumn(name = "ward_id")
+    private Ward ward;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

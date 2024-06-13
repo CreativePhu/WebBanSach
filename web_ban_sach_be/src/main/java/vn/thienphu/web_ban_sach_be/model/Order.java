@@ -24,6 +24,15 @@ public class Order {
     @Column(name = "order_date", nullable = false)
     private Date orderDate;
 
+    @Column(name = "customer_name", nullable = false)
+    private String customerName;
+
+    @Column(name = "customer_email", nullable = false)
+    private String customerEmail;
+
+    @Column(name = "customer_phone", nullable = false)
+    private String customerPhone;
+
     @Column(name = "total", nullable = false)
     private double total;
 
