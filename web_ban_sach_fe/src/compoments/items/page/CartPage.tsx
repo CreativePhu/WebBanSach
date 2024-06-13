@@ -10,8 +10,9 @@ const CartPage: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const [products, setProducts] = React.useState<BookCartInf[]>([])
-
-    const totalPrice = products.reduce((total, product) => total + product.bookPrice * product.quantity, 0);
+    const [listBookChecked, setListBookChecked] = React.useState<BookCartInf[]>([])
+    const [checkAll, setCheckAll] = React.useState<boolean>(false)
+    const totalPrice = listBookChecked.reduce((total, product) => total + product.bookPrice * product.quantity, 0);
 
     const increaseQuantity = (bookID: number) => {
         const newProducts = products.map((product) => {
@@ -41,6 +42,7 @@ const CartPage: React.FC = () => {
         setProducts(newProducts);
     }
 
+
     const changeQuantity = (bookID: number, quantity: number) => {
         const newProducts = products.map((product) => {
             if (product.bookID === bookID) {
@@ -54,10 +56,12 @@ const CartPage: React.FC = () => {
         setProducts(newProducts);
     }
 
+
     const removeProduct = (bookID: number) => {
         const newProducts = products.filter((product) => product.bookID !== bookID);
         setProducts(newProducts);
     }
+
 
     React.useEffect(() => {
         const cart = localStorage.getItem("cart");
@@ -67,10 +71,19 @@ const CartPage: React.FC = () => {
         }
     }, [])
 
+
     React.useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(products));
         dispatch(setCounter(products.length))
+        if(checkAll) setListBookChecked(products);
     }, [products, dispatch])
+
+
+    React.useEffect(() => {
+        if(listBookChecked.length === products.length) setCheckAll(true);
+        else setCheckAll(false);
+    }, [listBookChecked, products])
+
 
     if(products.length === 0) {
         return (
@@ -94,7 +107,14 @@ const CartPage: React.FC = () => {
                     <div className={"col-8 bg-white shadow p-3 rounded"}>
                         <div className={"row px-3 py-3"}>
                             <div className={"col-1"}>
-                                <input type={"checkbox"}/>
+                                <input type="checkbox" checked={checkAll} onChange={() => {
+                                    setCheckAll(!checkAll);
+                                    if (!checkAll) {
+                                        setListBookChecked(products);
+                                    } else {
+                                        setListBookChecked([]);
+                                    }
+                                }}/>
                             </div>
                             <div className={"col-5"}>
                                 <span className={"fw-semibold"}>Chon tất cả ({products.length} sản phẩm)</span>
@@ -111,7 +131,13 @@ const CartPage: React.FC = () => {
                                 return (
                                     <div key={product.bookID} className={"row px-3 py-3"}>
                                         <div className={"col-1"}>
-                                            <input type={"checkbox"}/>
+                                            <input type={"checkbox"} checked={listBookChecked.includes(product)} onChange={() => {
+                                                if (listBookChecked.includes(product)) {
+                                                    setListBookChecked(listBookChecked.filter((book) => book.bookID !== product.bookID));
+                                                } else {
+                                                    setListBookChecked([...listBookChecked, product]);
+                                                }
+                                            }}/>
                                         </div>
                                         <div className={"col-5"}>
                                             <div className={"row"}>
