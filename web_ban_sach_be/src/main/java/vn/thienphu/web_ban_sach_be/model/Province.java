@@ -20,9 +20,6 @@ public class Province {
     @Column(name = "province_name", length = 50, nullable = false)
     private String provinceName;
 
-    @Column(name = "province_type", length = 50, nullable = false)
-    private String provinceType;
-
     @OneToMany(mappedBy = "province")
     private List<District> districts;
 }
