@@ -72,9 +72,9 @@ export const PaymentPage: React.FC = () => {
         if (user) {
             setPaymentDetail({
                 ...paymentDetail,
-                fullName: user.fullName,
-                email: user.email,
-                phone: user.phone,
+                fullName: user?.fullName ? user.fullName : '',
+                email: user?.email ? user.email : '',
+                phone: user?.phone ? user.phone : '',
             })
         }
     }, [user])
