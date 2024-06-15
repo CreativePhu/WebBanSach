@@ -9,7 +9,6 @@ function Navbar() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
     const count = useAppSelector(state => state.Count.value)
-
     const user: UserInf | null = useAppSelector(state => state.User.value)
 
     const [searchValue, setSearchValue] = React.useState<string>("")
@@ -27,7 +26,6 @@ function Navbar() {
 
     React.useEffect(() => {
         setNumberCart(count)
-        console.log("change" + count)
     }, [count])
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

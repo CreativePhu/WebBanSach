@@ -62,6 +62,12 @@ const CartPage: React.FC = () => {
         setProducts(newProducts);
     }
 
+    const payProduct = () => {
+        if(listBookChecked.length === 0) return;
+        const listProductPayment = products.filter((product) => !listBookChecked.includes(product));
+        console.log(listProductPayment)
+    }
+
 
     React.useEffect(() => {
         const cart = localStorage.getItem("cart");
@@ -197,7 +203,7 @@ const CartPage: React.FC = () => {
                                         <p className={"fw-bold text-danger fs-3"}>{formatCurrencyVND(totalPrice)}</p>
                                     </div>
                                     <div className={"d-flex justify-content-between align-items-center"}>
-                                        <button className={"btn btn-danger w-100"}>THANH TOÁN</button>
+                                        <button onClick={() => {payProduct()}} className={"btn btn-danger w-100"}>THANH TOÁN</button>
                                     </div>
                                 </div>
                             </div>
