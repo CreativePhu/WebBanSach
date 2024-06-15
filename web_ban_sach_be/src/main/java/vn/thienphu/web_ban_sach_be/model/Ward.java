@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 public class Ward {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "war_id")
-    private long warID;
+    @Column(name = "ward_id")
+    private long wardID;
 
-    @Column(name = "war_name", length = 50, nullable = false)
-    private String warName;
+    @Column(name = "ward_name", length = 50, nullable = false)
+    private String wardName;
 
     @ManyToOne
     @JoinColumn(name = "district_id")

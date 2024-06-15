@@ -13,6 +13,9 @@ public class EndPoint {
             "/discounts",
             "/publishers",
             "/reviews",
+            "/districts",
+            "/provinces",
+            "/wards",
     };
 
     public static final String[] PUBLIC_POST_ENDPOINT = {
