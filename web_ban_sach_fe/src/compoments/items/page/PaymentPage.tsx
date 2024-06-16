@@ -120,6 +120,7 @@ export const PaymentPage: React.FC = () => {
                     setWards(data)
                     return
                 }
+                setPaymentDetail({...paymentDetail, ward: {wardID: 0, wardName: ''}})
             } catch (e) {
                 console.log(e)
             }
