@@ -1,7 +1,7 @@
 import React from 'react';
 import {jwtDecode} from 'jwt-decode';
 import {verifyToken} from "../api/Auth";
-import {updateUser, resetUser} from "../redux/UserSlice";
+import {updateUser, resetUser} from "../redux/slice/UserSlice";
 import {useAppDispatch} from '../redux/Hooks'
 import {useNavigate} from "react-router-dom";
 

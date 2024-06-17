@@ -1,7 +1,7 @@
 import React from "react";
 import BookCartInf from "../../data_type/Product/BookCartInf";
 import formatCurrencyVND from "../function/FormatCurrencyVND";
-import {setCounter} from "../../redux/CounterSlice";
+import {setCounter} from "../../redux/slice/CounterSlice";
 import {useAppDispatch} from "../../redux/Hooks";
 import {Link} from "react-router-dom";
 

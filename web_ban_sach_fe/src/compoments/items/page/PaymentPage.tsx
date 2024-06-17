@@ -9,6 +9,11 @@ import PaymentDetailInf from "../../data_type/Payment/PaymentDetailInf";
 import GetDistrict from "../../api/Address/GetDistrict";
 import GetWard from "../../api/Address/GetWard";
 
+enum PaymentMethod {
+    CASH_ON_DELIVERY = 'money',
+    BANK_TRANSFER = 'card'
+}
+
 export const PaymentPage: React.FC = () => {
 
     const user: UserInf | null = useAppSelector(state => state.User.value)
@@ -26,10 +31,15 @@ export const PaymentPage: React.FC = () => {
     const [provinces, setProvinces] = React.useState<ProvinceInf[]>([])
     const [districts, setDistricts] = React.useState<DistrictInf[]>([])
     const [wards, setWards] = React.useState<WardInf[]>([])
+    const [paymentMethod, setPaymentMethod] = React.useState<PaymentMethod>(PaymentMethod.CASH_ON_DELIVERY)
 
     const ressetStatusDistrict = () => {
         if (paymentDetail.province.provinceID === 0) {
-            setPaymentDetail({...paymentDetail, district: {districtID: 0, districtName: ''}, ward: {wardID: 0, wardName: ''}})
+            setPaymentDetail({
+                ...paymentDetail,
+                district: {districtID: 0, districtName: ''},
+                ward: {wardID: 0, wardName: ''}
+            })
         }
     }
 
@@ -216,14 +226,19 @@ export const PaymentPage: React.FC = () => {
                 <span className={"fw-semibold fs-5"}>PHƯƠNG THỨC THANH TOÁN</span>
                 <hr/>
                 <div className="form-check d-flex align-items-center">
-                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="money"/>
+                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="money"
+                           onClick={() => setPaymentMethod(PaymentMethod.CASH_ON_DELIVERY)}
+                           value={PaymentMethod.CASH_ON_DELIVERY}
+                           checked={paymentMethod === PaymentMethod.CASH_ON_DELIVERY}/>
                     <label className="form-check-label d-flex align-items-center ms-3 cussor-pointer" htmlFor="money">
                         <i className="bi bi-cash-coin fs-2 text-danger"></i>
                         <span className={"ms-3"}>Thanh toán khi nhận hàng</span>
                     </label>
                 </div>
                 <div className="form-check d-flex align-items-center">
-                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="card"/>
+                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="card"
+                           onClick={() => setPaymentMethod(PaymentMethod.BANK_TRANSFER)}
+                           value={PaymentMethod.BANK_TRANSFER} checked={paymentMethod === PaymentMethod.BANK_TRANSFER}/>
                     <label className="form-check-label d-flex align-items-center ms-3 cussor-pointer" htmlFor="card">
                         <i className="bi bi-credit-card-2-front fs-2 text-danger"></i>
                         <span className={"ms-3"}>Chuyển khoản</span>
@@ -234,6 +249,7 @@ export const PaymentPage: React.FC = () => {
             <div className={"container bg-white rounded py-3 mt-4"}>
                 <span className={"fw-semibold fs-5"}>KIỂM TRA LẠI ĐƠN HÀNG</span>
                 <hr/>
+
             </div>
         </div>
     );

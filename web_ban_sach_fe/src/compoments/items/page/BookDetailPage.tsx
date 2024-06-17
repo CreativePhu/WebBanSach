@@ -15,7 +15,7 @@ import GetPublisherByBookID from "../../api/Product/GetPublisherByBookID";
 import formatCurrencyVND from "../function/FormatCurrencyVND";
 import BookCartInf from "../../data_type/Product/BookCartInf";
 import {useDispatch} from "react-redux";
-import {setCounter} from "../../redux/CounterSlice";
+import {setCounter} from "../../redux/slice/CounterSlice";
 import {Bounce, toast} from "react-toastify";
 
 const BookDetailPage: React.FC = () => {

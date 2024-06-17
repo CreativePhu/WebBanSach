@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/Hooks";
 import UserInf from "../../data_type/Auth/UserInf";
-import {resetUser} from "../../redux/UserSlice";
+import {resetUser} from "../../redux/slice/UserSlice";
 
 function Navbar() {
 

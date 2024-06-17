@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from './Store'
-import UserInf from "../data_type/Auth/UserInf";
+import UserInf from "../../data_type/Auth/UserInf";
 
 interface CounterState {
     value: UserInf|null
@@ -24,5 +23,4 @@ export const userSlice = createSlice({
 })
 
 export const { updateUser, resetUser } = userSlice.actions
-export const selectCount = (state: RootState) => state.User.value
 export default userSlice.reducer
