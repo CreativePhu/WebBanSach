@@ -1,6 +1,4 @@
 import axios from "axios";
-import BookInf from "../../data_type/Product/BookInf";
-import AuthorInf from "../../data_type/Product/AuthorInf";
 import PublisherInf from "../../data_type/Product/PublisherInf";
 
 const GetAuthorByBookID = async (bookId: number):Promise<PublisherInf> => {
