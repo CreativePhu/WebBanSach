@@ -41,7 +41,7 @@ const BookDetailPage: React.FC = () => {
         if (bookId) {
             try {
                 setLoading(true)
-                const book = await GetBookById(bookId);
+                const book = await GetBookById(Number(bookId));
                 const images = await GetBookImageById(Number(bookId));
                 const authors = await GetAuthorByBookId(Number(bookId));
                 const categories = await GetCategoryByBookID(Number(bookId));

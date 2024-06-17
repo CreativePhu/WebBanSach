@@ -8,6 +8,11 @@ import WardInf from "../../data_type/Address/WardInf";
 import PaymentDetailInf from "../../data_type/Payment/PaymentDetailInf";
 import GetDistrict from "../../api/Address/GetDistrict";
 import GetWard from "../../api/Address/GetWard";
+import BookCartInf from "../../data_type/Product/BookCartInf";
+import BookDetailInf from "../../data_type/Product/BookDetailInf";
+import {GetBookDetailById} from "../function/GetBookDetailById";
+import formatCurrencyVND from "../function/FormatCurrencyVND";
+import {DiscountProductMoney, GetImagePrimaryFromArrayImage} from "../function";
 
 enum PaymentMethod {
     CASH_ON_DELIVERY = 'money',
@@ -17,7 +22,9 @@ enum PaymentMethod {
 export const PaymentPage: React.FC = () => {
 
     const user: UserInf | null = useAppSelector(state => state.User.value)
-
+    const listIdBookPayment: number[] = sessionStorage.getItem('listBookPayment') ? JSON.parse(sessionStorage.getItem('listBookPayment') as string) : []
+    const listBookInCart: BookCartInf = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart') as string) : []
+    const [listBookPayment, setListBookPayment] = React.useState<BookDetailInf[]>([])
     const [paymentDetail, setPaymentDetail] = React.useState<PaymentDetailInf>({
         fullName: '',
         email: '',
@@ -139,6 +146,21 @@ export const PaymentPage: React.FC = () => {
 
     }, [paymentDetail.district, districts]);
 
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const listBookPaymentDetail = await Promise.all(listIdBookPayment.map(async (bookID) => {
+                    const book = await GetBookDetailById(bookID);
+                    return book;
+                }));
+                setListBookPayment(listBookPaymentDetail);
+            } catch (e) {
+                console.log(e);
+            }
+        };
+        fetchData();
+    }, []);
+
     return (
         <div className={"container-fluid bg-light py-4"}>
             <div className={"container bg-white rounded py-3"}>
@@ -249,7 +271,65 @@ export const PaymentPage: React.FC = () => {
             <div className={"container bg-white rounded py-3 mt-4"}>
                 <span className={"fw-semibold fs-5"}>KIỂM TRA LẠI ĐƠN HÀNG</span>
                 <hr/>
-
+                <div className={"row"}>
+                    <div className={"col-6"}>
+                        <span className={"fw-semibold fs-6"}>Thông tin sách</span>
+                    </div>
+                    <div className={"col-2 text-center"}>
+                        <span className={"fw-semibold fs-6"}>Giá sản phẩm</span>
+                    </div>
+                    <div className={"col-2 text-center"}>
+                        <span className={"fw-semibold fs-6"}>Số lượng</span>
+                    </div>
+                    <div className={"col-2 text-center"}>
+                        <span className={"fw-semibold fs-6"}>Thành tiền</span>
+                    </div>
+                </div>
+                <hr/>
+                {
+                    listBookPayment.map(book => {
+                        return (
+                            <div key={book.bookId} className={"row"}>
+                                <div className={"col-6"}>
+                                    <div className={"d-flex align-items-start"}>
+                                        <img src={GetImagePrimaryFromArrayImage(book.bookImage)} alt={book.bookTitle}
+                                             className={"img-fluid"}
+                                             style={{width: "150px", height: "auto"}}/>
+                                        <span className={"ms-3"}>{book.bookTitle}</span>
+                                    </div>
+                                </div>
+                                <div className={"col-2 d-flex flex-column align-items-center"}>
+                                    {
+                                        book.bookDiscount > 0 ? (
+                                            <>
+                                                <span
+                                                    className={"text-danger fw-bold"}>{formatCurrencyVND(DiscountProductMoney(book.bookPrice, book.bookDiscount))}</span>
+                                                <span
+                                                    className={"text-decoration-line-through"}>{formatCurrencyVND(book.bookPrice)}</span>
+                                            </>
+                                        ) : (
+                                            <span className={"text-danger"}>{formatCurrencyVND(book.bookPrice)}</span>
+                                        )
+                                    }
+                                </div>
+                                <div className={"col-2 text-center"}>
+                                    <span>2</span>
+                                </div>
+                                <div className={"col-2 text-center"}>
+                                    {
+                                        book.bookDiscount > 0 ? (
+                                            <span
+                                                className={"text-warning fw-bold"}>{formatCurrencyVND(DiscountProductMoney(book.bookPrice, book.bookDiscount) * 2)}</span>
+                                        ) : (
+                                            <span
+                                                className={"text-warning"}>{formatCurrencyVND(book.bookPrice * 2)}</span>
+                                        )
+                                    }
+                                </div>
+                            </div>
+                        )
+                    })
+                }
             </div>
         </div>
     );

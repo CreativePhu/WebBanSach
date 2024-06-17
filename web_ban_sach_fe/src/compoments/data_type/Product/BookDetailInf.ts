@@ -3,7 +3,7 @@ import CategoryInf from "./CategoryInf";
 import BookImageInf from "./BookImageInf";
 
 interface BookDetailInf {
-    bookId: string;
+    bookId: number;
     bookTitle: string;
     bookPrice: number;
     bookDescription: string;

@@ -4,7 +4,6 @@ import formatCurrencyVND from "../function/FormatCurrencyVND";
 import {setCounter} from "../../redux/slice/CounterSlice";
 import {useAppDispatch} from "../../redux/Hooks";
 import {Link, useNavigate} from "react-router-dom";
-import {setListBookPayment} from "../../redux/slice/ListBookPaymentSlice";
 
 const CartPage: React.FC = () => {
 
@@ -67,7 +66,7 @@ const CartPage: React.FC = () => {
     const payProduct = () => {
         if(listBookChecked.length === 0) return;
         const listBookPayment: number[] = listBookChecked.map((book) => book.bookID);
-        dispatch(setListBookPayment(listBookPayment));
+        sessionStorage.setItem("listBookPayment", JSON.stringify(listBookPayment));
         navigate("/payment");
     }
 

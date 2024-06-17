@@ -2,7 +2,7 @@ interface BookInf {
     bookID: number;
     bookTitle: string;
     bookPrice: number;
-    bookDescription: number;
+    bookDescription: string;
     bookISBN: string;
 }
 
