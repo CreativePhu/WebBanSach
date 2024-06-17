@@ -3,11 +3,13 @@ import BookCartInf from "../../data_type/Product/BookCartInf";
 import formatCurrencyVND from "../function/FormatCurrencyVND";
 import {setCounter} from "../../redux/slice/CounterSlice";
 import {useAppDispatch} from "../../redux/Hooks";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {setListBookPayment} from "../../redux/slice/ListBookPaymentSlice";
 
 const CartPage: React.FC = () => {
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const [products, setProducts] = React.useState<BookCartInf[]>([])
     const [listBookChecked, setListBookChecked] = React.useState<BookCartInf[]>([])
@@ -64,8 +66,9 @@ const CartPage: React.FC = () => {
 
     const payProduct = () => {
         if(listBookChecked.length === 0) return;
-        const listProductPayment = products.filter((product) => !listBookChecked.includes(product));
-        console.log(listProductPayment)
+        const listBookPayment: number[] = listBookChecked.map((book) => book.bookID);
+        dispatch(setListBookPayment(listBookPayment));
+        navigate("/payment");
     }
 
 
