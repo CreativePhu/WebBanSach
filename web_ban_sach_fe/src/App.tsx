@@ -16,7 +16,7 @@ import withAuthCheck from "./compoments/HOC_compoment/WithAuthCheck";
 import CartPage from "./compoments/items/page/CartPage";
 import {Bounce, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {PaymentPage} from "./compoments/items/page/PaymentPage";
+import {PaymentPage} from "./compoments/items/page";
 
 function App() {
     return (

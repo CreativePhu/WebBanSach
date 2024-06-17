@@ -10,7 +10,7 @@ import GetDistrict from "../../api/Address/GetDistrict";
 import GetWard from "../../api/Address/GetWard";
 import BookCartInf from "../../data_type/Product/BookCartInf";
 import BookDetailInf from "../../data_type/Product/BookDetailInf";
-import {GetBookDetailById} from "../function/GetBookDetailById";
+import {GetBookDetailById} from "../function";
 import formatCurrencyVND from "../function/FormatCurrencyVND";
 import {DiscountProductMoney, GetImagePrimaryFromArrayImage} from "../function";
 

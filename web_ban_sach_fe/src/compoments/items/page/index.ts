@@ -1,0 +1,7 @@
+export * from './ActiveOTPPage'
+export * from './CartPage'
+export * from './BookDetailPage'
+export * from './LoginPage'
+export * from './PaymentPage'
+export * from './SearchPage'
+export * from './RegisterPage'
