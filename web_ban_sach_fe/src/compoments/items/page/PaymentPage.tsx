@@ -23,7 +23,7 @@ export const PaymentPage: React.FC = () => {
 
     const user: UserInf | null = useAppSelector(state => state.User.value)
     const listIdBookPayment: number[] = sessionStorage.getItem('listBookPayment') ? JSON.parse(sessionStorage.getItem('listBookPayment') as string) : []
-    const listBookInCart: BookCartInf = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart') as string) : []
+    const listBookInCart: BookCartInf[] = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart') as string) : []
     const [listBookPayment, setListBookPayment] = React.useState<BookDetailInf[]>([])
     const [paymentDetail, setPaymentDetail] = React.useState<PaymentDetailInf>({
         fullName: '',
@@ -40,14 +40,12 @@ export const PaymentPage: React.FC = () => {
     const [wards, setWards] = React.useState<WardInf[]>([])
     const [paymentMethod, setPaymentMethod] = React.useState<PaymentMethod>(PaymentMethod.CASH_ON_DELIVERY)
 
-    const ressetStatusDistrict = () => {
-        if (paymentDetail.province.provinceID === 0) {
-            setPaymentDetail({
-                ...paymentDetail,
-                district: {districtID: 0, districtName: ''},
-                ward: {wardID: 0, wardName: ''}
-            })
+    const getQuantityBookInCart = (bookID: number): number => {
+        const bookInCart = listBookInCart.find((book) => book.bookID === bookID)
+        if (bookInCart) {
+            return bookInCart.quantity
         }
+        return 0
     }
 
     const getProvincesByProvinceID = (provinceID: number): ProvinceInf => {
@@ -87,78 +85,65 @@ export const PaymentPage: React.FC = () => {
 
     React.useEffect(() => {
         if (user) {
-            setPaymentDetail({
-                ...paymentDetail,
+            setPaymentDetail(prevPaymentDetail => ({
+                ...prevPaymentDetail,
                 fullName: user?.fullName ? user.fullName : '',
                 email: user?.email ? user.email : '',
                 phone: user?.phone ? user.phone : '',
-            })
+            }));
         }
-    }, [user])
+    }, [user]);
 
 
     React.useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await GetProvince();
-                setProvinces(data)
-            } catch (e) {
-                console.log(e)
-            }
-        };
-        fetchData();
+        GetProvince().then(data => {
+            setProvinces(data)
+        }).catch(e => {
+            console.log(e)
+        })
     }, []);
 
 
     React.useEffect(() => {
-        const fetchData = async () => {
-            try {
-                if (paymentDetail.province.provinceID !== 0) {
-                    const data = await GetDistrict(paymentDetail.province.provinceID);
-                    setDistricts(data)
-                    return
-                }
-                ressetStatusDistrict()
-            } catch (e) {
+        if (paymentDetail.province.provinceID !== 0) {
+            GetDistrict(paymentDetail.province.provinceID).then(data => {
+                setDistricts(data)
+            }).catch(e => {
                 console.log(e)
-            }
-        };
-
-        fetchData();
-
+            })
+            return
+        }
+        setPaymentDetail(prevPaymentDetail => ({
+            ...prevPaymentDetail,
+            district: {districtID: 0, districtName: ''},
+            ward: {wardID: 0, wardName: ''}
+        }));
     }, [paymentDetail.province, provinces]);
 
 
     React.useEffect(() => {
-        const fetchData = async () => {
-            try {
-                if (paymentDetail.district.districtID !== 0) {
-                    const data = await GetWard(paymentDetail.district.districtID);
-                    setWards(data)
-                    return
-                }
-                setPaymentDetail({...paymentDetail, ward: {wardID: 0, wardName: ''}})
-            } catch (e) {
+        if (paymentDetail.district.districtID !== 0) {
+            GetWard(paymentDetail.district.districtID).then(data => {
+                setWards(data)
+            }).catch(e => {
                 console.log(e)
-            }
-        };
-        fetchData();
-
+            })
+            return
+        }
+        setPaymentDetail(prevPaymentDetail => ({
+            ...prevPaymentDetail,
+            ward: {wardID: 0, wardName: ''}
+        }));
     }, [paymentDetail.district, districts]);
 
     React.useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const listBookPaymentDetail = await Promise.all(listIdBookPayment.map(async (bookID) => {
-                    const book = await GetBookDetailById(bookID);
-                    return book;
-                }));
-                setListBookPayment(listBookPaymentDetail);
-            } catch (e) {
-                console.log(e);
-            }
-        };
-        fetchData();
+        Promise.all(listIdBookPayment.map(async (bookID) => {
+            return await GetBookDetailById(bookID);
+        })).then(listBookPaymentDetail => {
+            setListBookPayment(listBookPaymentDetail)
+        }).catch(e => {
+            console.log(e)
+        })
     }, []);
 
     return (
@@ -251,6 +236,10 @@ export const PaymentPage: React.FC = () => {
                     <input className="form-check-input" type="radio" name="flexRadioDefault" id="money"
                            onClick={() => setPaymentMethod(PaymentMethod.CASH_ON_DELIVERY)}
                            value={PaymentMethod.CASH_ON_DELIVERY}
+                           onChange={() => setPaymentDetail({
+                               ...paymentDetail,
+                               paymentMethod: PaymentMethod.CASH_ON_DELIVERY
+                           })}
                            checked={paymentMethod === PaymentMethod.CASH_ON_DELIVERY}/>
                     <label className="form-check-label d-flex align-items-center ms-3 cussor-pointer" htmlFor="money">
                         <i className="bi bi-cash-coin fs-2 text-danger"></i>
@@ -260,6 +249,10 @@ export const PaymentPage: React.FC = () => {
                 <div className="form-check d-flex align-items-center">
                     <input className="form-check-input" type="radio" name="flexRadioDefault" id="card"
                            onClick={() => setPaymentMethod(PaymentMethod.BANK_TRANSFER)}
+                           onChange={() => setPaymentDetail({
+                               ...paymentDetail,
+                               paymentMethod: PaymentMethod.BANK_TRANSFER
+                           })}
                            value={PaymentMethod.BANK_TRANSFER} checked={paymentMethod === PaymentMethod.BANK_TRANSFER}/>
                     <label className="form-check-label d-flex align-items-center ms-3 cussor-pointer" htmlFor="card">
                         <i className="bi bi-credit-card-2-front fs-2 text-danger"></i>
@@ -287,46 +280,55 @@ export const PaymentPage: React.FC = () => {
                 </div>
                 <hr/>
                 {
-                    listBookPayment.map(book => {
+                    listBookPayment.map((book, index) => {
                         return (
-                            <div key={book.bookId} className={"row"}>
-                                <div className={"col-6"}>
-                                    <div className={"d-flex align-items-start"}>
-                                        <img src={GetImagePrimaryFromArrayImage(book.bookImage)} alt={book.bookTitle}
-                                             className={"img-fluid"}
-                                             style={{width: "150px", height: "auto"}}/>
-                                        <span className={"ms-3"}>{book.bookTitle}</span>
+                            <>
+                                <div key={book.bookId} className={"row"}>
+                                    <div className={"col-6"}>
+                                        <div className={"d-flex align-items-start"}>
+                                            <img src={GetImagePrimaryFromArrayImage(book.bookImage)}
+                                                 alt={book.bookTitle}
+                                                 className={"img-fluid"}
+                                                 style={{width: "150px", height: "auto"}}/>
+                                            <span className={"ms-3"}>{book.bookTitle}</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className={"col-2 d-flex flex-column align-items-center"}>
-                                    {
-                                        book.bookDiscount > 0 ? (
-                                            <>
+                                    <div className={"col-2 d-flex flex-column align-items-center"}>
+                                        {
+                                            book.bookDiscount > 0 ? (
+                                                <>
                                                 <span
                                                     className={"text-danger fw-bold"}>{formatCurrencyVND(DiscountProductMoney(book.bookPrice, book.bookDiscount))}</span>
+                                                    <span
+                                                        className={"text-decoration-line-through"}>{formatCurrencyVND(book.bookPrice)}</span>
+                                                </>
+                                            ) : (
                                                 <span
-                                                    className={"text-decoration-line-through"}>{formatCurrencyVND(book.bookPrice)}</span>
-                                            </>
-                                        ) : (
-                                            <span className={"text-danger"}>{formatCurrencyVND(book.bookPrice)}</span>
-                                        )
-                                    }
+                                                    className={"text-danger"}>{formatCurrencyVND(book.bookPrice)}</span>
+                                            )
+                                        }
+                                    </div>
+                                    <div className={"col-2 text-center"}>
+                                        <span>{getQuantityBookInCart(book.bookId)}</span>
+                                    </div>
+                                    <div className={"col-2 text-center"}>
+                                        {
+                                            book.bookDiscount > 0 ? (
+                                                <span
+                                                    className={"text-warning fw-bold"}>{formatCurrencyVND(DiscountProductMoney(book.bookPrice, book.bookDiscount) * getQuantityBookInCart(book.bookId))}</span>
+                                            ) : (
+                                                <span
+                                                    className={"text-warning"}>{formatCurrencyVND(book.bookPrice * getQuantityBookInCart(book.bookId))}</span>
+                                            )
+                                        }
+                                    </div>
                                 </div>
-                                <div className={"col-2 text-center"}>
-                                    <span>2</span>
-                                </div>
-                                <div className={"col-2 text-center"}>
-                                    {
-                                        book.bookDiscount > 0 ? (
-                                            <span
-                                                className={"text-warning fw-bold"}>{formatCurrencyVND(DiscountProductMoney(book.bookPrice, book.bookDiscount) * 2)}</span>
-                                        ) : (
-                                            <span
-                                                className={"text-warning"}>{formatCurrencyVND(book.bookPrice * 2)}</span>
-                                        )
-                                    }
-                                </div>
-                            </div>
+                                {
+                                    index !== listBookPayment.length - 1 ? (
+                                        <hr/>
+                                    ) : null
+                                }
+                            </>
                         )
                     })
                 }
