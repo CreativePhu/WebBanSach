@@ -32,7 +32,11 @@ const TranslateX: React.FC = () => {
     }
 
     React.useEffect(() => {
-        fetchListBook();
+        fetchListBook()
+            .then(() => {
+                return
+            })
+            .catch((e) => setError(e.message))
     }, [])
 
     // xu ly su kien click scroll san pham hot sang trai
@@ -62,31 +66,26 @@ const TranslateX: React.FC = () => {
                      className={"d-flex flex-row transition-product-hot"}
                      style={{transform: `translateX(-${scrollPosition}px)`}}>
                     {
-                        loading && (
+                        loading ? (
                             <div className={"mt-4 w-100 d-flex justify-content-center"}>
                                 <div className="spinner-border text-light" role="status">
                                     <span className="visually-hidden">Loading...</span>
                                 </div>
                             </div>
-                        )
-                        ||
-                        error && (
+                        ) : error ? (
                             <div className={"alert alert-danger mt-4 w-100 d-flex justify-content-center"} role="alert">
                                 {error}
                             </div>
-                        )
-                        ||
-                        listBook.length === 0 && (
-                            <div className={"alert alert-warning mt-4 w-100 d-flex justify-content-center"} role="alert">
+                        ) : listBook.length === 0 ? (
+                            <div className={"alert alert-warning mt-4 w-100 d-flex justify-content-center"}
+                                 role="alert">
                                 Không có sản phẩm nào
                             </div>
-                        )
-                        ||
-                        listBook.map((book, index) => {
-                            return (
+                        ) : (
+                            listBook.map((book, index) => (
                                 <BookProduct key={index} book={book}/>
-                            )
-                        })
+                            ))
+                        )
                     }
                 </div>
             </div>

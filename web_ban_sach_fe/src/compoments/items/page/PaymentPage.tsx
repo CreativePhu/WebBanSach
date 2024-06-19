@@ -40,6 +40,19 @@ export const PaymentPage: React.FC = () => {
     const [wards, setWards] = React.useState<WardInf[]>([])
     const [paymentMethod, setPaymentMethod] = React.useState<PaymentMethod>(PaymentMethod.CASH_ON_DELIVERY)
 
+    const getTotalMoney = (): number => {
+        let totalMoney = 0
+        listBookPayment.forEach((book) => {
+            const quantity = getQuantityBookInCart(book.bookId)
+            if (book.bookDiscount > 0) {
+                totalMoney += DiscountProductMoney(book.bookPrice, book.bookDiscount) * quantity
+            } else {
+                totalMoney += book.bookPrice * quantity
+            }
+        })
+        return totalMoney
+    }
+
     const getQuantityBookInCart = (bookID: number): number => {
         const bookInCart = listBookInCart.find((book) => book.bookID === bookID)
         if (bookInCart) {
@@ -332,6 +345,12 @@ export const PaymentPage: React.FC = () => {
                         )
                     })
                 }
+            </div>
+
+            <div
+                className={"container bg-white rounded my-4 py-4 d-flex justify-content-between align-items-center position-sticky bottom-0"}>
+                <span className={"fs-2 fw-bold text-danger"}>TỔNG TIỀN: {formatCurrencyVND(getTotalMoney())}</span>
+                <button type="button" className="btn btn-danger fw-bold py-3 px-5">XÁC NHẬN THANH TOÁN</button>
             </div>
         </div>
     );

@@ -13,29 +13,29 @@ const SearchPage: React.FC = () => {
     const [loading, setLoading] = React.useState<boolean>(true)
     const [error, setError] = React.useState<string>("")
     const [page, setPage] = React.useState<number>(0)
-    const pageSize:number = 12
+    const pageSize: number = 12
     const [hasMore, setHasMore] = React.useState<boolean>(true)
     const [isChangeBookTitle, setIsChangeBookTitle] = React.useState<boolean>(false)
 
-    const fetchListBook = async ():Promise<void> => {
+    const fetchListBook = async (): Promise<void> => {
         try {
             setLoading(true)
             const listBookReq: BookInf[] = await FindBookByBookTitle(bookTitle, page, pageSize)
             setListBook([...listBook, ...listBookReq])
             setLoading(false)
-            if(listBook.length === 0) {
+            if (listBook.length === 0) {
                 setHasMore(false)
             }
-        } catch (e:any) {
+        } catch (e: any) {
             setLoading(false)
             setError(e.message)
         }
     }
 
     // khi scroll xuong cuoi trang thi se fetch du lieu
-    const handleScroll = ():void => {
-        if(window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return
-        if(hasMore) {
+    const handleScroll = (): void => {
+        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return
+        if (hasMore) {
             setPage(prevState => prevState + 1)
         }
     }
@@ -43,6 +43,10 @@ const SearchPage: React.FC = () => {
     // khi page thay doi thi se fetch lai du lieu
     React.useEffect(() => {
         fetchListBook()
+            .then(() => {
+                return
+            })
+            .catch((e) => setError(e.message))
         window.addEventListener("scroll", handleScroll)
         return () => window.removeEventListener("scroll", handleScroll)
     }, [page])
@@ -58,11 +62,14 @@ const SearchPage: React.FC = () => {
     // doi cac trang thai sau khi thay doi ten sach duoc cap nhat lai se chay useEffect nay
     React.useEffect(() => {
         if (isChangeBookTitle) {
-            fetchListBook();
+            fetchListBook()
+                .then(() => {
+                    return
+                })
+                .catch((e) => setError(e.message))
             setIsChangeBookTitle(false);
         }
     }, [isChangeBookTitle]);
-
 
 
     return (
@@ -82,24 +89,26 @@ const SearchPage: React.FC = () => {
                         })
                     }
                     {
-                        loading && (
+                        loading ? (
                             <div className={"d-flex justify-content-center mt-4 w-100"}>
                                 <div className="spinner-border text-danger" role="status">
                                     <span className="visually-hidden">Loading...</span>
                                 </div>
                             </div>
-                        )
-                        ||
-                        error && (
+                        ) : error ? (
                             <div className={"d-flex justify-content-center alert alert-danger mt-4 w-100"} role="alert">
                                 {error}
                             </div>
+                        ) : listBook.length === 0 ? (
+                            <div className={"d-flex justify-content-center alert alert-warning mt-4 w-100"}
+                                 role="alert">
+                                Không có sản phẩm nào
+                            </div>
+                        ) : (
+                            listBook.map((book, index) => (
+                                <BookProduct key={index} book={book}/>
+                            ))
                         )
-                        ||
-                        listBook.length === 0 &&
-                        <div className={"d-flex justify-content-center alert alert-warning mt-4 w-100"} role="alert">
-                            Không có sản phẩm nào
-                        </div>
                     }
                 </div>
             }

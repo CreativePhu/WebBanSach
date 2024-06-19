@@ -9,9 +9,9 @@ interface BookProps {
     book: BookInf
 }
 
-const BookProduct : React.FC<BookProps> = ({book}) => {
+const BookProduct: React.FC<BookProps> = ({book}) => {
 
-    const [isPrimaryImage, setIsPrimaryimage] = React.useState<string|undefined>("")
+    const [isPrimaryImage, setIsPrimaryimage] = React.useState<string | undefined>("")
     const [loading, setLoading] = React.useState<boolean>(true)
     const [error, setError] = React.useState<string>("")
 
@@ -21,7 +21,7 @@ const BookProduct : React.FC<BookProps> = ({book}) => {
             const primaryImage = listImage.find((image) => image?.primary === true)
             setIsPrimaryimage(primaryImage?.bookImage || "")
             setLoading(false)
-        } catch (e:any) {
+        } catch (e: any) {
             setLoading(false)
             setError(e.message)
         }
@@ -29,6 +29,10 @@ const BookProduct : React.FC<BookProps> = ({book}) => {
 
     React.useLayoutEffect(() => {
         fetchListImage()
+            .then(() => {
+                return
+            })
+            .catch((e) => setError(e.message))
     }, [])
 
     return (
@@ -37,22 +41,20 @@ const BookProduct : React.FC<BookProps> = ({book}) => {
             <div className={"w-100 mt-3 d-flex justify-content-center align-items-center"}
                  style={{height: "190px"}}>
                 {
-                    loading && (
+                    loading ? (
                         <div className="spinner-border text-danger" role="status">
                             <span className="visually-hidden">Loading...</span>
                         </div>
-                    )
-                    ||
-                    error && (
+                    ) : error ? (
                         <div className={"alert alert-danger mt-4"} role="alert">
                             {error}
                         </div>
+                    ) : (
+                        <Link to={`/book-detail?bookId=${book.bookID}`}>
+                            <img src={isPrimaryImage} className="card-img-top" alt={`${book.bookTitle}`}
+                                 style={{maxWidth: "190px", maxHeight: "100%"}}/>
+                        </Link>
                     )
-                    ||
-                    <Link to={`/book-detail?bookId=${book.bookID}`}>
-                        <img src={isPrimaryImage} className="card-img-top" alt={`${book.bookTitle}`}
-                             style={{maxWidth: "190px", maxHeight: "100%"}}/>
-                    </Link>
                 }
             </div>
             <div className="card-body">

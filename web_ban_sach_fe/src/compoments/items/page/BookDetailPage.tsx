@@ -59,13 +59,19 @@ const BookDetailPage: React.FC = () => {
         }
     }
 
-    React.useEffect( () => {
+    React.useEffect(() => {
         fetchBookData()
-    },[])
+            .then(() => {
+                return
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+    }, [])
 
     // tang so luong sach
     const addBookCount = () => {
-        if(bookCount === 10) return;
+        if (bookCount === 10) return;
         setBookCount(bookCount + 1)
     }
 
@@ -84,7 +90,7 @@ const BookDetailPage: React.FC = () => {
             if (bookIndex === -1) {
                 cartList.push(book);
             } else {
-                if(cartList[bookIndex].quantity + book.quantity <= 10){
+                if (cartList[bookIndex].quantity + book.quantity <= 10) {
                     cartList[bookIndex].quantity += book.quantity;
                 } else {
                     messageError("Số lượng sách này trong giỏ hàng không được vượt quá 10 !")
@@ -187,7 +193,8 @@ const BookDetailPage: React.FC = () => {
                                             quantity: bookCount
                                         })
                                     }
-                                }}>Thêm vào giỏ hàng</button>
+                                }}>Thêm vào giỏ hàng
+                                </button>
                                 <button className={"btn btn-danger fw-bold fs-4 px-4 ms-3"}>Mua ngay</button>
                             </div>
                         </div>

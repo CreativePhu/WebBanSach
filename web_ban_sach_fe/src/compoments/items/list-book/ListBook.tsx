@@ -36,6 +36,10 @@ const ListBook: React.FC = () => {
 
     React.useLayoutEffect(() => {
         fetchListBook()
+            .then(() => {return})
+            .catch((e) => {
+                console.log(e)
+            })
         window.addEventListener("scroll", handleScroll)
         return () => window.removeEventListener("scroll", handleScroll)
     }, [page, hasMore])
@@ -56,24 +60,25 @@ const ListBook: React.FC = () => {
                         })
                     }
                     {
-                        loading && (
+                        loading ? (
                             <div className={"d-flex justify-content-center mt-4 w-100"}>
                                 <div className="spinner-border text-danger" role="status">
                                     <span className="visually-hidden">Loading...</span>
                                 </div>
                             </div>
-                        )
-                        ||
-                        error && (
+                        ) : error ? (
                             <div className={"d-flex justify-content-center alert alert-danger mt-4 w-100"} role="alert">
                                 {error}
                             </div>
+                        ) : listBook.length === 0 ? (
+                            <div className={"d-flex justify-content-center alert alert-warning mt-4 w-100"} role="alert">
+                                Không có sản phẩm nào
+                            </div>
+                        ) : (
+                            listBook.map((book, index) => (
+                                <BookProduct key={index} book={book}/>
+                            ))
                         )
-                        ||
-                        listBook.length === 0 &&
-                        <div className={"d-flex justify-content-center alert alert-warning mt-4 w-100"} role="alert">
-                            Không có sản phẩm nào
-                        </div>
                     }
                 </div>
             }
