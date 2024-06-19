@@ -74,11 +74,7 @@ const ListBook: React.FC = () => {
                             <div className={"d-flex justify-content-center alert alert-warning mt-4 w-100"} role="alert">
                                 Không có sản phẩm nào
                             </div>
-                        ) : (
-                            listBook.map((book, index) => (
-                                <BookProduct key={index} book={book}/>
-                            ))
-                        )
+                        ) : null
                     }
                 </div>
             }

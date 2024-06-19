@@ -104,11 +104,7 @@ const SearchPage: React.FC = () => {
                                  role="alert">
                                 Không có sản phẩm nào
                             </div>
-                        ) : (
-                            listBook.map((book, index) => (
-                                <BookProduct key={index} book={book}/>
-                            ))
-                        )
+                        ) : null
                     }
                 </div>
             }
