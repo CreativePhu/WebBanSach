@@ -295,53 +295,51 @@ export const PaymentPage: React.FC = () => {
                 {
                     listBookPayment.map((book, index) => {
                         return (
-                            <>
-                                <div key={book.bookId} className={"row"}>
-                                    <div className={"col-6"}>
-                                        <div className={"d-flex align-items-start"}>
-                                            <img src={GetImagePrimaryFromArrayImage(book.bookImage)}
-                                                 alt={book.bookTitle}
-                                                 className={"img-fluid"}
-                                                 style={{width: "150px", height: "auto"}}/>
-                                            <span className={"ms-3"}>{book.bookTitle}</span>
-                                        </div>
+                            <div key={book.bookId} className={"row"}>
+                                <div className={"col-6"}>
+                                    <div className={"d-flex align-items-start"}>
+                                        <img src={GetImagePrimaryFromArrayImage(book.bookImage)}
+                                             alt={book.bookTitle}
+                                             className={"img-fluid"}
+                                             style={{width: "150px", height: "auto"}}/>
+                                        <span className={"ms-3"}>{book.bookTitle}</span>
                                     </div>
-                                    <div className={"col-2 d-flex flex-column align-items-center"}>
-                                        {
-                                            book.bookDiscount > 0 ? (
-                                                <>
+                                </div>
+                                <div className={"col-2 d-flex flex-column align-items-center"}>
+                                    {
+                                        book.bookDiscount > 0 ? (
+                                            <>
                                                 <span
                                                     className={"text-danger fw-bold"}>{formatCurrencyVND(DiscountProductMoney(book.bookPrice, book.bookDiscount))}</span>
-                                                    <span
-                                                        className={"text-decoration-line-through"}>{formatCurrencyVND(book.bookPrice)}</span>
-                                                </>
-                                            ) : (
                                                 <span
-                                                    className={"text-danger"}>{formatCurrencyVND(book.bookPrice)}</span>
-                                            )
-                                        }
-                                    </div>
-                                    <div className={"col-2 text-center"}>
-                                        <span>{getQuantityBookInCart(book.bookId)}</span>
-                                    </div>
-                                    <div className={"col-2 text-center"}>
-                                        {
-                                            book.bookDiscount > 0 ? (
-                                                <span
-                                                    className={"text-warning fw-bold"}>{formatCurrencyVND(DiscountProductMoney(book.bookPrice, book.bookDiscount) * getQuantityBookInCart(book.bookId))}</span>
-                                            ) : (
-                                                <span
-                                                    className={"text-warning"}>{formatCurrencyVND(book.bookPrice * getQuantityBookInCart(book.bookId))}</span>
-                                            )
-                                        }
-                                    </div>
+                                                    className={"text-decoration-line-through"}>{formatCurrencyVND(book.bookPrice)}</span>
+                                            </>
+                                        ) : (
+                                            <span
+                                                className={"text-danger"}>{formatCurrencyVND(book.bookPrice)}</span>
+                                        )
+                                    }
+                                </div>
+                                <div className={"col-2 text-center"}>
+                                    <span>{getQuantityBookInCart(book.bookId)}</span>
+                                </div>
+                                <div className={"col-2 text-center"}>
+                                    {
+                                        book.bookDiscount > 0 ? (
+                                            <span
+                                                className={"text-warning fw-bold"}>{formatCurrencyVND(DiscountProductMoney(book.bookPrice, book.bookDiscount) * getQuantityBookInCart(book.bookId))}</span>
+                                        ) : (
+                                            <span
+                                                className={"text-warning"}>{formatCurrencyVND(book.bookPrice * getQuantityBookInCart(book.bookId))}</span>
+                                        )
+                                    }
                                 </div>
                                 {
                                     index !== listBookPayment.length - 1 ? (
                                         <hr/>
                                     ) : null
                                 }
-                            </>
+                            </div>
                         )
                     })
                 }
