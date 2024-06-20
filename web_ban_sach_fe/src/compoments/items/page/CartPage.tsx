@@ -84,7 +84,7 @@ const CartPage: React.FC = () => {
         localStorage.setItem("cart", JSON.stringify(products));
         dispatch(setCounter(products.length))
         if(checkAll) setListBookChecked(products);
-    }, [products, dispatch])
+    }, [products, dispatch, checkAll])
 
 
     React.useEffect(() => {

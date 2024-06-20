@@ -13,6 +13,7 @@ import BookDetailInf from "../../data_type/Product/BookDetailInf";
 import {GetBookDetailById} from "../function";
 import formatCurrencyVND from "../function/FormatCurrencyVND";
 import {DiscountProductMoney, GetImagePrimaryFromArrayImage} from "../function";
+import {REGEX_EMAIL, REGEX_NAME, REGEX_PHONENUMBER} from "../Regex";
 
 enum PaymentMethod {
     CASH_ON_DELIVERY = 'money',
@@ -39,6 +40,16 @@ export const PaymentPage: React.FC = () => {
     const [districts, setDistricts] = React.useState<DistrictInf[]>([])
     const [wards, setWards] = React.useState<WardInf[]>([])
     const [paymentMethod, setPaymentMethod] = React.useState<PaymentMethod>(PaymentMethod.CASH_ON_DELIVERY)
+
+    const [errorName, setErrorName] = React.useState<string>('')
+    const [errorEmail, setErrorEmail] = React.useState<string>('')
+    const [errorPhone, setErrorPhone] = React.useState<string>('')
+    const [errorProvince, setErrorProvince] = React.useState<string>('')
+    const [errorDistrict, setErrorDistrict] = React.useState<string>('')
+    const [errorWard, setErrorWard] = React.useState<string>('')
+    const [errorAddress, setErrorAddress] = React.useState<string>('')
+    const [errorPaymentMethod, setErrorPaymentMethod] = React.useState<string>('')
+
 
     const getTotalMoney = (): number => {
         let totalMoney = 0
@@ -157,7 +168,57 @@ export const PaymentPage: React.FC = () => {
         }).catch(e => {
             console.log(e)
         })
-    }, []);
+    }, [])
+
+    const validateForm = (): boolean => {
+        let check = true
+
+        if (paymentDetail.fullName === '') {
+            setErrorName('Vui lòng nhập trường này')
+            check = false
+        } else {
+            if (!paymentDetail.fullName.match(REGEX_NAME)) {
+                setErrorName('Phải là chữ, tối thiểu 2 kí tự')
+                check = false
+            }
+        }
+        if (paymentDetail.email === '') {
+            setErrorEmail('Vui lòng nhập trường này')
+            check = false
+        } else {
+            if (!paymentDetail.email.match(REGEX_EMAIL)) {
+                setErrorEmail('Email không hợp lệ')
+                check = false
+            }
+        }
+        if (paymentDetail.phone === '') {
+            setErrorPhone('Vui lòng nhập trường này')
+            check = false
+        } else {
+            if (!paymentDetail.phone.match(REGEX_PHONENUMBER)) {
+                setErrorPhone('Số điện thoại không hợp lệ')
+                check = false
+            }
+        }
+        if (paymentDetail.province.provinceID === 0) {
+            setErrorProvince("Vui lòng nhập trường này")
+            check = false
+        }
+        if (paymentDetail.district.districtID === 0) {
+            setErrorDistrict("Vui lòng nhập trường này")
+            check = false
+        }
+        if (paymentDetail.ward.wardID === 0) {
+            setErrorWard("Vui lòng nhập trường này")
+            check = false
+        }
+        if (paymentDetail.address === '') {
+            setErrorAddress('Vui lòng nhập trường này')
+            check = false
+        }
+
+        return check
+    }
 
     return (
         <div className={"container-fluid bg-light py-4"}>
@@ -169,75 +230,96 @@ export const PaymentPage: React.FC = () => {
                         <label htmlFor="fullname" className="form-label">Họ và tên người nhận</label>
                         <input value={paymentDetail.fullName} onChange={(e) => {
                             setPaymentDetail({...paymentDetail, fullName: e.target.value})
+                            setErrorName('')
                         }} type="text" className="form-control" id="fullname"
                                placeholder="Nhập họ và tên người nhận"/>
+                        <span className={"text-danger"}>{errorName}</span>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email</label>
                         <input value={paymentDetail.email} onChange={(e) => {
                             setPaymentDetail({...paymentDetail, email: e.target.value})
+                            setErrorEmail('')
                         }} type="email" className="form-control" id="email"
                                placeholder={"Nhập email"}/>
+                        <span className={"text-danger"}>{errorEmail}</span>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="phone" className="form-label">Số điện thoại</label>
                         <input value={paymentDetail.phone} onChange={(e) => {
                             setPaymentDetail({...paymentDetail, phone: e.target.value})
+                            setErrorPhone('')
                         }} type="tel" className="form-control" id="phone"
                                placeholder={"Ví dụ: 0348323xxx (10 chữ số)"}/>
+                        <span className={"text-danger"}>{errorPhone}</span>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="province" className="form-label">Tỉnh/Thành Phố</label>
                         <select className="form-select" id="province"
                                 value={paymentDetail.province.provinceID !== 0 ? paymentDetail.province.provinceID : 0}
-                                onChange={(e) => setPaymentDetail({
-                                    ...paymentDetail,
-                                    province: getProvincesByProvinceID(Number(e.target.value))
-                                })}>
+                                onChange={(e) => {
+                                    setPaymentDetail({
+                                        ...paymentDetail,
+                                        province: getProvincesByProvinceID(Number(e.target.value))
+                                    })
+                                    setErrorProvince('')
+                                }
+                                }>
                             <option value={0}>Chọn Tỉnh/Thành phố</option>
                             {provinces.map((province) => (
                                 <option key={province.provinceID}
                                         value={province.provinceID}>{province.provinceName}</option>
                             ))}
                         </select>
+                        <span className={"text-danger"}>{errorProvince}</span>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="district" className="form-label">Quận/Huyện</label>
                         <select className="form-select" id="district"
                                 disabled={paymentDetail.province.provinceID === 0}
                                 value={paymentDetail.district.districtID !== 0 ? paymentDetail.district.districtID : 0}
-                                onChange={(e) => setPaymentDetail({
-                                    ...paymentDetail,
-                                    district: getDistrictByDistrictID(Number(e.target.value))
-                                })}>
+                                onChange={(e) => {
+                                    setPaymentDetail({
+                                        ...paymentDetail,
+                                        district: getDistrictByDistrictID(Number(e.target.value))
+                                    })
+                                    setErrorDistrict('')
+                                }}>
                             <option value={0}>Chọn Quận/Huyện</option>
                             {districts.map((district) => (
                                 <option key={district.districtID}
                                         value={district.districtID}>{district.districtName}</option>
                             ))}
                         </select>
+                        <span className={"text-danger"}>{errorDistrict}</span>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="ward" className="form-label">Phường/Xã</label>
                         <select className="form-select" id="ward"
                                 disabled={paymentDetail.district.districtID === 0}
                                 value={paymentDetail.ward.wardID !== 0 ? paymentDetail.ward.wardID : 0}
-                                onChange={(e) => setPaymentDetail({
-                                    ...paymentDetail,
-                                    ward: getWardByWardID(Number(e.target.value))
-                                })}>
+                                onChange={(e) => {
+                                    setPaymentDetail({
+                                        ...paymentDetail,
+                                        ward: getWardByWardID(Number(e.target.value))
+                                    })
+                                    setErrorWard('')
+                                }}>
                             <option value={0}>Chọn Phường/Xã</option>
                             {wards.map((ward) => (
                                 <option key={ward.wardID} value={ward.wardID}>{ward.wardName}</option>
                             ))}
                         </select>
+                        <span className={"text-danger"}>{errorWard}</span>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="address" className="form-label">Địa chỉ nhận hàng</label>
                         <input value={paymentDetail.address} onChange={(e) => {
                             setPaymentDetail({...paymentDetail, address: e.target.value})
+                            setErrorAddress('')
                         }} type="text" className="form-control" id="address"
                                placeholder={"Nhập địa chỉ nhận hàng"}/>
+                        <span className={"text-danger"}>{errorAddress}</span>
                     </div>
                 </form>
             </div>
@@ -372,7 +454,12 @@ export const PaymentPage: React.FC = () => {
             <div
                 className={"container bg-white rounded my-4 py-4 d-flex flex-column flex-lg-row justify-content-between align-items-center position-sticky bottom-0"}>
                 <span className={"fs-2 fw-bold text-danger"}>TỔNG TIỀN: {formatCurrencyVND(getTotalMoney())}</span>
-                <button type="button" className="btn btn-danger fw-bold py-3 px-5">XÁC NHẬN THANH TOÁN</button>
+                <button onClick={() => {
+                    if(validateForm()){
+                        console.log(paymentDetail)
+                    }
+                }} type="button" className="btn btn-danger fw-bold py-3 px-5">XÁC NHẬN THANH TOÁN
+                </button>
             </div>
         </div>
     );
