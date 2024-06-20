@@ -134,18 +134,20 @@ const CartPage: React.FC = () => {
                                 <span className={"fw-semibold"}>THÀNH TIỀN</span>
                             </div>
                         </div>
+                        <hr className={"my-3"}/>
                         {
-                            products.map((product: BookCartInf) => {
+                            products.map((product: BookCartInf, index) => {
                                 return (
                                     <div key={product.bookID} className={"row px-3 py-3"}>
                                         <div className={"col-1"}>
-                                            <input type={"checkbox"} checked={listBookChecked.includes(product)} onChange={() => {
-                                                if (listBookChecked.includes(product)) {
-                                                    setListBookChecked(listBookChecked.filter((book) => book.bookID !== product.bookID));
-                                                } else {
-                                                    setListBookChecked([...listBookChecked, product]);
-                                                }
-                                            }}/>
+                                            <input type={"checkbox"} checked={listBookChecked.includes(product)}
+                                                   onChange={() => {
+                                                       if (listBookChecked.includes(product)) {
+                                                           setListBookChecked(listBookChecked.filter((book) => book.bookID !== product.bookID));
+                                                       } else {
+                                                           setListBookChecked([...listBookChecked, product]);
+                                                       }
+                                                   }}/>
                                         </div>
                                         <div className={"col-12 col-lg-5"}>
                                             <div className={"row"}>
@@ -153,12 +155,16 @@ const CartPage: React.FC = () => {
                                                     <img src={product.bookImage} alt={product.bookTitle}
                                                          className={"w-100"}/>
                                                 </div>
+                                                <div className={"col-6 d-none d-lg-block"}>
+                                                    <span>{product.bookTitle}</span>
+                                                    <p className={"fw-semibold text-danger"}>{formatCurrencyVND(product.bookPrice)}</p>
+                                                </div>
                                                 <div className={"col-6 d-lg-none"}>
                                                     <span>{product.bookTitle}</span>
                                                     <p className={"fw-semibold text-danger"}>{formatCurrencyVND(product.bookPrice)}</p>
                                                     <div className={"col-12"}>
                                                         <div
-                                                            className={"shadow-sm rounded d-flex justify-content-between"}>
+                                                            className={"d-flex justify-content-start"}>
                                                             <button onClick={() => decreaseQuantity(product.bookID)}
                                                                     className={"btn btn-light"}>-
                                                             </button>
@@ -186,8 +192,8 @@ const CartPage: React.FC = () => {
                                             </div>
                                         </div>
                                         <div className={"col-2 d-none d-lg-block"}>
-                                            <div className={"shadow-sm rounded d-flex justify-content-between"}>
-                                            <button onClick={() => decreaseQuantity(product.bookID)}
+                                            <div className={"w-100 d-flex justify-content-center"}>
+                                                <button onClick={() => decreaseQuantity(product.bookID)}
                                                         className={"btn btn-light"}>-
                                                 </button>
                                                 <input
@@ -205,20 +211,24 @@ const CartPage: React.FC = () => {
                                             </div>
                                         </div>
                                         <div className={"col-2 d-none d-lg-block"}>
-                                            <span className={"fw-semibold"}>{formatCurrencyVND(product.bookPrice * product.quantity)}</span>
+                                            <span
+                                                className={"fw-semibold"}>{formatCurrencyVND(product.bookPrice * product.quantity)}</span>
                                         </div>
                                         <div className={"col-2 d-none d-lg-block"}>
                                             <button onClick={() => removeProduct(product.bookID)}
                                                     className={"btn btn-danger"}><i className="bi bi-trash3"></i>
                                             </button>
                                         </div>
+                                        {
+                                            index < products.length - 1 && <hr className={"my-3"}/>
+                                        }
                                     </div>
                                 )
                             })
                         }
                     </div>
                     <div className={"col-12 col-lg-4 p-0 px-lg-2 mt-4 mt-lg-0"}>
-                        <div className={"row"}>
+                        <div className={"row position-sticky top-0"}>
                             <div className={"col-12"}>
                                 <div className={"bg-white px-3 py-3 shadow bg-body-tertiary rounded"}>
                                     <div className={"d-flex justify-content-between align-items-center"}>
