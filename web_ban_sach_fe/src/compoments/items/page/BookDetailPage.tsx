@@ -144,8 +144,8 @@ const BookDetailPage: React.FC = () => {
                             ))}
                         </Carousel>
                     </div>
-                    <div className={"col-12 ps-5 mt-sm-3 col-sm-12 col-lg-8"}>
-                        <p className={"fs-4"}>{bookDetail?.bookTitle}</p>
+                    <div className={"col-12 ps-lg-5 ps-0 mt-sm-3 col-sm-12 col-lg-8"}>
+                        <p className={"fs-3 mt-3 mt-lg-0"}>{bookDetail?.bookTitle}</p>
                         <div className={"row mt-3"}>
                             <div className={"col-12 col-lg-6"}>
                                 <span className={"fs-5 fw-bold"}>Nhà xuất bản: </span>
@@ -164,7 +164,7 @@ const BookDetailPage: React.FC = () => {
                                     </button>
                                 </div>
                             </div>
-                            <div className={"col-6"}>
+                            <div className={"col-12 col-lg-6"}>
                                 <span className={"fs-5 fw-bold"}>Tác giả:</span>
                                 <ul>
                                     {bookAuthor.map((author: AuthorInf) => (
@@ -182,7 +182,7 @@ const BookDetailPage: React.FC = () => {
                                 <span className={"fs-5 fw-bold"}>Mô tả sách:</span>
                                 <p className={"fs-6"}>{bookDetail?.bookDescription}</p>
                             </div>
-                            <div className={"col-12 d-flex justify-content-start d-sm-block justify-sm-content-start"}>
+                            <div className={"col-12 d-flex flex-column flex-lg-row justify-content-start d-sm-block justify-sm-content-start"}>
                                 <button className={"btn btn-primary fw-bold fs-4 px-4"} onClick={() => {
                                     if (bookDetail) {
                                         addBookToCart({
@@ -195,7 +195,7 @@ const BookDetailPage: React.FC = () => {
                                     }
                                 }}>Thêm vào giỏ hàng
                                 </button>
-                                <button className={"btn btn-danger fw-bold fs-4 px-4 ms-3"}>Mua ngay</button>
+                                <button className={"btn btn-danger fw-bold fs-4 px-4 ms-md-3 mt-3 mt-md-0 mt-lg-0"}>Mua ngay</button>
                             </div>
                         </div>
                     </div>
