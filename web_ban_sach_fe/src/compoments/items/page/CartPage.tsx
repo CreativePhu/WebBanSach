@@ -112,7 +112,7 @@ const CartPage: React.FC = () => {
             <div className={"container"}>
                 <p className={"fw-semibold fs-5"}>GIỎ HÀNG ({products.length} sản phẩm)</p>
                 <div className={"row d-flex justify-content-between"}>
-                    <div className={"col-8 bg-white shadow p-3 rounded"}>
+                    <div className={"col-12 col-lg-8 bg-white shadow p-3 rounded"}>
                         <div className={"row px-3 py-3"}>
                             <div className={"col-1"}>
                                 <input type="checkbox" checked={checkAll} onChange={() => {
@@ -124,13 +124,13 @@ const CartPage: React.FC = () => {
                                     }
                                 }}/>
                             </div>
-                            <div className={"col-5"}>
-                                <span className={"fw-semibold"}>Chon tất cả ({products.length} sản phẩm)</span>
+                            <div className={"col-12 col-lg-5"}>
+                                <span className={"fw-semibold fs-"}>Chon tất cả ({products.length} sản phẩm)</span>
                             </div>
-                            <div className={"col-2"}>
+                            <div className={"col-2 d-none d-lg-block"}>
                                 <span className={"fw-semibold"}>SỐ LƯỢNG</span>
                             </div>
-                            <div className={"col-3"}>
+                            <div className={"col-3 d-none d-lg-block"}>
                                 <span className={"fw-semibold"}>THÀNH TIỀN</span>
                             </div>
                         </div>
@@ -147,21 +147,47 @@ const CartPage: React.FC = () => {
                                                 }
                                             }}/>
                                         </div>
-                                        <div className={"col-5"}>
+                                        <div className={"col-12 col-lg-5"}>
                                             <div className={"row"}>
                                                 <div className={"col-6"}>
                                                     <img src={product.bookImage} alt={product.bookTitle}
                                                          className={"w-100"}/>
                                                 </div>
-                                                <div className={"col-6"}>
+                                                <div className={"col-6 d-lg-none"}>
                                                     <span>{product.bookTitle}</span>
                                                     <p className={"fw-semibold text-danger"}>{formatCurrencyVND(product.bookPrice)}</p>
+                                                    <div className={"col-12"}>
+                                                        <div
+                                                            className={"shadow-sm rounded d-flex justify-content-between"}>
+                                                            <button onClick={() => decreaseQuantity(product.bookID)}
+                                                                    className={"btn btn-light"}>-
+                                                            </button>
+                                                            <input
+                                                                type={"number"}
+                                                                value={product.quantity}
+                                                                disabled={true}
+                                                                onChange={(e) => {
+                                                                    changeQuantity(product.bookID, parseInt(e.target.value))
+                                                                }}
+                                                                className={"w-50 text-center border-0 rounded"}
+                                                            />
+                                                            <button onClick={() => increaseQuantity(product.bookID)}
+                                                                    className={"btn btn-light"}>+
+                                                            </button>
+                                                        </div>
+                                                        <div className={"col-12 mt-4"}>
+                                                            <button onClick={() => removeProduct(product.bookID)}
+                                                                    className={"btn btn-danger"}><i
+                                                                className="bi bi-trash3"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className={"col-2"}>
+                                        <div className={"col-2 d-none d-lg-block"}>
                                             <div className={"shadow-sm rounded d-flex justify-content-between"}>
-                                                <button onClick={() => decreaseQuantity(product.bookID)}
+                                            <button onClick={() => decreaseQuantity(product.bookID)}
                                                         className={"btn btn-light"}>-
                                                 </button>
                                                 <input
@@ -178,10 +204,10 @@ const CartPage: React.FC = () => {
                                                 </button>
                                             </div>
                                         </div>
-                                        <div className={"col-2"}>
+                                        <div className={"col-2 d-none d-lg-block"}>
                                             <span className={"fw-semibold"}>{formatCurrencyVND(product.bookPrice * product.quantity)}</span>
                                         </div>
-                                        <div className={"col-2"}>
+                                        <div className={"col-2 d-none d-lg-block"}>
                                             <button onClick={() => removeProduct(product.bookID)}
                                                     className={"btn btn-danger"}><i className="bi bi-trash3"></i>
                                             </button>
@@ -191,7 +217,7 @@ const CartPage: React.FC = () => {
                             })
                         }
                     </div>
-                    <div className={"col-4"}>
+                    <div className={"col-12 col-lg-4 p-0 px-lg-2 mt-4 mt-lg-0"}>
                         <div className={"row"}>
                             <div className={"col-12"}>
                                 <div className={"bg-white px-3 py-3 shadow bg-body-tertiary rounded"}>
