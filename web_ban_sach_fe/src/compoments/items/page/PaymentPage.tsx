@@ -281,13 +281,13 @@ export const PaymentPage: React.FC = () => {
                     <div className={"col-6"}>
                         <span className={"fw-semibold fs-6"}>Thông tin sách</span>
                     </div>
-                    <div className={"col-2 text-center"}>
+                    <div className={"col-2 text-center d-none d-lg-block"}>
                         <span className={"fw-semibold fs-6"}>Giá sản phẩm</span>
                     </div>
-                    <div className={"col-2 text-center"}>
+                    <div className={"col-2 text-center d-none d-lg-block"}>
                         <span className={"fw-semibold fs-6"}>Số lượng</span>
                     </div>
-                    <div className={"col-2 text-center"}>
+                    <div className={"col-2 text-center d-none d-lg-block"}>
                         <span className={"fw-semibold fs-6"}>Thành tiền</span>
                     </div>
                 </div>
@@ -296,16 +296,41 @@ export const PaymentPage: React.FC = () => {
                     listBookPayment.map((book, index) => {
                         return (
                             <div key={book.bookId} className={"row"}>
-                                <div className={"col-6"}>
-                                    <div className={"d-flex align-items-start"}>
-                                        <img src={GetImagePrimaryFromArrayImage(book.bookImage)}
-                                             alt={book.bookTitle}
-                                             className={"img-fluid"}
-                                             style={{width: "150px", height: "auto"}}/>
-                                        <span className={"ms-3"}>{book.bookTitle}</span>
+                                <div className={"col-12 col-lg-6 d-flex flex-row"}>
+                                    <img src={GetImagePrimaryFromArrayImage(book.bookImage)}
+                                         alt={book.bookTitle}
+                                         className={"img-fluid"}
+                                         style={{width: "150px", height: "auto"}}/>
+                                    <div className={"d-flex flex-column justify-content-start align-items-start"}>
+                                        <span>{book.bookTitle}</span>
+                                        <div className={"d-block d-lg-none"}>
+                                            {
+                                                book.bookDiscount > 0 ? (
+                                                    <div className={"d-flex flex-row"}>
+                                                    <span
+                                                        className={"text-danger fw-bold"}>{formatCurrencyVND(DiscountProductMoney(book.bookPrice, book.bookDiscount))}</span>
+                                                        <span
+                                                            className={"text-decoration-line-through ms-3"}>{formatCurrencyVND(book.bookPrice)}</span>
+                                                    </div>
+                                                ) : (
+                                                    <p
+                                                        className={"text-danger"}>{formatCurrencyVND(book.bookPrice)}</p>
+                                                )
+                                            }
+                                            <span>Số lượng: {getQuantityBookInCart(book.bookId)}</span>
+                                            {
+                                                book.bookDiscount > 0 ? (
+                                                    <p
+                                                        className={"text-warning fw-bold"}>{formatCurrencyVND(DiscountProductMoney(book.bookPrice, book.bookDiscount) * getQuantityBookInCart(book.bookId))}</p>
+                                                ) : (
+                                                    <p
+                                                        className={"text-warning"}>{formatCurrencyVND(book.bookPrice * getQuantityBookInCart(book.bookId))}</p>
+                                                )
+                                            }
+                                        </div>
                                     </div>
                                 </div>
-                                <div className={"col-2 d-flex flex-column align-items-center"}>
+                                <div className={"col-2 flex-column align-items-center d-none d-lg-flex"}>
                                     {
                                         book.bookDiscount > 0 ? (
                                             <>
@@ -320,10 +345,10 @@ export const PaymentPage: React.FC = () => {
                                         )
                                     }
                                 </div>
-                                <div className={"col-2 text-center"}>
+                                <div className={"col-2 text-center d-none d-lg-block"}>
                                     <span>{getQuantityBookInCart(book.bookId)}</span>
                                 </div>
-                                <div className={"col-2 text-center"}>
+                                <div className={"col-2 text-center d-none d-lg-block"}>
                                     {
                                         book.bookDiscount > 0 ? (
                                             <span
@@ -336,7 +361,7 @@ export const PaymentPage: React.FC = () => {
                                 </div>
                                 {
                                     index !== listBookPayment.length - 1 ? (
-                                        <hr/>
+                                        <hr className={"my-4"}/>
                                     ) : null
                                 }
                             </div>
@@ -344,9 +369,8 @@ export const PaymentPage: React.FC = () => {
                     })
                 }
             </div>
-
             <div
-                className={"container bg-white rounded my-4 py-4 d-flex justify-content-between align-items-center position-sticky bottom-0"}>
+                className={"container bg-white rounded my-4 py-4 d-flex flex-column flex-lg-row justify-content-between align-items-center position-sticky bottom-0"}>
                 <span className={"fs-2 fw-bold text-danger"}>TỔNG TIỀN: {formatCurrencyVND(getTotalMoney())}</span>
                 <button type="button" className="btn btn-danger fw-bold py-3 px-5">XÁC NHẬN THANH TOÁN</button>
             </div>
