@@ -14,6 +14,7 @@ import {GetBookDetailById} from "../function";
 import formatCurrencyVND from "../function/FormatCurrencyVND";
 import {DiscountProductMoney, GetImagePrimaryFromArrayImage} from "../function";
 import {REGEX_EMAIL, REGEX_NAME, REGEX_PHONENUMBER} from "../Regex";
+import {Link} from "react-router-dom";
 
 enum PaymentMethod {
     CASH_ON_DELIVERY = 'money',
@@ -48,7 +49,6 @@ export const PaymentPage: React.FC = () => {
     const [errorDistrict, setErrorDistrict] = React.useState<string>('')
     const [errorWard, setErrorWard] = React.useState<string>('')
     const [errorAddress, setErrorAddress] = React.useState<string>('')
-    const [errorPaymentMethod, setErrorPaymentMethod] = React.useState<string>('')
 
 
     const getTotalMoney = (): number => {
@@ -222,6 +222,18 @@ export const PaymentPage: React.FC = () => {
 
     return (
         <div className={"container-fluid bg-light py-4"}>
+            {
+                !user ?
+                    <div
+                        className={"container bg-white rounded my-3 d-flex flex-row justify-content-start align-items-center"}>
+                        <i className="bi bi-exclamation-triangle text-danger fs-3"></i>
+                        <span className={"fs-5 m-3"}>
+                            Bạn đã là thành viên !
+                            <Link to={"/login"}
+                                  className={"ms-auto text-decoration-underline text-danger fw-bold ps-2"}>Đăng nhập</Link>
+                        </span>
+                    </div> : null
+            }
             <div className={"container bg-white rounded py-3"}>
                 <span className={"fw-semibold fs-5"}>ĐỊA CHỈ GIAO HÀNG</span>
                 <hr/>
@@ -455,7 +467,7 @@ export const PaymentPage: React.FC = () => {
                 className={"container bg-white rounded my-4 py-4 d-flex flex-column flex-lg-row justify-content-between align-items-center position-sticky bottom-0"}>
                 <span className={"fs-2 fw-bold text-danger"}>TỔNG TIỀN: {formatCurrencyVND(getTotalMoney())}</span>
                 <button onClick={() => {
-                    if(validateForm()){
+                    if (validateForm()) {
                         console.log(paymentDetail)
                     }
                 }} type="button" className="btn btn-danger fw-bold py-3 px-5">XÁC NHẬN THANH TOÁN
