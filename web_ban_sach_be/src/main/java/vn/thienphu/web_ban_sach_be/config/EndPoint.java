@@ -16,6 +16,8 @@ public class EndPoint {
             "/districts",
             "/provinces",
             "/wards",
+            "/orders",
+            "/order-book",
     };
 
     public static final String[] PUBLIC_POST_ENDPOINT = {
@@ -23,6 +25,7 @@ public class EndPoint {
             "/users/verify",
             "/users/verify/token",
             "/users/login",
+            "/orders",
     };
 
     public static final String[] ADMIN_GET_ENDPOINT = {

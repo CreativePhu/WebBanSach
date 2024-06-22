@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import vn.thienphu.web_ban_sach_be.model.enums.OrderStatus;
 import vn.thienphu.web_ban_sach_be.model.enums.PaymentMethod;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,4 +55,13 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;
+
+    public void addOrderDetail(OrderDetail orderDetail) {
+        if(orderDetails == null) {
+            orderDetails = new ArrayList<>();
+            orderDetails.add(orderDetail);
+        }else {
+            orderDetails.add(orderDetail);
+        }
+    }
 }
