@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class UserDTImp implements UserDTService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserDTImp(UserRepository userRepository) {
@@ -35,8 +35,7 @@ public class UserDTImp implements UserDTService {
         if (user == null) {
             throw new UsernameNotFoundException("Không tìm thấy tài khoản");
         }
-        org.springframework.security.core.userdetails.User userDetail = new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), getAuthorities(user.getRoles()));
-        return userDetail;
+        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), getAuthorities(user.getRoles()));
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(List<Role> roles) {

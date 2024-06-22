@@ -9,6 +9,7 @@ import vn.thienphu.web_ban_sach_be.dao.RoleRepository;
 import vn.thienphu.web_ban_sach_be.dao.UserRepository;
 import vn.thienphu.web_ban_sach_be.dto.UserInfoDTO;
 import vn.thienphu.web_ban_sach_be.dto.UserRegisterDTO;
+import vn.thienphu.web_ban_sach_be.exception.UserException;
 import vn.thienphu.web_ban_sach_be.model.Role;
 import vn.thienphu.web_ban_sach_be.model.User;
 
@@ -18,11 +19,11 @@ import java.util.UUID;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
-    private BCryptPasswordEncoder passwordEncoder;
-    private RoleRepository roleRepository;
-    private EmailService emailService;
-    private JWTService jwtService;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
+    private final EmailService emailService;
+    private final JWTService jwtService;
 
     @Autowired
     public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, RoleRepository roleRepository, EmailService emailService, JWTService jwtService) {
@@ -37,11 +38,11 @@ public class UserService {
     public ResponseEntity<?> UserRegister(UserRegisterDTO userRegisterDTO) {
 
         if (userRepository.existsByUserName(userRegisterDTO.getUsername())) {
-            return ResponseEntity.badRequest().body("Tên đăng nhập đã tồn tại");
+            throw new UserException("Tên đăng nhập đã tồn tại");
         }
 
         if (userRepository.existsByEmail(userRegisterDTO.getEmail())) {
-            return ResponseEntity.badRequest().body("Email đã tồn tại");
+            throw new UserException("Email đã tồn tại");
         }
 
         User user = new User(0, userRegisterDTO.getUsername(), passwordEncoder.encode(userRegisterDTO.getPassword()), userRegisterDTO.getUsername(), null, userRegisterDTO.getEmail(), false, generateVerificationCode(),  new Date(), new Date());

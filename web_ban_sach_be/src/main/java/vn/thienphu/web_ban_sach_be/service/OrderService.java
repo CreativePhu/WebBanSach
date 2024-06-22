@@ -7,25 +7,23 @@ import org.springframework.stereotype.Service;
 import vn.thienphu.web_ban_sach_be.dao.*;
 import vn.thienphu.web_ban_sach_be.dto.ListBookOrderDTO;
 import vn.thienphu.web_ban_sach_be.dto.OrderBookDTO;
+import vn.thienphu.web_ban_sach_be.exception.UserException;
 import vn.thienphu.web_ban_sach_be.model.*;
 import vn.thienphu.web_ban_sach_be.model.enums.OrderStatus;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class OrderService {
 
     private final ShippingAddressRepository shippingAddressRepository;
-    private OrderRepository orderRepository;
-    private OrderDetailRepository orderDetailRepository;
-    private UserRepository userRepository;
-    private ProvinceRepository provinceRepository;
-    private DistrictRepository districtRepository;
-    private WardRepository wardRepository;
-    private BookRepository bookRepository;
+    private final OrderRepository orderRepository;
+    private final OrderDetailRepository orderDetailRepository;
+    private final UserRepository userRepository;
+    private final ProvinceRepository provinceRepository;
+    private final DistrictRepository districtRepository;
+    private final WardRepository wardRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
     public OrderService(OrderRepository orderRepository, OrderDetailRepository orderDetailRepository, UserRepository userRepository, ProvinceRepository provinceRepository, DistrictRepository districtRepository, WardRepository wardRepository, BookRepository bookRepository, ShippingAddressRepository shippingAddressRepository) {
@@ -41,17 +39,20 @@ public class OrderService {
 
     @Transactional
     public ResponseEntity<?> createOrder(OrderBookDTO orderBookDTO) {
-        System.out.println(orderBookDTO.toString());
         User user = userRepository.findById((long) orderBookDTO.getUserID()).orElse(null);
 
-        Province province = provinceRepository.findById((long) orderBookDTO.getProvinceID()).get();
-        District district = districtRepository.findById((long) orderBookDTO.getDistrictID()).get();
-        Ward ward = wardRepository.findById((long) orderBookDTO.getWardID()).get();
+        if(user == null){
+            throw new UserException("Người dùng với id=" + orderBookDTO.getUserID() + " không tồn tại");
+        }
+
+        Optional<Province> province = provinceRepository.findById((long) orderBookDTO.getProvinceID());
+        Optional<District> district = districtRepository.findById((long) orderBookDTO.getDistrictID());
+        Optional<Ward> ward = wardRepository.findById((long) orderBookDTO.getWardID());
 
         ShippingAddress shippingAddress = new ShippingAddress();
-        shippingAddress.setProvince(province);
-        shippingAddress.setDistrict(district);
-        shippingAddress.setWard(ward);
+        shippingAddress.setProvince(province.orElseThrow(() -> new UserException("Tỉnh/Thành phố với id=" + orderBookDTO.getProvinceID() + " không tồn tại")));
+        shippingAddress.setDistrict(district.orElseThrow(() -> new UserException("Quận/Huyện với id=" + orderBookDTO.getDistrictID() + " không tồn tại")));
+        shippingAddress.setWard(ward.orElseThrow(() -> new UserException("Phường/Xã với id=" + orderBookDTO.getWardID() + " không tồn tại")));
         shippingAddress.setShippingAddress(orderBookDTO.getAddress());
 
         Order order = new Order();
@@ -64,26 +65,12 @@ public class OrderService {
         order.setShippingAddress(shippingAddress);
         order.setOrderStatus(OrderStatus.PENDING);
 
-        Set<ListBookOrderDTO> listBookOrder = orderBookDTO.getListBookOrder();
-        List<OrderDetail> orderDetails = new ArrayList<>();
-        listBookOrder.forEach(bookOrder -> {
-            Book book = bookRepository.findById((long) bookOrder.getBookID()).orElse(null);
-
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setBook(book);
-            orderDetail.setQuantity(bookOrder.getQuantity());
-            orderDetail.setUnitPrice(book.getBookPrice()*bookOrder.getQuantity());
-            orderDetail.setOrder(order);
-
-            order.addOrderDetail(orderDetail);
-
-            orderDetails.add(orderDetail);
-        });
+        List<OrderDetail> orderDetails = createOrderDetails(orderBookDTO.getListBookOrder(), order);
 
         order.setTotal(calculateTotal(orderDetails));
         orderRepository.save(order);
         shippingAddressRepository.save(shippingAddress);
-        orderDetails.forEach(orderDetailRepository::save);
+        orderDetailRepository.saveAll(orderDetails);
 
         return ResponseEntity.ok("Đặt hàng thành công");
     }
@@ -94,5 +81,26 @@ public class OrderService {
             total += orderDetail.getUnitPrice();
         }
         return total;
+    }
+
+    private List<OrderDetail> createOrderDetails(Set<ListBookOrderDTO> listBookOrder, Order order) {
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        listBookOrder.forEach(bookOrder -> {
+            Book book = bookRepository.findById(bookOrder.getBookID()).orElse(null);
+
+            if(book == null){
+                throw new UserException("Sách với id=" + bookOrder.getBookID() + " không tồn tại");
+            }
+
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setBook(book);
+            orderDetail.setQuantity(bookOrder.getQuantity());
+            orderDetail.setUnitPrice(book.getBookPrice()*bookOrder.getQuantity());
+            orderDetail.setOrder(order);
+
+            order.addOrderDetail(orderDetail);
+            orderDetails.add(orderDetail);
+        });
+        return orderDetails;
     }
 }
