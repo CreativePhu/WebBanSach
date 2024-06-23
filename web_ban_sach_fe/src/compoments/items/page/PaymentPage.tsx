@@ -1,6 +1,6 @@
 import React from "react";
 import UserInf from "../../data_type/Auth/UserInf";
-import {useAppSelector} from "../../redux/Hooks";
+import {useAppDispatch, useAppSelector} from "../../redux/Hooks";
 import GetProvince from "../../api/Address/GetProvince";
 import ProvinceInf from "../../data_type/Address/ProvinceInf";
 import DistrictInf from "../../data_type/Address/DistrictInf";
@@ -14,14 +14,20 @@ import {GetBookDetailById} from "../function";
 import formatCurrencyVND from "../function/FormatCurrencyVND";
 import {DiscountProductMoney, GetImagePrimaryFromArrayImage} from "../function";
 import {REGEX_EMAIL, REGEX_NAME, REGEX_PHONENUMBER} from "../Regex";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import PaymentRequest from "../../data_type/Payment/PaymentRequest";
+import CreateOrder from "../../api/Order/CreateOrder";
+import {setCounter} from "../../redux/slice/CounterSlice";
 
 enum PaymentMethod {
-    CASH_ON_DELIVERY = 'money',
-    BANK_TRANSFER = 'card'
+    CASH_ON_DELIVERY = 'CASH_ON_DELIVERY',
+    BANK_TRANSFER = 'BANK_TRANSFER'
 }
 
 export const PaymentPage: React.FC = () => {
+
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
     const user: UserInf | null = useAppSelector(state => state.User.value)
     const listIdBookPayment: number[] = sessionStorage.getItem('listBookPayment') ? JSON.parse(sessionStorage.getItem('listBookPayment') as string) : []
@@ -49,7 +55,6 @@ export const PaymentPage: React.FC = () => {
     const [errorDistrict, setErrorDistrict] = React.useState<string>('')
     const [errorWard, setErrorWard] = React.useState<string>('')
     const [errorAddress, setErrorAddress] = React.useState<string>('')
-
 
     const getTotalMoney = (): number => {
         let totalMoney = 0
@@ -83,7 +88,6 @@ export const PaymentPage: React.FC = () => {
         return {provinceID: 0, provinceName: ''}
     }
 
-
     const getDistrictByDistrictID = (districtID: number): DistrictInf => {
         if (districts.length > 0) {
             const district = districts.find((district) => district.districtID === districtID)
@@ -105,70 +109,6 @@ export const PaymentPage: React.FC = () => {
         }
         return {wardID: 0, wardName: ''}
     }
-
-
-    React.useEffect(() => {
-        if (user) {
-            setPaymentDetail(prevPaymentDetail => ({
-                ...prevPaymentDetail,
-                fullName: user?.fullName ? user.fullName : '',
-                email: user?.email ? user.email : '',
-                phone: user?.phone ? user.phone : '',
-            }));
-        }
-    }, [user]);
-
-
-    React.useEffect(() => {
-        GetProvince().then(data => {
-            setProvinces(data)
-        }).catch(e => {
-            console.log(e)
-        })
-    }, []);
-
-
-    React.useEffect(() => {
-        if (paymentDetail.province.provinceID !== 0) {
-            GetDistrict(paymentDetail.province.provinceID).then(data => {
-                setDistricts(data)
-            }).catch(e => {
-                console.log(e)
-            })
-            return
-        }
-        setPaymentDetail(prevPaymentDetail => ({
-            ...prevPaymentDetail,
-            district: {districtID: 0, districtName: ''},
-            ward: {wardID: 0, wardName: ''}
-        }));
-    }, [paymentDetail.province, provinces]);
-
-
-    React.useEffect(() => {
-        if (paymentDetail.district.districtID !== 0) {
-            GetWard(paymentDetail.district.districtID).then(data => {
-                setWards(data)
-            }).catch(e => {
-                console.log(e)
-            })
-            return
-        }
-        setPaymentDetail(prevPaymentDetail => ({
-            ...prevPaymentDetail,
-            ward: {wardID: 0, wardName: ''}
-        }));
-    }, [paymentDetail.district, districts]);
-
-    React.useEffect(() => {
-        Promise.all(listIdBookPayment.map(async (bookID) => {
-            return await GetBookDetailById(bookID);
-        })).then(listBookPaymentDetail => {
-            setListBookPayment(listBookPaymentDetail)
-        }).catch(e => {
-            console.log(e)
-        })
-    }, [])
 
     const validateForm = (): boolean => {
         let check = true
@@ -220,6 +160,120 @@ export const PaymentPage: React.FC = () => {
         return check
     }
 
+    const ressetPaymentDetail = () => {
+        setPaymentDetail({
+            fullName: '',
+            email: '',
+            phone: '',
+            province: {provinceID: 0, provinceName: ''},
+            district: {districtID: 0, districtName: ''},
+            ward: {wardID: 0, wardName: ''},
+            address: '',
+            paymentMethod: ''
+        })
+    }
+
+    const paymentRequest: PaymentRequest = {
+        customerName: paymentDetail.fullName,
+        customerEmail: paymentDetail.email,
+        customerPhone: paymentDetail.phone,
+        userID: user ? user.userID : 0,
+        paymentMethod: paymentMethod,
+        provinceID: paymentDetail.province.provinceID,
+        districtID: paymentDetail.district.districtID,
+        wardID: paymentDetail.ward.wardID,
+        address: paymentDetail.address,
+        listBookOrder: listBookPayment.map((book) => {
+            return {
+                bookID: book.bookId,
+                quantity: getQuantityBookInCart(book.bookId)
+            }
+        })
+    }
+
+    const removeBookInCart = (listIDBook: number[]) => {
+        const listBookInCart = JSON.parse(localStorage.getItem('cart') as string)
+        const newListBookInCart = listBookInCart.filter((book: BookCartInf) => {
+            return !listIDBook.includes(book.bookID)
+        })
+        localStorage.setItem('cart', JSON.stringify(newListBookInCart))
+        dispatch(setCounter(newListBookInCart.length))
+    }
+
+    const payment = () => {
+        if (validateForm()) {
+            CreateOrder(paymentRequest).then(() => {
+                alert("Đặt hàng thành công")
+                ressetPaymentDetail()
+                removeBookInCart(listIdBookPayment)
+                navigate("/")
+            }).catch(() => {
+                alert("Đặt hàng thất bại")
+            })
+        }
+        document.getElementById('form-payment')?.scrollIntoView({behavior: "smooth"})
+    }
+
+    React.useEffect(() => {
+        if (user) {
+            setPaymentDetail(prevPaymentDetail => ({
+                ...prevPaymentDetail,
+                fullName: user?.fullName ? user.fullName : '',
+                email: user?.email ? user.email : '',
+                phone: user?.phone ? user.phone : '',
+            }));
+        }
+    }, [user]);
+
+    React.useEffect(() => {
+        GetProvince().then(data => {
+            setProvinces(data)
+        }).catch(e => {
+            console.log(e)
+        })
+    }, []);
+
+    React.useEffect(() => {
+        if (paymentDetail.province.provinceID !== 0) {
+            GetDistrict(paymentDetail.province.provinceID).then(data => {
+                setDistricts(data)
+            }).catch(e => {
+                console.log(e)
+            })
+            return
+        }
+        setPaymentDetail(prevPaymentDetail => ({
+            ...prevPaymentDetail,
+            district: {districtID: 0, districtName: ''},
+            ward: {wardID: 0, wardName: ''}
+        }));
+    }, [paymentDetail.province, provinces]);
+
+    React.useEffect(() => {
+        if (paymentDetail.district.districtID !== 0) {
+            GetWard(paymentDetail.district.districtID).then(data => {
+                setWards(data)
+            }).catch(e => {
+                console.log(e)
+            })
+            return
+        }
+        setPaymentDetail(prevPaymentDetail => ({
+            ...prevPaymentDetail,
+            ward: {wardID: 0, wardName: ''}
+        }));
+    }, [paymentDetail.district, districts]);
+
+    React.useEffect(() => {
+        Promise.all(listIdBookPayment.map(async (bookID) => {
+            return await GetBookDetailById(bookID);
+        })).then(listBookPaymentDetail => {
+            setListBookPayment(listBookPaymentDetail)
+        }).catch(e => {
+            console.log(e)
+        })
+    }, [])
+
     return (
         <div className={"container-fluid bg-light py-4"}>
             {
@@ -234,7 +288,7 @@ export const PaymentPage: React.FC = () => {
                         </span>
                     </div> : null
             }
-            <div className={"container bg-white rounded py-3"}>
+            <div id={"form-payment"} className={"container bg-white rounded py-3"}>
                 <span className={"fw-semibold fs-5"}>ĐỊA CHỈ GIAO HÀNG</span>
                 <hr/>
                 <form>
@@ -463,15 +517,11 @@ export const PaymentPage: React.FC = () => {
                     })
                 }
             </div>
+
             <div
                 className={"container bg-white rounded my-4 py-4 d-flex flex-column flex-lg-row justify-content-between align-items-center position-sticky bottom-0"}>
                 <span className={"fs-2 fw-bold text-danger"}>TỔNG TIỀN: {formatCurrencyVND(getTotalMoney())}</span>
-                <button onClick={() => {
-                    if (validateForm()) {
-                        console.log(paymentDetail)
-                    }
-                }} type="button" className="btn btn-danger fw-bold py-3 px-5">XÁC NHẬN THANH TOÁN
-                </button>
+                <button onClick={() => {payment()}} type="button" className="btn btn-danger fw-bold py-3 px-5">XÁC NHẬN THANH TOÁN</button>
             </div>
         </div>
     );
