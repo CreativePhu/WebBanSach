@@ -1,7 +1,7 @@
 import React from "react";
 import BookImageInf from "../../data_type/Product/BookImageInf";
 import BookInf from "../../data_type/Product/BookInf";
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import GetBookById from "../../api/Product/GetBookById";
 import GetBookImageById from "../../api/Product/GetBookImageById";
 import {Carousel} from "react-responsive-carousel";
@@ -20,6 +20,7 @@ import {Bounce, toast} from "react-toastify";
 
 const BookDetailPage: React.FC = () => {
 
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const messageSuccess = (message: string) => toast.success(message, {autoClose: 2000, transition: Bounce});
     const messageError = (message: string) => toast.error(message, {autoClose: 2000, transition: Bounce});
@@ -195,7 +196,19 @@ const BookDetailPage: React.FC = () => {
                                     }
                                 }}>Thêm vào giỏ hàng
                                 </button>
-                                <button className={"btn btn-danger fw-bold fs-4 px-4 ms-md-3 mt-3 mt-md-0 mt-lg-0"}>Mua ngay</button>
+                                <button
+                                    onClick={() => {
+                                        if(bookDetail) {
+                                            sessionStorage.setItem("listBookPayment", JSON.stringify([{
+                                                bookID: bookDetail?.bookID,
+                                                quantity: bookCount
+                                            }]));
+                                            navigate("/payment")
+                                        }
+                                    }}
+                                    className={"btn btn-danger fw-bold fs-4 px-4 ms-md-3 mt-3 mt-md-0 mt-lg-0"}>
+                                    Mua ngay
+                                </button>
                             </div>
                         </div>
                     </div>

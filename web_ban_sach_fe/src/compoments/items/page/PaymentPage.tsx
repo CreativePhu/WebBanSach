@@ -18,6 +18,7 @@ import {Link, useNavigate} from "react-router-dom";
 import PaymentRequest from "../../data_type/Payment/PaymentRequest";
 import CreateOrder from "../../api/Order/CreateOrder";
 import {setCounter} from "../../redux/slice/CounterSlice";
+import {ListBookPayment} from "../../data_type/Payment/ListBookPayment";
 
 enum PaymentMethod {
     CASH_ON_DELIVERY = 'CASH_ON_DELIVERY',
@@ -30,8 +31,7 @@ export const PaymentPage: React.FC = () => {
     const dispatch = useAppDispatch()
 
     const user: UserInf | null = useAppSelector(state => state.User.value)
-    const listIdBookPayment: number[] = sessionStorage.getItem('listBookPayment') ? JSON.parse(sessionStorage.getItem('listBookPayment') as string) : []
-    const listBookInCart: BookCartInf[] = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart') as string) : []
+    const listIdBookPayment: ListBookPayment[] = sessionStorage.getItem('listBookPayment') ? JSON.parse(sessionStorage.getItem('listBookPayment') as string) : []
     const [listBookPayment, setListBookPayment] = React.useState<BookDetailInf[]>([])
     const [paymentDetail, setPaymentDetail] = React.useState<PaymentDetailInf>({
         fullName: '',
@@ -70,7 +70,7 @@ export const PaymentPage: React.FC = () => {
     }
 
     const getQuantityBookInCart = (bookID: number): number => {
-        const bookInCart = listBookInCart.find((book) => book.bookID === bookID)
+        const bookInCart = listIdBookPayment.find((book) => book.bookID === bookID)
         if (bookInCart) {
             return bookInCart.quantity
         }
@@ -191,10 +191,10 @@ export const PaymentPage: React.FC = () => {
         })
     }
 
-    const removeBookInCart = (listIDBook: number[]) => {
+    const removeBookInCart = (listIDBook: ListBookPayment[]) => {
         const listBookInCart = JSON.parse(localStorage.getItem('cart') as string)
         const newListBookInCart = listBookInCart.filter((book: BookCartInf) => {
-            return !listIDBook.includes(book.bookID)
+            return !listIDBook.some((bookPayment) => book.bookID === bookPayment.bookID)
         })
         localStorage.setItem('cart', JSON.stringify(newListBookInCart))
         dispatch(setCounter(newListBookInCart.length))
@@ -265,8 +265,8 @@ export const PaymentPage: React.FC = () => {
     }, [paymentDetail.district, districts]);
 
     React.useEffect(() => {
-        Promise.all(listIdBookPayment.map(async (bookID) => {
-            return await GetBookDetailById(bookID);
+        Promise.all(listIdBookPayment.map(async (book) => {
+            return await GetBookDetailById(book.bookID);
         })).then(listBookPaymentDetail => {
             setListBookPayment(listBookPaymentDetail)
         }).catch(e => {
@@ -521,7 +521,7 @@ export const PaymentPage: React.FC = () => {
             <div
                 className={"container bg-white rounded my-4 py-4 d-flex flex-column flex-lg-row justify-content-between align-items-center position-sticky bottom-0"}>
                 <span className={"fs-2 fw-bold text-danger"}>TỔNG TIỀN: {formatCurrencyVND(getTotalMoney())}</span>
-                <button onClick={() => {payment()}} type="button" className="btn btn-danger fw-bold py-3 px-5">XÁC NHẬN THANH TOÁN</button>
+                <button onClick={() => {payment()}} type="button" className="btn btn-danger fw-bold py-3 px-5">XÁC NHẬN ĐẶT HÀNG</button>
             </div>
         </div>
     );
