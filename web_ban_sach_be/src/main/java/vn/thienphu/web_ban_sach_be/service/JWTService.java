@@ -2,7 +2,6 @@ package vn.thienphu.web_ban_sach_be.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,8 @@ import java.util.Map;
 public class JWTService {
 
     private static final String SECRET = "LKJSLJKEKJFSDOIFJALKWJELASKJDFLASJEOIFJASLDFALKSEOIJLKADJSFOKAWENDF";
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24;
-    private UserRepository userRepository;
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60;
+    private final UserRepository userRepository;
 
     @Autowired
     public JWTService(UserRepository userRepository) {
@@ -60,11 +59,11 @@ public class JWTService {
 
     private String createToken(Map<String, Object> claims, String username) {
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(username)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS256, hmacShaKeyFor(SECRET))
+                .claims(claims)
+                .subject(username)
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(hmacShaKeyFor(SECRET))
                 .compact();
     }
 
