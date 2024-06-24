@@ -270,7 +270,7 @@ export const PaymentPage: React.FC = () => {
         })).then(listBookPaymentDetail => {
             setListBookPayment(listBookPaymentDetail)
         }).catch(e => {
-            console.log(e)
+            console.error(e)
         })
     }, [])
 

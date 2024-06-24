@@ -5,6 +5,7 @@ import {setCounter} from "../../redux/slice/CounterSlice";
 import {useAppDispatch} from "../../redux/Hooks";
 import {Link, useNavigate} from "react-router-dom";
 import {ListBookPayment} from "../../data_type/Payment/ListBookPayment";
+import book from "../Book";
 
 const CartPage: React.FC = () => {
 
@@ -113,7 +114,7 @@ const CartPage: React.FC = () => {
             <div className={"container"}>
                 <p className={"fw-semibold fs-5"}>GIỎ HÀNG ({products.length} sản phẩm)</p>
                 <div className={"row d-flex justify-content-between"}>
-                    <div className={"col-12 col-lg-8 bg-white shadow p-3 rounded"}>
+                    <div className={"col-12 col-lg-8 bg-white shadow-sm p-3 rounded"}>
                         <div className={"row px-3 py-3"}>
                             <div className={"col-1"}>
                                 <input type="checkbox" checked={checkAll} onChange={() => {
@@ -153,11 +154,15 @@ const CartPage: React.FC = () => {
                                         <div className={"col-12 col-lg-5"}>
                                             <div className={"row"}>
                                                 <div className={"col-6"}>
-                                                    <img src={product.bookImage} alt={product.bookTitle}
-                                                         className={"w-100"}/>
+                                                    <Link to={`/book-detail?bookId=${product.bookID}`}>
+                                                        <img src={product.bookImage} alt={product.bookTitle}
+                                                             className={"w-100"}/>
+                                                    </Link>
                                                 </div>
                                                 <div className={"col-6 d-none d-lg-block"}>
-                                                    <span>{product.bookTitle}</span>
+                                                    <Link className={"text-decoration-none fw-semibold text-dark"} to={`/book-detail?bookId=${product.bookID}`}>
+                                                        <span>{product.bookTitle}</span>
+                                                    </Link>
                                                     <p className={"fw-semibold text-danger"}>{formatCurrencyVND(product.bookPrice)}</p>
                                                 </div>
                                                 <div className={"col-6 d-lg-none"}>
@@ -231,7 +236,7 @@ const CartPage: React.FC = () => {
                     <div className={"col-12 col-lg-4 p-0 px-lg-2 mt-4 mt-lg-0"}>
                         <div className={"row position-sticky top-0"}>
                             <div className={"col-12"}>
-                                <div className={"bg-white px-3 py-3 shadow bg-body-tertiary rounded"}>
+                                <div className={"bg-white px-3 py-3 shadow-sm rounded"}>
                                     <div className={"d-flex justify-content-between align-items-center"}>
                                         <p className={"fw-semibold"}>Thành tiền</p>
                                         <p className={"fw-semibold"}>{formatCurrencyVND(totalPrice)}</p>

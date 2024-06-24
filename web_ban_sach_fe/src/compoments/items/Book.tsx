@@ -58,11 +58,11 @@ const BookProduct: React.FC<BookProps> = ({book}) => {
                 }
             </div>
             <div className="card-body">
-                <Link to={`/book-detail?bookId=${book.bookID}`} className="card-title d-block mb-3"
+                <Link to={`/book-detail?bookId=${book.bookID}`} className="card-title d-block mb-3 fw-semibold"
                       style={{textDecoration: "none"}}>{book.bookTitle}
                 </Link>
                 <div
-                    className="card-text fw-bold text-danger">{formatCurrencyVND(book.bookPrice - (book.bookPrice * 0.1))}
+                    className="card-text fw-semibold text-danger">{formatCurrencyVND(book.bookPrice - (book.bookPrice * 0.1))}
                     <span
                         className="badge bg-danger py-2 ms-2">{0.1 * 100}%</span>
                 </div>
