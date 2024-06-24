@@ -7,13 +7,17 @@ import formatCurrencyVND from "./function/FormatCurrencyVND";
 
 interface BookProps {
     book: BookInf
+    width?: string
+    height?: string
+    isHover?: boolean
 }
 
-const BookProduct: React.FC<BookProps> = ({book}) => {
+const BookProduct: React.FC<BookProps> = ({book, width, height, isHover}) => {
 
     const [isPrimaryImage, setIsPrimaryimage] = React.useState<string | undefined>("")
     const [loading, setLoading] = React.useState<boolean>(true)
     const [error, setError] = React.useState<string>("")
+    const [hover, setHover] = React.useState<boolean>(false)
 
     const fetchListImage = async () => {
         try {
@@ -36,10 +40,13 @@ const BookProduct: React.FC<BookProps> = ({book}) => {
     }, [])
 
     return (
-        <div className="card me-3 flex-grow-0 flex-shrink-0 my-3"
-             style={{flexBasis: "auto", width: "250px"}}>
+        <div
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            className={`card me-3 flex-grow-0 flex-shrink-0 my-3 border-0 ${isHover && hover ? "shadow" : "shadow-sm"}`}
+             style={{flexBasis: "auto", width: `${width ? width : "250px"}`}}>
             <div className={"w-100 mt-3 d-flex justify-content-center align-items-center"}
-                 style={{height: "190px"}}>
+                 style={{height: `${height ? height : "190px"}`}}>
                 {
                     loading ? (
                         <div className="spinner-border text-danger" role="status">
@@ -50,7 +57,7 @@ const BookProduct: React.FC<BookProps> = ({book}) => {
                             {error}
                         </div>
                     ) : (
-                        <Link to={`/book-detail?bookId=${book.bookID}`}>
+                        <Link className={"mt-3"} to={`/book-detail?bookId=${book.bookID}`}>
                             <img src={isPrimaryImage} className="card-img-top" alt={`${book.bookTitle}`}
                                  style={{maxWidth: "190px", maxHeight: "100%"}}/>
                         </Link>

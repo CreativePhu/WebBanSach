@@ -279,7 +279,7 @@ export const PaymentPage: React.FC = () => {
             {
                 !user ?
                     <div
-                        className={"container bg-white rounded my-3 d-flex flex-row justify-content-start align-items-center"}>
+                        className={"container bg-white rounded my-3 d-flex flex-row justify-content-start align-items-center shadow-sm"}>
                         <i className="bi bi-exclamation-triangle text-danger fs-3"></i>
                         <span className={"fs-5 m-3"}>
                             Bạn đã là thành viên !
@@ -288,7 +288,7 @@ export const PaymentPage: React.FC = () => {
                         </span>
                     </div> : null
             }
-            <div id={"form-payment"} className={"container bg-white rounded py-3"}>
+            <div id={"form-payment"} className={"container bg-white rounded py-3 shadow-sm"}>
                 <span className={"fw-semibold fs-5"}>ĐỊA CHỈ GIAO HÀNG</span>
                 <hr/>
                 <form>
@@ -390,7 +390,7 @@ export const PaymentPage: React.FC = () => {
                 </form>
             </div>
 
-            <div className={"container bg-white rounded py-3 mt-4"}>
+            <div className={"container bg-white rounded py-3 mt-4 shadow-sm"}>
                 <span className={"fw-semibold fs-5"}>PHƯƠNG THỨC THANH TOÁN</span>
                 <hr/>
                 <div className="form-check d-flex align-items-center">
@@ -422,7 +422,7 @@ export const PaymentPage: React.FC = () => {
                 </div>
             </div>
 
-            <div className={"container bg-white rounded py-3 mt-4"}>
+            <div className={"container bg-white rounded py-3 mt-4 shadow-sm"}>
                 <span className={"fw-semibold fs-5"}>KIỂM TRA LẠI ĐƠN HÀNG</span>
                 <hr/>
                 <div className={"row"}>
@@ -519,9 +519,12 @@ export const PaymentPage: React.FC = () => {
             </div>
 
             <div
-                className={"container bg-white rounded my-4 py-4 d-flex flex-column flex-lg-row justify-content-between align-items-center position-sticky bottom-0"}>
+                className={"container bg-white rounded my-4 py-4 d-flex flex-column flex-lg-row justify-content-between align-items-center position-sticky bottom-0 shadow-sm"}>
                 <span className={"fs-2 fw-bold text-danger"}>TỔNG TIỀN: {formatCurrencyVND(getTotalMoney())}</span>
-                <button onClick={() => {payment()}} type="button" className="btn btn-danger fw-bold py-3 px-5">XÁC NHẬN ĐẶT HÀNG</button>
+                <button onClick={() => {
+                    payment()
+                }} type="button" className="btn btn-danger fw-bold py-3 px-5">XÁC NHẬN ĐẶT HÀNG
+                </button>
             </div>
         </div>
     );

@@ -83,7 +83,7 @@ const TranslateX: React.FC = () => {
                             </div>
                         ) : (
                             listBook.map((book, index) => (
-                                <BookProduct key={index} book={book}/>
+                                <BookProduct key={index} book={book} width={"250px"}/>
                             ))
                         )
                     }

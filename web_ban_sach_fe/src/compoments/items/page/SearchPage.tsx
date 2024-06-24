@@ -80,11 +80,11 @@ const SearchPage: React.FC = () => {
                 <span className={"fs-4 fw-bold ms-3 text-danger"}>Danh sách sản phẩm cần tìm</span>
             </div>
             {
-                <div className={"py-4 px-2 d-flex justify-content-around flex-wrap"}>
+                <div className={"py-4 px-2 d-flex flex-wrap"}>
                     {
                         listBook.map((book, index) => {
                             return (
-                                <BookProduct key={index} book={book}/>
+                                <BookProduct key={index} book={book} width={"240px"} isHover={true}/>
                             )
                         })
                     }

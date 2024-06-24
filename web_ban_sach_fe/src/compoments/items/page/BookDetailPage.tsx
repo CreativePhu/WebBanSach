@@ -134,7 +134,7 @@ const BookDetailPage: React.FC = () => {
 
     return (
         <div className={"container-fluid bg-light py-4"}>
-            <div className={"container rounded bg-white"}>
+            <div className={"container rounded bg-white shadow-sm"}>
                 <div className={"row py-4 px-4"}>
                     <div className={"col-12 col-lg-4 col-sm-12 border"}>
                         <Carousel>
