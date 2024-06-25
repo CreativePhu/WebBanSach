@@ -97,7 +97,7 @@ const CartPage: React.FC = () => {
 
     if(products.length === 0) {
         return (
-            <div className={"container-fluid bg-light rounded py-4"}>
+            <div className={"container-fluid bg-light rounded py-4 shadow-sm"}>
                 <div className={"container rounded bg-white d-flex flex-column justify-content-center align-items-center shadow-sm"} style={{minHeight: "500px"}}>
                     <img
                         src="/images/cart/cart-empty.png"

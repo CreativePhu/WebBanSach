@@ -45,13 +45,13 @@ const ListBook: React.FC = () => {
     }, [page, hasMore])
 
     return (
-        <div id={"list-book"} className={"container bg-white rounded mt-4 shadow-sm"}>
+        <div id={"list-book"} className={"container bg-white rounded shadow-sm mt-4"}>
             <div className={"d-flex align-items-center px-2 py-2 border-bottom"}>
                 <i className="bi bi-collection-fill fs-2 text-danger"></i>
                 <span className={"fs-4 fw-bold ms-3 text-danger"}>Danh sách sản phẩm</span>
             </div>
             {
-                <div className={"py-4 px-2 d-flex flex-wrap"}>
+                <div className={"py-4 px-2 d-flex flex-wrap justify-content-around justify-content-xl-start"}>
                     {
                         listBook.map((book, index) => {
                             return (

@@ -237,6 +237,13 @@ export const PaymentPage: React.FC = () => {
         if (paymentDetail.province.provinceID !== 0) {
             GetDistrict(paymentDetail.province.provinceID).then(data => {
                 setDistricts(data)
+                if(data.length === 0) {
+                    setPaymentDetail(prevPaymentDetail => ({
+                        ...prevPaymentDetail,
+                        district: {districtID: 0, districtName: ''},
+                        ward: {wardID: 0, wardName: ''}
+                    }));
+                }
             }).catch(e => {
                 console.log(e)
             })
