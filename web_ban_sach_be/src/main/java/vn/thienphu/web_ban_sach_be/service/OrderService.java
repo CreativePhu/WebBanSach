@@ -10,6 +10,7 @@ import vn.thienphu.web_ban_sach_be.dto.OrderBookDTO;
 import vn.thienphu.web_ban_sach_be.exception.UserException;
 import vn.thienphu.web_ban_sach_be.model.*;
 import vn.thienphu.web_ban_sach_be.model.enums.OrderStatus;
+import vn.thienphu.web_ban_sach_be.model.enums.PaymentStatus;
 
 import java.util.*;
 
@@ -41,7 +42,7 @@ public class OrderService {
     public ResponseEntity<?> createOrder(OrderBookDTO orderBookDTO) {
         User user = userRepository.findById((long) orderBookDTO.getUserID()).orElse(null);
 
-        if(user == null){
+        if(user == null && orderBookDTO.getUserID() > 0){
             throw new UserException("Người dùng với id=" + orderBookDTO.getUserID() + " không tồn tại");
         }
 
@@ -64,6 +65,7 @@ public class OrderService {
         order.setPaymentMethod(orderBookDTO.getPaymentMethod());
         order.setShippingAddress(shippingAddress);
         order.setOrderStatus(OrderStatus.PENDING);
+        order.setPaymentStatus(PaymentStatus.PENDING);
 
         List<OrderDetail> orderDetails = createOrderDetails(orderBookDTO.getListBookOrder(), order);
 

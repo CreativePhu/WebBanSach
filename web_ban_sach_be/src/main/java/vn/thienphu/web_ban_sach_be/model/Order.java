@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import vn.thienphu.web_ban_sach_be.model.enums.OrderStatus;
 import vn.thienphu.web_ban_sach_be.model.enums.PaymentMethod;
+import vn.thienphu.web_ban_sach_be.model.enums.PaymentStatus;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +45,10 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_method", length = 50, nullable = false)
     private PaymentMethod paymentMethod;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status", length = 50, nullable = false)
+    private PaymentStatus paymentStatus;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
