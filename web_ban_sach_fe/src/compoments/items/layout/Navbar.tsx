@@ -98,7 +98,7 @@ function Navbar() {
                                             </button>
                                         </Link>
                                         <div
-                                            className={`${isHoverCart ? "d-block" : "d-none"} position-absolute bg-white shadow p-3 mb-5 bg-body-tertiary rounded z-3`}
+                                            className={`${isHoverCart && products.length > 0 ? "d-block" : "d-none"} position-absolute bg-white shadow p-3 mb-5 bg-body-tertiary rounded z-3`}
                                             style={{minWidth: "380px", minHeight: "300px"}}>
                                             <h6 className={"text-danger"}><i className="bi bi-cart"></i> Giỏ hàng</h6>
                                             <hr/>
@@ -106,8 +106,8 @@ function Navbar() {
                                                 {
                                                     products.map((book, index) => {
                                                         return (
-                                                            <>
-                                                                <div key={index} className={"d-flex flex-row"}>
+                                                            <div key={book.bookID}>
+                                                                <div className={"d-flex flex-row"}>
                                                                     <Link to={`/book-detail?bookId=${book.bookID}`}>
                                                                         <img src={book.bookImage} alt={book.bookTitle}
                                                                              className={"h-auto"}
@@ -126,7 +126,7 @@ function Navbar() {
                                                                     </div>
                                                                 </div>
                                                                 <hr/>
-                                                            </>
+                                                            </div>
                                                         )
                                                     })
                                                 }
