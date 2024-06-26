@@ -17,8 +17,10 @@ import CartPage from "./compoments/items/page/payment/CartPage";
 import {Bounce, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {PaymentPage} from "./compoments/items/page";
+import {NotFoundPage} from "./compoments/items/page/Error/NotFoundPage";
 
 function App() {
+
     return (
         <div className={"myApp"}>
             <Navbar/>
@@ -31,7 +33,7 @@ function App() {
                 <Route path={"/active-otp/*"} element={<ActiveOTPPage />}/>
                 <Route path={"/cart"} element={<CartPage />}/>
                 <Route path={"/payment"} element={<PaymentPage/>}/>
-                <Route path={"*"} element={<h1>404 Not Found</h1>}/>
+                <Route path={"*"} element={<NotFoundPage/>}/>
             </Routes>
             <Footer/>
             <ToastContainer
