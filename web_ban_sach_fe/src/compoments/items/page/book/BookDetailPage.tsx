@@ -1,21 +1,21 @@
 import React from "react";
-import BookImageInf from "../../data_type/Product/BookImageInf";
-import BookInf from "../../data_type/Product/BookInf";
+import BookImageInf from "../../../data_type/Product/BookImageInf";
+import BookInf from "../../../data_type/Product/BookInf";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import GetBookById from "../../api/Product/GetBookById";
-import GetBookImageById from "../../api/Product/GetBookImageById";
+import GetBookById from "../../../api/Product/GetBookById";
+import GetBookImageById from "../../../api/Product/GetBookImageById";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import AuthorInf from "../../data_type/Product/AuthorInf";
-import GetAuthorByBookId from "../../api/Product/GetAuthorByBookId";
-import CategoryInf from "../../data_type/Product/CategoryInf";
-import GetCategoryByBookID from "../../api/Product/GetCategoryByBookID";
-import PublisherInf from "../../data_type/Product/PublisherInf";
-import GetPublisherByBookID from "../../api/Product/GetPublisherByBookID";
-import formatCurrencyVND from "../function/FormatCurrencyVND";
-import BookCartInf from "../../data_type/Product/BookCartInf";
+import AuthorInf from "../../../data_type/Product/AuthorInf";
+import GetAuthorByBookId from "../../../api/Product/GetAuthorByBookId";
+import CategoryInf from "../../../data_type/Product/CategoryInf";
+import GetCategoryByBookID from "../../../api/Product/GetCategoryByBookID";
+import PublisherInf from "../../../data_type/Product/PublisherInf";
+import GetPublisherByBookID from "../../../api/Product/GetPublisherByBookID";
+import formatCurrencyVND from "../../function/FormatCurrencyVND";
+import BookCartInf from "../../../data_type/Product/BookCartInf";
 import {useDispatch} from "react-redux";
-import {setCounter} from "../../redux/slice/CounterSlice";
+import {setCounter} from "../../../redux/slice/CounterSlice";
 import {Bounce, toast} from "react-toastify";
 
 const BookDetailPage: React.FC = () => {

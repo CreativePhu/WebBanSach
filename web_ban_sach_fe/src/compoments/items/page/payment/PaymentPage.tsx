@@ -1,24 +1,24 @@
 import React from "react";
-import UserInf from "../../data_type/Auth/UserInf";
-import {useAppDispatch, useAppSelector} from "../../redux/Hooks";
-import GetProvince from "../../api/Address/GetProvince";
-import ProvinceInf from "../../data_type/Address/ProvinceInf";
-import DistrictInf from "../../data_type/Address/DistrictInf";
-import WardInf from "../../data_type/Address/WardInf";
-import PaymentDetailInf from "../../data_type/Payment/PaymentDetailInf";
-import GetDistrict from "../../api/Address/GetDistrict";
-import GetWard from "../../api/Address/GetWard";
-import BookCartInf from "../../data_type/Product/BookCartInf";
-import BookDetailInf from "../../data_type/Product/BookDetailInf";
-import {GetBookDetailById} from "../function";
-import formatCurrencyVND from "../function/FormatCurrencyVND";
-import {DiscountProductMoney, GetImagePrimaryFromArrayImage} from "../function";
-import {REGEX_EMAIL, REGEX_NAME, REGEX_PHONENUMBER} from "../Regex";
+import UserInf from "../../../data_type/Auth/UserInf";
+import {useAppDispatch, useAppSelector} from "../../../redux/Hooks";
+import GetProvince from "../../../api/Address/GetProvince";
+import ProvinceInf from "../../../data_type/Address/ProvinceInf";
+import DistrictInf from "../../../data_type/Address/DistrictInf";
+import WardInf from "../../../data_type/Address/WardInf";
+import PaymentDetailInf from "../../../data_type/Payment/PaymentDetailInf";
+import GetDistrict from "../../../api/Address/GetDistrict";
+import GetWard from "../../../api/Address/GetWard";
+import BookCartInf from "../../../data_type/Product/BookCartInf";
+import BookDetailInf from "../../../data_type/Product/BookDetailInf";
+import {GetBookDetailById} from "../../function";
+import formatCurrencyVND from "../../function/FormatCurrencyVND";
+import {DiscountProductMoney, GetImagePrimaryFromArrayImage} from "../../function";
+import {REGEX_EMAIL, REGEX_NAME, REGEX_PHONENUMBER} from "../../Regex";
 import {Link, useNavigate} from "react-router-dom";
-import PaymentRequest from "../../data_type/Payment/PaymentRequest";
-import CreateOrder from "../../api/Order/CreateOrder";
-import {setCounter} from "../../redux/slice/CounterSlice";
-import {ListBookPayment} from "../../data_type/Payment/ListBookPayment";
+import PaymentRequest from "../../../data_type/Payment/PaymentRequest";
+import CreateOrder from "../../../api/Order/CreateOrder";
+import {setCounter} from "../../../redux/slice/CounterSlice";
+import {ListBookPayment} from "../../../data_type/Payment/ListBookPayment";
 
 enum PaymentMethod {
     CASH_ON_DELIVERY = 'CASH_ON_DELIVERY',

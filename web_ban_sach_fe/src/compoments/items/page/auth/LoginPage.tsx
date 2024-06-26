@@ -1,10 +1,10 @@
 import React from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {UserLogin} from "../../api/Auth";
-import {verifyToken} from "../../api/Auth";
-import {updateUser} from "../../redux/slice/UserSlice";
-import {useAppDispatch} from "../../redux/Hooks";
-import userInf from "../../data_type/Auth/UserInf";
+import {UserLogin} from "../../../api/Auth";
+import {verifyToken} from "../../../api/Auth";
+import {updateUser} from "../../../redux/slice/UserSlice";
+import {useAppDispatch} from "../../../redux/Hooks";
+import userInf from "../../../data_type/Auth/UserInf";
 
 const LoginPage: React.FC = () => {
 

@@ -1,6 +1,6 @@
 import React from "react";
 import {Link, useNavigate, useSearchParams} from "react-router-dom";
-import {CheckVerifyOTP} from "../../api/Auth";
+import {CheckVerifyOTP} from "../../../api/Auth";
 
 const ActiveOTPPage: React.FC = () => {
 

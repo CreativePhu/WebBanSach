@@ -1,11 +1,11 @@
 import React from "react";
-import BookCartInf from "../../data_type/Product/BookCartInf";
-import formatCurrencyVND from "../function/FormatCurrencyVND";
-import {setCounter} from "../../redux/slice/CounterSlice";
-import {useAppDispatch} from "../../redux/Hooks";
+import BookCartInf from "../../../data_type/Product/BookCartInf";
+import formatCurrencyVND from "../../function/FormatCurrencyVND";
+import {setCounter} from "../../../redux/slice/CounterSlice";
+import {useAppDispatch} from "../../../redux/Hooks";
 import {Link, useNavigate} from "react-router-dom";
-import {ListBookPayment} from "../../data_type/Payment/ListBookPayment";
-import book from "../Book";
+import {ListBookPayment} from "../../../data_type/Payment/ListBookPayment";
+import book from "../../Book";
 
 const CartPage: React.FC = () => {
 
