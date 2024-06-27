@@ -8,9 +8,24 @@ interface UpdateEmailProps {
 
 export const UpdateEmail : React.FC<UpdateEmailProps> = ({isVisible, onClose}) => {
 
+    const modalRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+                onClose();
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    })
+
     return (
         <FullScreenOverlay isVisible={isVisible}>
-            <div className={"rounded bg-white px-5 py-5 position-relative"} style={{width: "450px", minHeight: "250px"}}>
+            <div ref={modalRef}  className={"rounded bg-white px-5 py-5 position-relative"} style={{width: "450px", minHeight: "250px"}}>
                 <p className={"text-danger fw-semibold fs-3"}>Cập nhật Email</p>
                 <label htmlFor={"email"} className={"fw-semibold"}>Email</label>
                 <input id={"email"} type="text" className={"form-control mt-1 py-2 rounded-3"}

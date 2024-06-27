@@ -8,9 +8,24 @@ interface UpdateFullNameProps {
 
 export const UpdateFullName : React.FC<UpdateFullNameProps> = ({isVisible, onClose}) => {
 
+    const modalRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+                onClose();
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    })
+
     return (
         <FullScreenOverlay isVisible={isVisible}>
-            <div className={"rounded bg-white px-5 py-5 position-relative"} style={{width: "450px", minHeight: "350px"}}>
+            <div ref={modalRef} className={"rounded bg-white px-5 py-5 position-relative"} style={{width: "450px", minHeight: "350px"}}>
                 <span className={"text-danger fw-semibold fs-3"}>Cập nhật tên của bạn</span>
                 <p className={"text-danger"}>Tên sẽ được hiển thị trên trang cá nhân và các bài viết của bạn</p>
                 <label htmlFor={"fullName"} className={"fw-semibold"}>Họ và Tên</label>
