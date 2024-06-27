@@ -16,7 +16,7 @@ import withAuthCheck from "./compoments/HOC_compoment/WithAuthCheck";
 import CartPage from "./compoments/items/page/payment/CartPage";
 import {Bounce, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {PaymentPage} from "./compoments/items/page";
+import {PaymentPage, ProfilePage} from "./compoments/items/page";
 import {NotFoundPage} from "./compoments/items/page/Error/NotFoundPage";
 
 function App() {
@@ -33,6 +33,7 @@ function App() {
                 <Route path={"/active-otp/*"} element={<ActiveOTPPage />}/>
                 <Route path={"/cart"} element={<CartPage />}/>
                 <Route path={"/payment"} element={<PaymentPage/>}/>
+                <Route path={"/profile"} element={<ProfilePage/>}/>
                 <Route path={"*"} element={<NotFoundPage/>}/>
             </Routes>
             <Footer/>
