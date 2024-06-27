@@ -166,12 +166,16 @@ function Navbar() {
                                                         onMouseLeave={() => setIsHover(false)}
                                                         className={`${isHover ? "d-block" : "d-none"} position-absolute d-flex flex-column bg-white shadow-sm p-3 mb-5 bg-body-tertiary rounded`}
                                                         style={{width: "150px"}}>
-                                                        <Link to={"/login"}
+                                                        <Link onClick={() => {
+                                                            setIsHover(false)
+                                                        }} to={"/login"}
                                                               className={"text-decoration-none text-danger"}>
                                                             Đăng nhập
                                                         </Link>
                                                         <hr className={"my-2 text-danger"}/>
-                                                        <Link to={"/register"}
+                                                        <Link onClick={() => {
+                                                            setIsHover(false)
+                                                        }} to={"/register"}
                                                               className={"text-decoration-none text-danger"}>
                                                             Đăng ký
                                                         </Link>
