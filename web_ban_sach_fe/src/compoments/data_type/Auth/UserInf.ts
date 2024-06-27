@@ -1,6 +1,6 @@
 interface UserInf {
     userID: number;
-    username: string;
+    userName: string;
     fullName: string;
     phone: string;
     email: string;

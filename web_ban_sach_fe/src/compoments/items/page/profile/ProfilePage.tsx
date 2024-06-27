@@ -1,11 +1,41 @@
 import React from "react";
 import {ProfileInfomation} from "./ProfileInfomation";
 import {OrderInformation} from "./OrderInformation";
+import {UpdateFullName} from "./form/UpdateFullName";
+import {UpdatePhoneNumber} from "./form/UpdatePhoneNumber";
+import {UpdateEmail} from "./form/UpdateEmail";
 
 export const ProfilePage = () => {
 
     const active = "rounded-5 bg-danger text-white";
     const [activeTab, setActiveTab] = React.useState<boolean>(true);
+    const [isVisibleFullName, setIsVisibleFullName] = React.useState<boolean>(false);
+    const [isVisiblePhoneNumber, setIsVisiblePhoneNumber] = React.useState<boolean>(false);
+    const [isVisibleEmail, setIsVisibleEmail] = React.useState<boolean>(false);
+
+    const onCloseFullName = () => {
+        setIsVisibleFullName(false);
+    }
+
+    const openFullName = () => {
+        setIsVisibleFullName(true);
+    }
+
+    const onClosePhoneNumber = () => {
+        setIsVisiblePhoneNumber(false);
+    }
+
+    const openPhoneNumber = () => {
+        setIsVisiblePhoneNumber(true);
+    }
+
+    const onCloseEmail = () => {
+        setIsVisibleEmail(false);
+    }
+
+    const openEmail = () => {
+        setIsVisibleEmail(true);
+    }
 
     return (
         <div className={"container-fluid bg-light py-4"}>
@@ -36,12 +66,15 @@ export const ProfilePage = () => {
                     <div className={"col-9 pe-0"}>
                         <div style={{minHeight: "500px"}}>
                             {
-                                activeTab ? <ProfileInfomation/> : <OrderInformation/>
+                                activeTab ? <ProfileInfomation openEmail={openEmail} openFullName={openFullName} openPhoneNumber={openPhoneNumber} /> : <OrderInformation/>
                             }
                         </div>
                     </div>
                 </div>
             </div>
+            <UpdateFullName isVisible={isVisibleFullName} onClose={onCloseFullName}/>
+            <UpdatePhoneNumber isVisible={isVisiblePhoneNumber} onClose={onClosePhoneNumber}/>
+            <UpdateEmail isVisible={isVisibleEmail} onClose={onCloseEmail}/>
         </div>
     );
 }
