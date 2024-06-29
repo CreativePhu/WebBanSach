@@ -1,5 +1,6 @@
 package vn.thienphu.web_ban_sach_be.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -59,6 +60,7 @@ public class User {
     @Column(name = "updated_at", length = 255, nullable = false)
     private Date updatedAt;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
@@ -70,10 +72,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<ShippingAddress> shippingAddresses;
 
-    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Review> reviews;
 
     public void addRole(Role role) {
@@ -85,4 +89,20 @@ public class User {
         }
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID=" + userID +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", isVerified=" + isVerified +
+                ", verificationCode='" + verificationCode + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", shippingAddresses=" + shippingAddresses +
+                '}';
+    }
 }

@@ -28,6 +28,10 @@ public class EndPoint {
             "/orders",
     };
 
+    public static final String[] USER_PUT_ENDPOINT = {
+            "/users/**",
+    };
+
     public static final String[] ADMIN_GET_ENDPOINT = {
             "/users"
     };

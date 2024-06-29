@@ -6,10 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import vn.thienphu.web_ban_sach_be.dto.JwtDTO;
-import vn.thienphu.web_ban_sach_be.dto.UserLoginDTO;
-import vn.thienphu.web_ban_sach_be.dto.UserRegisterDTO;
-import vn.thienphu.web_ban_sach_be.dto.UserVerifyDTO;
+import vn.thienphu.web_ban_sach_be.dto.*;
 import vn.thienphu.web_ban_sach_be.service.JWTService;
 import vn.thienphu.web_ban_sach_be.service.UserService;
 
@@ -46,15 +43,20 @@ public class UserController {
     @PostMapping("/login")
     private ResponseEntity<?> login(@RequestBody UserLoginDTO userLoginDTO) {
             try {
-                Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginDTO.getUsername(), userLoginDTO.getPassword()));
+                Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginDTO.getUserName(), userLoginDTO.getPassWord()));
                 if(authentication.isAuthenticated()){
-                    String token = jwtService.generateToken(userLoginDTO.getUsername());
+                    String token = jwtService.generateToken(userLoginDTO.getUserName());
                     return ResponseEntity.ok(new JwtDTO(token));
                 }
                 return ResponseEntity.badRequest().body("Tài khoản hoặc mật khẩu không chính xác");
             }catch (Exception e){
                 return ResponseEntity.badRequest().body("Lỗi đăng nhập");
             }
+    }
+
+    @PutMapping("/{username}/update")
+    private ResponseEntity<?> updateUser(@PathVariable String username ,@RequestBody UserUpdateDTO userUpdateDTO) {
+        return userService.updateUser(username, userUpdateDTO);
     }
 
 }

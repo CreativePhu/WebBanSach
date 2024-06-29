@@ -9,6 +9,7 @@ import vn.thienphu.web_ban_sach_be.dao.RoleRepository;
 import vn.thienphu.web_ban_sach_be.dao.UserRepository;
 import vn.thienphu.web_ban_sach_be.dto.UserInfoDTO;
 import vn.thienphu.web_ban_sach_be.dto.UserRegisterDTO;
+import vn.thienphu.web_ban_sach_be.dto.UserUpdateDTO;
 import vn.thienphu.web_ban_sach_be.exception.UserException;
 import vn.thienphu.web_ban_sach_be.model.Role;
 import vn.thienphu.web_ban_sach_be.model.User;
@@ -37,7 +38,7 @@ public class UserService {
     @Transactional
     public ResponseEntity<?> UserRegister(UserRegisterDTO userRegisterDTO) {
 
-        if (userRepository.existsByUserName(userRegisterDTO.getUsername())) {
+        if (userRepository.existsByUserName(userRegisterDTO.getUserName())) {
             throw new UserException("Tên đăng nhập đã tồn tại");
         }
 
@@ -45,7 +46,7 @@ public class UserService {
             throw new UserException("Email đã tồn tại");
         }
 
-        User user = new User(0, userRegisterDTO.getUsername(), passwordEncoder.encode(userRegisterDTO.getPassword()), userRegisterDTO.getUsername(), null, userRegisterDTO.getEmail(), false, generateVerificationCode(),  new Date(), new Date());
+        User user = new User(0, userRegisterDTO.getUserName(), passwordEncoder.encode(userRegisterDTO.getPassWord()), userRegisterDTO.getUserName(), null, userRegisterDTO.getEmail(), false, generateVerificationCode(), new Date(), new Date());
         Role role = roleRepository.findByRoleName("CUSTOMER");
         user.addRole(role);
         role.addUser(user);
@@ -62,7 +63,7 @@ public class UserService {
 
     private void sendVerificationEmail(String email, String verificationCode) {
         String subject = "VERIFY YOUR ACCOUNT - Fahasha";
-        emailService.sendEmail("phutot28102002@gmail.com",email, subject, verificationCode);
+        emailService.sendEmail("phutot28102002@gmail.com", email, subject, verificationCode);
     }
 
     public ResponseEntity<?> verifyUser(String email, String verificationCode) {
@@ -85,5 +86,18 @@ public class UserService {
             return ResponseEntity.ok(userInfoDTO);
         }
         return ResponseEntity.badRequest().body("Token không hợp lệ");
+    }
+
+    @Transactional
+    public ResponseEntity<?> updateUser(String username, UserUpdateDTO userUpdateDTO) {
+        User user = userRepository.findByUserName(username);
+        if (user != null) {
+            if (userUpdateDTO.getFullName() != null) user.setFullName(userUpdateDTO.getFullName());
+            if (userUpdateDTO.getPhoneNumber() != null) user.setPhone(userUpdateDTO.getPhoneNumber());
+            if (userUpdateDTO.getEmail() != null) user.setEmail(userUpdateDTO.getEmail());
+            userRepository.save(user);
+            return ResponseEntity.ok("Cập nhật thành công");
+        }
+        return ResponseEntity.badRequest().body("Người dùng không tồn tại");
     }
 }
