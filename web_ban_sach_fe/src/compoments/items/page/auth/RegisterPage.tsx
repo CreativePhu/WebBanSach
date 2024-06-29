@@ -5,6 +5,7 @@ import UserRegisterInf from "../../../data_type/Auth/UserRegisterInf";
 import {UserRegister} from "../../../api/Auth";
 import {checkUserNameExists} from "../../../api/Auth";
 import {checkEmailExists} from "../../../api/Auth";
+import userRegisterInf from "../../../data_type/Auth/UserRegisterInf";
 
 const RegisterPage: React.FC = () => {
 
@@ -91,7 +92,7 @@ const RegisterPage: React.FC = () => {
             setError("")
             if (await checkValidateForm()) {
                 setLoading(true)
-                const user: UserRegisterInf = {username, email, password}
+                const user: UserRegisterInf = {userName: username, email, passWord: password}
                 await UserRegister(user)
                 navigate(`/active-otp?email=${email}`)
                 setLoading(false)

@@ -43,7 +43,7 @@ const LoginPage: React.FC = () => {
         e.preventDefault();
         try {
             if (checkValidateForm()) {
-                const response = await UserLogin({username: username, password: password})
+                const response = await UserLogin({userName: username, passWord: password})
                 const jwt:string = response.token
                 localStorage.setItem("token", jwt)
                 const user:userInf = await verifyToken(jwt)

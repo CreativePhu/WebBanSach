@@ -1,6 +1,6 @@
 interface UserLoginInf {
-    username: string;
-    password: string;
+    userName: string;
+    passWord: string;
 }
 
 export default UserLoginInf;

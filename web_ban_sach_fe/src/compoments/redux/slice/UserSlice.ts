@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import UserInf from "../../data_type/Auth/UserInf";
 
 interface CounterState {
-    value: UserInf|null
+    value: UserInf | null
 }
 
 const initialState: CounterState = {
@@ -16,11 +16,20 @@ export const userSlice = createSlice({
         updateUser: (state, action: PayloadAction<UserInf>) => {
             state.value = action.payload;
         },
+        updateUserFullName: (state, action: PayloadAction<string>) => {
+            state.value!.fullName = action.payload;
+        },
+        updateUserPhoneNumber: (state, action: PayloadAction<string>) => {
+            state.value!.phone = action.payload;
+        },
+        updateUserEmail: (state, action: PayloadAction<string>) => {
+            state.value!.email = action.payload;
+        },
         resetUser: (state) => {
             state.value = null;
         }
     },
 })
 
-export const { updateUser, resetUser } = userSlice.actions
+export const {updateUser, resetUser, updateUserFullName, updateUserPhoneNumber, updateUserEmail} = userSlice.actions
 export default userSlice.reducer

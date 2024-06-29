@@ -1,6 +1,6 @@
 interface UserRegisterInf {
-    username: string;
-    password: string;
+    userName: string;
+    passWord: string;
     email: string;
 }
 
