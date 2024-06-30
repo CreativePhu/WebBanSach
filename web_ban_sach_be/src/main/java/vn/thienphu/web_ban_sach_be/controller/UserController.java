@@ -59,4 +59,9 @@ public class UserController {
         return userService.updateUser(username, userUpdateDTO);
     }
 
+    @PostMapping("/generate-otp")
+    private ResponseEntity<?> generateOTP(@RequestBody UserGenerateOTP_DTO userGenerateOTPDto) {
+        return userService.generateOTP(userGenerateOTPDto);
+    }
+
 }

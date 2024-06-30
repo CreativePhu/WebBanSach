@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.thienphu.web_ban_sach_be.dao.RoleRepository;
 import vn.thienphu.web_ban_sach_be.dao.UserRepository;
+import vn.thienphu.web_ban_sach_be.dto.UserGenerateOTP_DTO;
 import vn.thienphu.web_ban_sach_be.dto.UserInfoDTO;
 import vn.thienphu.web_ban_sach_be.dto.UserRegisterDTO;
 import vn.thienphu.web_ban_sach_be.dto.UserUpdateDTO;
@@ -99,5 +100,17 @@ public class UserService {
             return ResponseEntity.ok("Cập nhật thành công");
         }
         return ResponseEntity.badRequest().body("Người dùng không tồn tại");
+    }
+
+    public ResponseEntity<?> generateOTP(UserGenerateOTP_DTO userGenerateOTPDto) {
+        User user = userRepository.findByUserName(userGenerateOTPDto.getUserName());
+        if (user != null) {
+            String otp = generateVerificationCode();
+            user.setVerificationCode(otp);
+            userRepository.save(user);
+            sendVerificationEmail(userGenerateOTPDto.getEmail(), otp);
+            return ResponseEntity.ok("Gửi mã OTP thành công");
+        }
+        return ResponseEntity.badRequest().body("Yêu cầu không hợp lệ");
     }
 }
