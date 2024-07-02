@@ -25,8 +25,9 @@ export const UpdateFullName: React.FC<UpdateFullNameProps> = ({isVisible, onClos
     React.useEffect(() => {
         if (user) {
             setFullName(user.fullName);
+            setError("")
         }
-    }, [user])
+    }, [user, isVisible])
 
     React.useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {

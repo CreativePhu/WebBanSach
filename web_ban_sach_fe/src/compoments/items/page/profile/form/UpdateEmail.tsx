@@ -22,8 +22,10 @@ export const UpdateEmail : React.FC<UpdateEmailProps> = ({isVisible, onClose}) =
     React.useEffect(() => {
         if(user) {
             setEmail(user.email)
+            setError("")
+            setMoveVerifyAccount(false)
         }
-    }, [user])
+    }, [user, isVisible])
 
     React.useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {

@@ -25,8 +25,9 @@ export const UpdatePhoneNumber: React.FC<UpdatePhoneNumberProps> = ({isVisible, 
     React.useEffect(() => {
         if (user) {
             setPhoneNumber(user?.phone);
+            setError("")
         }
-    }, [user])
+    }, [user, isVisible])
 
     React.useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
