@@ -113,4 +113,13 @@ public class UserService {
         }
         return ResponseEntity.badRequest().body("Yêu cầu không hợp lệ");
     }
+
+    public ResponseEntity<?> checkIsVerified(String email) {
+        boolean isVerified = userRepository.existsByEmailAndIsVerifiedTrue(email);
+        if (isVerified) {
+            return ResponseEntity.ok("Email đã được xác thực.");
+        } else {
+            return ResponseEntity.badRequest().body("Email chưa được xác thực.");
+        }
+    }
 }

@@ -64,4 +64,9 @@ public class UserController {
         return userService.generateOTP(userGenerateOTPDto);
     }
 
+    @GetMapping("/check-is-verified/{email}")
+    private ResponseEntity<?> checkIsVerified(@PathVariable String email) {
+        return userService.checkIsVerified(email);
+    }
+
 }

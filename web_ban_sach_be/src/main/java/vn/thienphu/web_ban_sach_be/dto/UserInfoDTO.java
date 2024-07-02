@@ -15,7 +15,7 @@ public class UserInfoDTO {
     private String fullName;
     private String phone;
     private String email;
-    private boolean isVerified;
+    private boolean verified;
     private Date createdAt;
     private Date updatedAt;
 }
