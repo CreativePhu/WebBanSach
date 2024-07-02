@@ -47,7 +47,7 @@ const ActiveOTPPage: React.FC = () => {
             <span className={"text-danger mb-2"}>Đã gửi mã xác thực tới Email: <span
                 className={"text-decoration-underline text-secondary"}>{email}</span></span>
             <div className={"bg-white border p-5 rounded-3"} style={{width: "450px"}}>
-                <h1 className={"text-center text-danger fw-bold"}>XÁC THỰC TÀI KHOẢN</h1>
+                <h1 className={"text-center text-danger fw-bold"}>XÁC THỰC EMAIL</h1>
                 <form className={"mt-4"}>
                     <div className="mb-3">
                         <label htmlFor="taikhoan" className="form-label">Mã OTP:</label>

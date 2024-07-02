@@ -46,9 +46,15 @@ const LoginPage: React.FC = () => {
                 const response = await UserLogin({userName: username, passWord: password})
                 const jwt:string = response.token
                 localStorage.setItem("token", jwt)
+
                 const user:userInf = await verifyToken(jwt)
                 dispatch(updateUser(user))
-                navigate("/")
+
+                if(user.verified){
+                    navigate("/")
+                }else{
+                    navigate("/notVerifyEmail")
+                }
                 setLoading(false)
             }
             setLoading(false)

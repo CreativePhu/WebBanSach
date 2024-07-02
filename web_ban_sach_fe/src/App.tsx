@@ -18,6 +18,7 @@ import {Bounce, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {PaymentPage, ProfilePage} from "./compoments/items/page";
 import {NotFoundPage} from "./compoments/items/page/Error/NotFoundPage";
+import {IsNotVerifyPage} from "./compoments/items/page/auth/IsNotVerifyPage";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
                 <Route path={"/search/*"} element={<SearchPage/>}/>
                 <Route path={"/book-detail/*"} element={<BookDetailPage/>}/>
                 <Route path={"/register"} element={<RegisterPage/>}/>
+                <Route path={"/notVerifyEmail"} element={<IsNotVerifyPage/>}/>
                 <Route path={"/active-otp/*"} element={<ActiveOTPPage />}/>
                 <Route path={"/cart"} element={<CartPage />}/>
                 <Route path={"/payment"} element={<PaymentPage/>}/>

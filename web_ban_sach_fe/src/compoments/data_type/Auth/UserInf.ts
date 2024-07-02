@@ -4,7 +4,7 @@ interface UserInf {
     fullName: string;
     phone: string;
     email: string;
-    isVerified: boolean;
+    verified: boolean;
     createdAt: string;
     updatedAt: string;
 }
