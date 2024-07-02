@@ -4,13 +4,14 @@ import {REGEX_EMAIL} from "../../../Regex";
 import UserInf from "../../../../data_type/Auth/UserInf";
 import {useAppSelector} from "../../../../redux/Hooks";
 import {VerifyAccountForm} from "./VerifyAccountForm";
+import {checkEmailExists} from "../../../../api/Auth";
 
 interface UpdateEmailProps {
     isVisible: boolean;
     onClose: () => void;
 }
 
-export const UpdateEmail : React.FC<UpdateEmailProps> = ({isVisible, onClose}) => {
+export const UpdateEmail: React.FC<UpdateEmailProps> = ({isVisible, onClose}) => {
 
 
     const user: UserInf | null = useAppSelector(state => state.User.value)
@@ -20,7 +21,7 @@ export const UpdateEmail : React.FC<UpdateEmailProps> = ({isVisible, onClose}) =
     const [moveVerifyAccount, setMoveVerifyAccount] = React.useState<boolean>(false);
 
     React.useEffect(() => {
-        if(user) {
+        if (user) {
             setEmail(user.email)
             setError("")
             setMoveVerifyAccount(false)
@@ -40,24 +41,33 @@ export const UpdateEmail : React.FC<UpdateEmailProps> = ({isVisible, onClose}) =
         };
     })
 
-    const validateEmail = () => {
+    const validateEmail = async () => {
         let check = true
-        if(email === "") {
+        if (email === "") {
             check = false
             setError("Email không được để trống");
-        }else{
-            if(!email.match(REGEX_EMAIL)){
+        } else {
+            if (!email.match(REGEX_EMAIL)) {
                 check = false
                 setError("Email không hợp lệ");
+            } else {
+                if (await checkEmailExists(email)) {
+                    setError("Email đã tồn tại");
+                    check = false;
+                }
             }
         }
 
         return check
     }
 
-    const moveVerifyAccountForm = () => {
-        if (validateEmail()) {
-            setMoveVerifyAccount(true)
+    const moveVerifyAccountForm = async () => {
+        try {
+            if (await validateEmail()) {
+                setMoveVerifyAccount(true)
+            }
+        } catch (e) {
+            setError("Có lỗi xảy ra, vui lòng thử lại sau")
         }
     }
 

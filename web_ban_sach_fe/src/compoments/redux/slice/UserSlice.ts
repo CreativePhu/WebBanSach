@@ -25,11 +25,21 @@ export const userSlice = createSlice({
         updateUserEmail: (state, action: PayloadAction<string>) => {
             state.value!.email = action.payload;
         },
+        updateVerified: (state, action: PayloadAction<boolean>) => {
+            state.value!.verified = action.payload;
+        },
         resetUser: (state) => {
             state.value = null;
         }
     },
 })
 
-export const {updateUser, resetUser, updateUserFullName, updateUserPhoneNumber, updateUserEmail} = userSlice.actions
+export const {
+    updateUser,
+    resetUser,
+    updateUserFullName,
+    updateUserPhoneNumber,
+    updateVerified,
+    updateUserEmail
+} = userSlice.actions
 export default userSlice.reducer

@@ -1,10 +1,13 @@
 import React from "react";
 import {Link, useNavigate, useSearchParams} from "react-router-dom";
 import {CheckVerifyOTP} from "../../../api/Auth";
+import {useAppDispatch} from "../../../redux/Hooks";
+import {updateVerified} from "../../../redux/slice/UserSlice";
 
 const ActiveOTPPage: React.FC = () => {
 
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
     const [searchParams] = useSearchParams();
     const email = searchParams.get('email') || "";
@@ -32,7 +35,8 @@ const ActiveOTPPage: React.FC = () => {
             if (checkValidateForm()) {
                 await CheckVerifyOTP({email, verificationCode: codeOTP});
                 setLoading(false)
-                alert("Xác thực thành công");
+                dispatch(updateVerified(true))
+                alert("Xác thực thành công")
                 navigate("/")
             }
         } catch (e) {
