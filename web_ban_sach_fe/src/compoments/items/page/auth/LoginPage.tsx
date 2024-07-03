@@ -38,29 +38,31 @@ const LoginPage: React.FC = () => {
         return check;
     }
 
-    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        setLoading(true)
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        try {
-            if (checkValidateForm()) {
-                const response = await UserLogin({userName: username, passWord: password})
-                const jwt:string = response.token
+        if (checkValidateForm()) {
+            setLoading(true)
+            UserLogin({userName: username, passWord: password}).then((response) => {
+                const jwt: string = response.token
                 localStorage.setItem("token", jwt)
-
-                const user:userInf = await verifyToken(jwt)
-                dispatch(updateUser(user))
-
-                if(user.verified){
-                    navigate("/")
-                }else{
-                    navigate("/notVerifyEmail")
+                return jwt
+            }).then((jwt) => {
+                return verifyToken(jwt)
+            }).then((user) => {
+                dispatch(updateUser(user));
+                if (user.verified) {
+                    navigate("/");
+                } else {
+                    navigate("/notVerifyEmail");
+                }
+            }).catch((error) => {
+                if ((error.message.includes("Failed to fetch") || error.message.includes("Network Error"))) {
+                    setErrorUsername("Lỗi mạng, vui lòng kiểm tra lại kết nối internet của bạn")
+                } else {
+                    setErrorUsername(error.response.data.message)
                 }
                 setLoading(false)
-            }
-            setLoading(false)
-        } catch (e) {
-            setErrorUsername("Tài khoản hoặc mật khẩu không chính xác")
-            setLoading(false)
+            })
         }
     }
 
@@ -95,8 +97,7 @@ const LoginPage: React.FC = () => {
                     {
                         !loading
                             ?
-                            <button type="submit" className="btn btn-danger w-100 mt-4" onClick={handleSubmit}>Đăng nhập
-                            </button>
+                            <button type="submit" className="btn btn-danger w-100 mt-4" onClick={handleSubmit}>Đăng nhập</button>
                             :
                             <div className={"mt-4 w-100 d-flex justify-content-center"}>
                                 <div className="spinner-border text-danger" role="status">
