@@ -1,6 +1,7 @@
 package vn.thienphu.web_ban_sach_be.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,9 +49,9 @@ public class UserController {
                     String token = jwtService.generateToken(userLoginDTO.getUserName());
                     return ResponseEntity.ok(new JwtDTO(token));
                 }
-                return ResponseEntity.badRequest().body("Tài khoản hoặc mật khẩu không chính xác");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponseDTO(HttpStatus.UNAUTHORIZED.value(), "Tài khoản hoặc mật khẩu không chính xác", System.currentTimeMillis()));
             }catch (Exception e){
-                return ResponseEntity.badRequest().body("Lỗi đăng nhập");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponseDTO(HttpStatus.UNAUTHORIZED.value(), "Tài khoản hoặc mật khẩu không chính xác", System.currentTimeMillis()));
             }
     }
 
