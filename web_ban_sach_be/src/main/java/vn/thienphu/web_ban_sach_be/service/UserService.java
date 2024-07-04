@@ -2,15 +2,13 @@ package vn.thienphu.web_ban_sach_be.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.thienphu.web_ban_sach_be.dao.RoleRepository;
 import vn.thienphu.web_ban_sach_be.dao.UserRepository;
-import vn.thienphu.web_ban_sach_be.dto.UserGenerateOTP_DTO;
-import vn.thienphu.web_ban_sach_be.dto.UserInfoDTO;
-import vn.thienphu.web_ban_sach_be.dto.UserRegisterDTO;
-import vn.thienphu.web_ban_sach_be.dto.UserUpdateDTO;
+import vn.thienphu.web_ban_sach_be.dto.*;
 import vn.thienphu.web_ban_sach_be.exception.UserException;
 import vn.thienphu.web_ban_sach_be.model.Role;
 import vn.thienphu.web_ban_sach_be.model.User;
@@ -76,7 +74,7 @@ public class UserService {
             userRepository.save(user);
             return ResponseEntity.ok("Xác thực thành công");
         }
-        return ResponseEntity.badRequest().body("Xác thực thất bại");
+        return ResponseEntity.badRequest().body(new ErrorResponseDTO(HttpStatus.BAD_REQUEST.value(), "Mã xác thực không hợp lệ", System.currentTimeMillis()));
     }
 
     public ResponseEntity<?> verifyToken(String token) {
