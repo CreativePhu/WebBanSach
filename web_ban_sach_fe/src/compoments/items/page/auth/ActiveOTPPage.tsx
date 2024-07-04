@@ -1,8 +1,9 @@
 import React from "react";
 import {Link, useNavigate, useSearchParams} from "react-router-dom";
 import {CheckVerifyOTP} from "../../../api/Auth";
-import {useAppDispatch} from "../../../redux/Hooks";
+import {useAppDispatch, useAppSelector} from "../../../redux/Hooks";
 import {updateVerified} from "../../../redux/slice/UserSlice";
+import UserInf from "../../../data_type/Auth/UserInf";
 
 const ActiveOTPPage: React.FC = () => {
 
@@ -11,10 +12,12 @@ const ActiveOTPPage: React.FC = () => {
 
     const [searchParams] = useSearchParams();
     const email = searchParams.get('email') || "";
+    const user: UserInf | null = useAppSelector(state => state.User.value)
 
     const [codeOTP, setCodeOTP] = React.useState<string>("");
     const [error, setError] = React.useState<string>("");
     const [loading, setLoading] = React.useState<boolean>(false);
+    const [verifySuccess, setVerifySuccess] = React.useState<boolean>(false);
 
     const checkValidateForm = (): boolean => {
         let check = true;
@@ -24,25 +27,33 @@ const ActiveOTPPage: React.FC = () => {
         } else {
             setError("");
         }
-
         return check;
     }
 
-    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        try {
+        if (checkValidateForm()) {
             setLoading(true)
-            if (checkValidateForm()) {
-                await CheckVerifyOTP({email, verificationCode: codeOTP});
-                setLoading(false)
-                dispatch(updateVerified(true))
-                alert("Xác thực thành công")
+            CheckVerifyOTP({email, verificationCode: codeOTP}).then(() => {
+                if (user) {
+                    dispatch(updateVerified(true))
+                }
+                return new Promise((resolve) => {
+                    setLoading(false)
+                    setVerifySuccess(true)
+                    setTimeout(() => {
+                        resolve(true)
+                    }, 2000)
+                })
+            }).then(() => {
                 navigate("/")
-            }
-        } catch (e) {
-            console.log(e)
-            setLoading(false)
-            setError("Mã OTP không chính xác")
+            }).catch((error) => {
+                if ((error.message.includes("Failed to fetch") || error.message.includes("Network Error"))) {
+                    setError("Lỗi mạng, vui lòng kiểm tra lại kết nối internet của bạn")
+                } else {
+                    setError(error.response.data.message)
+                }
+            })
         }
     }
 
@@ -69,8 +80,14 @@ const ActiveOTPPage: React.FC = () => {
                     {
                         !loading
                             ?
-                            <button type="submit" className="btn btn-danger w-100 mt-4" onClick={handleSubmit}>Xác
-                                thực</button>
+                            verifySuccess
+                                ?
+                                <div className={"mt-4 w-100 d-flex justify-content-center"}>
+                                    <i className="bi bi-check-circle-fill fs-2 text-success"></i>
+                                </div>
+                                :
+                                <button type="submit" className="btn btn-danger w-100 mt-4" onClick={handleSubmit}>Xác
+                                    thực</button>
                             :
                             <div className={"mt-4 w-100 d-flex justify-content-center"}>
                                 <div className="spinner-border text-danger" role="status">

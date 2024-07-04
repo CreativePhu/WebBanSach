@@ -5,7 +5,6 @@ import UserRegisterInf from "../../../data_type/Auth/UserRegisterInf";
 import {UserRegister} from "../../../api/Auth";
 import {checkUserNameExists} from "../../../api/Auth";
 import {checkEmailExists} from "../../../api/Auth";
-import userRegisterInf from "../../../data_type/Auth/UserRegisterInf";
 
 const RegisterPage: React.FC = () => {
 
@@ -20,12 +19,10 @@ const RegisterPage: React.FC = () => {
     const [errorEmail, setErrorEmail] = React.useState<string>("");
     const [errorPassword, setErrorPassword] = React.useState<string>("");
     const [errorRePassword, setErrorRePassword] = React.useState<string>("");
-
-    const [loading, setLoading] = React.useState<boolean>(false);
     const [error, setError] = React.useState<string>("");
+    const [loading, setLoading] = React.useState<boolean>(false);
 
-    const checkValidateForm = async (): Promise<boolean> => {
-        setLoading(true)
+    const checkValidateForm = (): boolean => {
         let check = true;
         if (!username) {
             setErrorUsername("Tên tài khoản không được để trống");
@@ -34,11 +31,8 @@ const RegisterPage: React.FC = () => {
             if (!REGEX_USERNAME.test(username)) {
                 setErrorUsername("Tên tài khoản phải có ít nhất ba ký tự và không chứa ký tự đặc biệt");
                 check = false;
-            }else if(await checkUserNameExists(username)){
-                setErrorUsername("Tên tài khoản đã tồn tại");
-                check = false;
-            } else {
-                setErrorUsername("");
+            }else{
+                setErrorUsername("")
             }
         }
 
@@ -49,11 +43,8 @@ const RegisterPage: React.FC = () => {
             if (!REGEX_EMAIL.test(email)) {
                 setErrorEmail("Email không hợp lệ");
                 check = false;
-            }else if(await checkEmailExists(email)){
-                setErrorEmail("Email đã tồn tại");
-                check = false;
-            } else {
-                setErrorEmail("");
+            }else{
+                setErrorEmail("")
             }
         }
 
@@ -64,8 +55,8 @@ const RegisterPage: React.FC = () => {
             if (!REGEX_PASSWORD.test(password)) {
                 setErrorPassword("Mật khẩu tối thiểu tám ký tự, ít nhất một chữ hoa, một chữ thường, một số và một ký tự đặc biệt");
                 check = false;
-            } else {
-                setErrorPassword("");
+            }else{
+                setErrorPassword("")
             }
         }
 
@@ -76,46 +67,45 @@ const RegisterPage: React.FC = () => {
             if (rePassword !== password) {
                 setErrorRePassword("Nhập lại mật khẩu không khớp");
                 check = false;
-            } else {
-                setErrorRePassword("");
+            }else{
+                setErrorRePassword("")
             }
         }
-
-        setLoading(false)
-
         return check;
     }
 
-    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
-        try {
-            e.preventDefault();
-            setError("")
-            if (await checkValidateForm()) {
-                setLoading(true)
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+        if (checkValidateForm()) {
+
+            setLoading(true)
+            Promise.all([checkUserNameExists(username), checkEmailExists(email)]).then((response) => {
+                if (response[0]) setErrorUsername("Tên tài khoản đã tồn tại")
+                if (response[1]) setErrorEmail("Email đã tồn tại")
+                return (response[0] && response[1])
+            }).then((result) => {
+                if (result) return Promise.reject(new Error(" "))
                 const user: UserRegisterInf = {userName: username, email, passWord: password}
-                await UserRegister(user)
+                return UserRegister(user)
+            }).then(() => {
                 navigate(`/active-otp?email=${email}`)
+            }).catch((error) => {
+                if ((error.message.includes("Failed to fetch") || error.message.includes("Network Error"))) {
+                    setError("Lỗi mạng, vui lòng kiểm tra lại kết nối internet của bạn")
+                }else{
+                    setError(error.message || error.response.data.message || "")
+                }
+            }).finally(() => {
                 setLoading(false)
-            }
-        }catch (e) {
-            setError("Đăng kí thất bại")
-            setLoading(false)
+            })
         }
     }
 
     return (
         <div className={"container-fluid d-flex flex-column justify-content-center align-items-center bg-light py-5"}>
-            {
-                error
-                    ?
-                    <div className="alert alert-danger" role="alert">
-                        {error}
-                    </div>
-                    :
-                    ""
-            }
             <div className={"bg-white border p-5 rounded-3"} style={{width: "450px"}}>
                 <h1 className={"text-center text-danger fw-bold"}>ĐĂNG KÍ</h1>
+                <span className={"text-danger"}>{error}</span>
                 <form className={"mt-4"}>
                     <div className="mb-3">
                         <label htmlFor="taikhoan" className="form-label">Tên tài khoản</label>

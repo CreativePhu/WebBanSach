@@ -4,7 +4,7 @@ import {UserLogin} from "../../../api/Auth";
 import {verifyToken} from "../../../api/Auth";
 import {updateUser} from "../../../redux/slice/UserSlice";
 import {useAppDispatch} from "../../../redux/Hooks";
-import userInf from "../../../data_type/Auth/UserInf";
+import UserInf from "../../../data_type/Auth/UserInf";
 
 const LoginPage: React.FC = () => {
 
@@ -46,9 +46,9 @@ const LoginPage: React.FC = () => {
                 const jwt: string = response.token
                 localStorage.setItem("token", jwt)
                 return jwt
-            }).then((jwt) => {
+            }).then((jwt: string) => {
                 return verifyToken(jwt)
-            }).then((user) => {
+            }).then((user: UserInf) => {
                 dispatch(updateUser(user));
                 if (user.verified) {
                     navigate("/");
@@ -61,7 +61,8 @@ const LoginPage: React.FC = () => {
                 } else {
                     setErrorUsername(error.response.data.message)
                 }
-                setLoading(false)
+            }).finally(() => {
+              setLoading(false)
             })
         }
     }
