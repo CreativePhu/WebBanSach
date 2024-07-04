@@ -46,7 +46,7 @@ export const VerifyAccountForm: React.FC<VerifyAccountFormProps> = ({onClose, mo
 
         try {
             if (token) {
-                await GenerateOTP(token, {userName: user!.userName, email})
+                await GenerateOTP(token)
             }else{
                 throw new Error("Không tìm thấy token")
             }

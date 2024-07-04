@@ -4,6 +4,7 @@ import {CheckVerifyOTP} from "../../../api/Auth";
 import {useAppDispatch, useAppSelector} from "../../../redux/Hooks";
 import {updateVerified} from "../../../redux/slice/UserSlice";
 import UserInf from "../../../data_type/Auth/UserInf";
+import {GenerateOTP} from "../../../api/Auth/GenerateOTP";
 
 const ActiveOTPPage: React.FC = () => {
 
@@ -17,7 +18,20 @@ const ActiveOTPPage: React.FC = () => {
     const [codeOTP, setCodeOTP] = React.useState<string>("");
     const [error, setError] = React.useState<string>("");
     const [loading, setLoading] = React.useState<boolean>(false);
+    const [loadingResend, setLoadingResend] = React.useState<boolean>(false);
     const [verifySuccess, setVerifySuccess] = React.useState<boolean>(false);
+    const [countDown, setCountDown] = React.useState<number>(30);
+
+    React.useEffect(() => {
+        const id = setInterval(() => {
+            if (countDown > 0){
+                setCountDown(prevState => prevState - 1)
+            }else{
+                clearInterval(id)
+            }
+        }, 1000);
+        return () => clearInterval(id);
+    }, [countDown])
 
     const checkValidateForm = (): boolean => {
         let check = true;
@@ -28,6 +42,21 @@ const ActiveOTPPage: React.FC = () => {
             setError("");
         }
         return check;
+    }
+
+    const sendOTPBack = () => {
+        setLoadingResend(true)
+        const token = sessionStorage.getItem("token") || "";
+        setCountDown(30)
+        GenerateOTP(token).catch((error) => {
+            if ((error.message.includes("Failed to fetch") || error.message.includes("Network Error"))) {
+                setError("Lỗi mạng, vui lòng kiểm tra lại kết nối internet của bạn")
+            } else {
+                setError(error?.response.data.message || error.message || "")
+            }
+        }).finally(() => {
+            setLoadingResend(false)
+        })
     }
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -74,9 +103,19 @@ const ActiveOTPPage: React.FC = () => {
                         }}/>
                         <span className={"text-danger"}>{error}</span>
                     </div>
-                    <p className={"mt-2"}>
-                        <Link className={"text-decoration-none"} to={""}>Gửi lại mã</Link>
-                    </p>
+                    <span className={"d-flex align-items-center"}>
+                        <button
+                            onClick={() => {sendOTPBack()}}
+                            disabled={countDown > 0}
+                            type="button"
+                            className="btn btn-link p-0 text-decoration-none me-2">
+                            Gửi lại mã
+                        </button>
+                        <span className={`${countDown <= 0 ? "d-none" : "d-block"}`}>
+                            sau: {countDown}s
+                            <i className="bi bi-check-circle-fill ms-2 text-success"></i>
+                        </span>
+                    </span>
                     {
                         !loading
                             ?

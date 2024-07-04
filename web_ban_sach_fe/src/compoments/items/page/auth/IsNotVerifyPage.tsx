@@ -14,7 +14,7 @@ export const IsNotVerifyPage: React.FC = () => {
 
     const handleVerify = () => {
         setLoading(true)
-        GenerateOTP(token || "", {userName: user!.userName, email: user!.email}).then(()  => {
+        GenerateOTP(token || "").then(()  => {
             navigate(`/active-otp?email=${user!.email}`)
             setLoading(false)
 

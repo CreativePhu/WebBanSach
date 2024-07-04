@@ -87,7 +87,8 @@ const RegisterPage: React.FC = () => {
                 if (result) return Promise.reject(new Error(" "))
                 const user: UserRegisterInf = {userName: username, email, passWord: password}
                 return UserRegister(user)
-            }).then(() => {
+            }).then((jwt) => {
+                sessionStorage.setItem("token", jwt.token)
                 navigate(`/active-otp?email=${email}`)
             }).catch((error) => {
                 if ((error.message.includes("Failed to fetch") || error.message.includes("Network Error"))) {

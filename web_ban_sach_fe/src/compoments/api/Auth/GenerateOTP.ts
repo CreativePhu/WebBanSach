@@ -1,13 +1,8 @@
 import axios from "axios";
 
-interface GenerateOTPInf {
-    userName: string;
-    email: string;
-}
-
-export const GenerateOTP = async (token: string, body: GenerateOTPInf) => {
+export const GenerateOTP = async (token: string) => {
     const HOST = process.env.REACT_APP_HOST_BE;
-    const response = await axios.post(`${HOST}/users/generate-otp`, body, {
+    const response = await axios.get(`${HOST}/users/generate-otp`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
