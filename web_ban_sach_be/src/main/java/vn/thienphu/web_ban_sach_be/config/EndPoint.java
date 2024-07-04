@@ -33,8 +33,11 @@ public class EndPoint {
     };
 
     public static final String[] USER_POST_ENDPOINT = {
-            "/users/generate-otp",
             "/check-is-verified/**",
+    };
+
+    public static final String[] USER_GET_ENDPOINT = {
+            "/users/generate-otp",
     };
 
     public static final String[] ADMIN_GET_ENDPOINT = {

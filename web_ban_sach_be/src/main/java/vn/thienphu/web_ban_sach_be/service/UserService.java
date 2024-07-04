@@ -53,7 +53,7 @@ public class UserService {
         userRepository.save(user);
         sendVerificationEmail(user.getEmail(), user.getVerificationCode());
 
-        return ResponseEntity.ok("Đăng ký thành công");
+        return ResponseEntity.ok(new JwtDTO(jwtService.generateToken(user.getUserName())));
     }
 
     private String generateVerificationCode() {
@@ -100,16 +100,18 @@ public class UserService {
         return ResponseEntity.badRequest().body("Người dùng không tồn tại");
     }
 
-    public ResponseEntity<?> generateOTP(UserGenerateOTP_DTO userGenerateOTPDto) {
-        User user = userRepository.findByUserName(userGenerateOTPDto.getUserName());
+    public ResponseEntity<?> generateOTP(String authorizationHeader) {
+        String jwt = authorizationHeader.substring(7);
+        String username = jwtService.extractUsername(jwt);
+        User user = userRepository.findByUserName(username);
         if (user != null) {
             String otp = generateVerificationCode();
             user.setVerificationCode(otp);
             userRepository.save(user);
-            sendVerificationEmail(userGenerateOTPDto.getEmail(), otp);
+            sendVerificationEmail(user.getEmail(), otp);
             return ResponseEntity.ok("Gửi mã OTP thành công");
         }
-        return ResponseEntity.badRequest().body("Yêu cầu không hợp lệ");
+        return ResponseEntity.badRequest().body("Người dùng không tồn tại");
     }
 
     public ResponseEntity<?> checkIsVerified(String email) {

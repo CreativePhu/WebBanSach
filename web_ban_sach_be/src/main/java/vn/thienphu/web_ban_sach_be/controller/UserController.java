@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping("verify-token")
-    private ResponseEntity<?> verifyToken(@RequestBody JwtDTO jwtDTO) {
+    private ResponseEntity<?> verifyToken(@RequestBody JwtDTO jwtDTO){
         return userService.verifyToken(jwtDTO.getToken());
     }
 
@@ -60,9 +60,9 @@ public class UserController {
         return userService.updateUser(username, userUpdateDTO);
     }
 
-    @PostMapping("/generate-otp")
-    private ResponseEntity<?> generateOTP(@RequestBody UserGenerateOTP_DTO userGenerateOTPDto) {
-        return userService.generateOTP(userGenerateOTPDto);
+    @GetMapping("/generate-otp")
+    private ResponseEntity<?> generateOTP(@RequestHeader("Authorization") String authorizationHeader) {
+        return userService.generateOTP(authorizationHeader);
     }
 
     @GetMapping("/check-is-verified/{email}")

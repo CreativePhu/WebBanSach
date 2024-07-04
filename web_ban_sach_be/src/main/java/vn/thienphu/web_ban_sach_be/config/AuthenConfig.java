@@ -56,6 +56,7 @@ public class AuthenConfig {
                 .requestMatchers(HttpMethod.POST, EndPoint.PUBLIC_POST_ENDPOINT).permitAll()
                 .requestMatchers(HttpMethod.PUT, EndPoint.USER_PUT_ENDPOINT).hasAnyAuthority("CUSTOMER", "ADMIN")
                 .requestMatchers(HttpMethod.POST, EndPoint.USER_POST_ENDPOINT).hasAnyAuthority("CUSTOMER", "ADMIN")
+                .requestMatchers(HttpMethod.GET, EndPoint.USER_GET_ENDPOINT).hasAnyAuthority("CUSTOMER", "ADMIN")
                 .requestMatchers(HttpMethod.GET, EndPoint.ADMIN_GET_ENDPOINT).hasAuthority("ADMIN")
                 .anyRequest().permitAll()
         );

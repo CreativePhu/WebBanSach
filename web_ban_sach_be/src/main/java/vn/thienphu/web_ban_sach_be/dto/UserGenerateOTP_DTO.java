@@ -8,6 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserGenerateOTP_DTO {
-    private String userName;
     private String email;
 }
