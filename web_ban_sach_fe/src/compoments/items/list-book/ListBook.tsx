@@ -9,7 +9,7 @@ const ListBook: React.FC = () => {
     const [loading, setLoading] = React.useState<boolean>(true)
     const [error, setError] = React.useState<string>("")
     const [page, setPage] = React.useState<number>(0)
-    const pageSize:number = 12
+    const pageSize:number = 15
     const [hasMore, setHasMore] = React.useState<boolean>(true)
 
     const fetchListBook = async ():Promise<void> => {
