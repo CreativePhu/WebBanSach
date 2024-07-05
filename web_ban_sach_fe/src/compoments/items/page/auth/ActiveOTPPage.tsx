@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, useNavigate, useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import {CheckVerifyOTP} from "../../../api/Auth";
 import {useAppDispatch, useAppSelector} from "../../../redux/Hooks";
 import {updateVerified} from "../../../redux/slice/UserSlice";
@@ -24,9 +24,9 @@ const ActiveOTPPage: React.FC = () => {
 
     React.useEffect(() => {
         const id = setInterval(() => {
-            if (countDown > 0){
+            if (countDown > 0) {
                 setCountDown(prevState => prevState - 1)
-            }else{
+            } else {
                 clearInterval(id)
             }
         }, 1000);
@@ -46,8 +46,8 @@ const ActiveOTPPage: React.FC = () => {
 
     const sendOTPBack = () => {
         setLoadingResend(true)
-        const token = sessionStorage.getItem("token") || "";
-        setCountDown(30)
+        let token = sessionStorage.getItem("token") || ""
+        if(user) token  = localStorage.getItem("token") || ""
         GenerateOTP(token).catch((error) => {
             if ((error.message.includes("Failed to fetch") || error.message.includes("Network Error"))) {
                 setError("Lỗi mạng, vui lòng kiểm tra lại kết nối internet của bạn")
@@ -55,6 +55,7 @@ const ActiveOTPPage: React.FC = () => {
                 setError(error?.response.data.message || error.message || "")
             }
         }).finally(() => {
+            setCountDown(30)
             setLoadingResend(false)
         })
     }
@@ -103,19 +104,32 @@ const ActiveOTPPage: React.FC = () => {
                         }}/>
                         <span className={"text-danger"}>{error}</span>
                     </div>
-                    <span className={"d-flex align-items-center"}>
-                        <button
-                            onClick={() => {sendOTPBack()}}
-                            disabled={countDown > 0}
-                            type="button"
-                            className="btn btn-link p-0 text-decoration-none me-2">
-                            Gửi lại mã
-                        </button>
-                        <span className={`${countDown <= 0 ? "d-none" : "d-block"}`}>
-                            sau: {countDown}s
-                            <i className="bi bi-check-circle-fill ms-2 text-success"></i>
-                        </span>
-                    </span>
+                    {
+                        loadingResend ?
+                            <div className={"d-flex justify-content-start"}>
+                                <div className="spinner-border text-danger" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                            :
+                            <>
+                                <span className={"d-flex align-items-center"}>
+                                <button
+                                    onClick={() => {
+                                        sendOTPBack()
+                                    }}
+                                    disabled={countDown > 0}
+                                    type="button"
+                                    className="btn btn-link p-0 text-decoration-none me-2">
+                                    Gửi lại mã
+                                </button>
+                                <span className={`${countDown <= 0 ? "d-none" : "d-block"}`}>
+                                    sau: {countDown}s
+                                    <i className="bi bi-check-circle-fill ms-2 text-success"></i>
+                                </span>
+                                </span>
+                            </>
+                    }
                     {
                         !loading
                             ?
