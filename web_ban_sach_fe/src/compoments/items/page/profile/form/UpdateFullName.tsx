@@ -3,8 +3,8 @@ import {FullScreenOverlay} from "../../../FullScreenOverlay";
 import UserInf from "../../../../data_type/Auth/UserInf";
 import {useAppDispatch, useAppSelector} from "../../../../redux/Hooks";
 import {REGEX_NAME} from "../../../Regex";
-import {UpdateProfileUser} from "../../../../api/profile/UpdateProfileUser";
 import {updateUserFullName} from "../../../../redux/slice/UserSlice";
+import {UpdateUser} from "../../../../api/profile/UpdateProfileUser";
 
 interface UpdateFullNameProps {
     isVisible: boolean;
@@ -60,11 +60,11 @@ export const UpdateFullName: React.FC<UpdateFullNameProps> = ({isVisible, onClos
         if (validateForm()) {
             setLoading(true);
             if (user?.userName && token) {
-                UpdateProfileUser(user.userName, token, {fullName}).then(() => {
+                UpdateUser(token, {fullName}).then(() => {
                     dispatch(updateUserFullName(fullName))
                     setLoading(false);
                     onClose();
-                }).catch(err => {
+                }).catch((err:any) => {
                     setLoading(false);
                     console.error(err)
                     setError("Có lỗi xảy ra, vui lòng thử lại sau");

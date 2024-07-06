@@ -4,6 +4,7 @@ import {OrderInformation} from "./OrderInformation";
 import {UpdateFullName} from "./form/UpdateFullName";
 import {UpdatePhoneNumber} from "./form/UpdatePhoneNumber";
 import {UpdateEmail} from "./form/UpdateEmail";
+import {ChangePassword} from "./form/ChangePassword";
 
 export const ProfilePage = () => {
 
@@ -12,6 +13,7 @@ export const ProfilePage = () => {
     const [isVisibleFullName, setIsVisibleFullName] = React.useState<boolean>(false);
     const [isVisiblePhoneNumber, setIsVisiblePhoneNumber] = React.useState<boolean>(false);
     const [isVisibleEmail, setIsVisibleEmail] = React.useState<boolean>(false);
+    const [isVisibleChangePassword, setIsVisibleChangePassword] = React.useState<boolean>(false);
 
     const onCloseFullName = () => {
         setIsVisibleFullName(false);
@@ -35,6 +37,14 @@ export const ProfilePage = () => {
 
     const openEmail = () => {
         setIsVisibleEmail(true);
+    }
+
+    const onCloseChangePassword = () => {
+        setIsVisibleChangePassword(false);
+    }
+
+    const openChangePassword = () => {
+        setIsVisibleChangePassword(true);
     }
 
     return (
@@ -66,7 +76,12 @@ export const ProfilePage = () => {
                     <div className={"col-9 pe-0"}>
                         <div style={{minHeight: "500px"}}>
                             {
-                                activeTab ? <ProfileInfomation openEmail={openEmail} openFullName={openFullName} openPhoneNumber={openPhoneNumber} /> : <OrderInformation/>
+                                activeTab ? <ProfileInfomation
+                                        openEmail={openEmail}
+                                        openFullName={openFullName}
+                                        openPhoneNumber={openPhoneNumber}
+                                        openChangePassword={openChangePassword}/> :
+                                    <OrderInformation/>
                             }
                         </div>
                     </div>
@@ -75,6 +90,7 @@ export const ProfilePage = () => {
             <UpdateFullName isVisible={isVisibleFullName} onClose={onCloseFullName}/>
             <UpdatePhoneNumber isVisible={isVisiblePhoneNumber} onClose={onClosePhoneNumber}/>
             <UpdateEmail isVisible={isVisibleEmail} onClose={onCloseEmail}/>
+            <ChangePassword isVisible={isVisibleChangePassword} onClose={onCloseChangePassword}/>
         </div>
     );
 }

@@ -7,9 +7,10 @@ interface ProfileInfomationProps {
     openFullName: () => void;
     openPhoneNumber: () => void;
     openEmail: () => void;
+    openChangePassword: () => void;
 }
 
-export const ProfileInfomation: React.FC<ProfileInfomationProps> = ({openEmail, openPhoneNumber, openFullName}) => {
+export const ProfileInfomation: React.FC<ProfileInfomationProps> = ({openEmail, openPhoneNumber, openFullName, openChangePassword}) => {
 
     const user: UserInf | null = useAppSelector(state => state.User.value)
 
@@ -57,7 +58,7 @@ export const ProfileInfomation: React.FC<ProfileInfomationProps> = ({openEmail, 
                     <div>
                         <span className={"fw-semibold"}>Mật khẩu: </span>
                         <span>**********</span>
-                        <i className="bi bi-pencil-square ms-2 text-primary cussor-pointer"></i>
+                        <i onClick={() => {openChangePassword()}} className="bi bi-pencil-square ms-2 text-primary cussor-pointer"></i>
                     </div>
                 </div>
             </div>
