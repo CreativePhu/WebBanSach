@@ -15,9 +15,9 @@ import vn.thienphu.web_ban_sach_be.service.UserService;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserService userService;
-    private AuthenticationManager authenticationManager;
-    private JWTService jwtService;
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final JWTService jwtService;
 
     @Autowired
     public UserController(UserService userService, AuthenticationManager authenticationManager, JWTService jwtService) {
@@ -55,9 +55,14 @@ public class UserController {
             }
     }
 
-    @PutMapping("/{username}/update")
-    private ResponseEntity<?> updateUser(@PathVariable String username ,@RequestBody UserUpdateDTO userUpdateDTO) {
-        return userService.updateUser(username, userUpdateDTO);
+    @PatchMapping("/update")
+    private ResponseEntity<?> updateUser(@RequestBody UserUpdateDTO userUpdateDTO, @RequestHeader("Authorization") String authorizationHeader){
+        return userService.updateUser(authorizationHeader, userUpdateDTO);
+    }
+
+    @PostMapping("/change-password")
+    private ResponseEntity<?> changePassword(@RequestBody UserChangePasswordDTO userChangePasswordDTO, @RequestHeader("Authorization") String authorizationHeader){
+        return userService.changePassword(authorizationHeader, userChangePasswordDTO);
     }
 
     @GetMapping("/generate-otp")

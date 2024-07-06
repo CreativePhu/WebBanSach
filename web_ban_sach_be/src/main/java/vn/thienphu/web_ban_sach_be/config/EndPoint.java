@@ -28,12 +28,13 @@ public class EndPoint {
             "/orders",
     };
 
-    public static final String[] USER_PUT_ENDPOINT = {
-            "/users/**",
+    public static final String[] USER_PATCH_ENDPOINT = {
+            "/users/update",
     };
 
     public static final String[] USER_POST_ENDPOINT = {
             "/check-is-verified/**",
+            "/users/change-password",
     };
 
     public static final String[] USER_GET_ENDPOINT = {
@@ -48,6 +49,7 @@ public class EndPoint {
             "GET",
             "POST",
             "PUT",
-            "DELETE"
+            "DELETE",
+            "PATCH"
     };
 }

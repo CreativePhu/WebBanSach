@@ -4,6 +4,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.thienphu.web_ban_sach_be.dao.RoleRepository;
@@ -24,14 +27,16 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final EmailService emailService;
     private final JWTService jwtService;
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, RoleRepository roleRepository, EmailService emailService, JWTService jwtService) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, RoleRepository roleRepository, EmailService emailService, JWTService jwtService, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.emailService = emailService;
         this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
     }
 
     @Transactional
@@ -88,7 +93,9 @@ public class UserService {
     }
 
     @Transactional
-    public ResponseEntity<?> updateUser(String username, UserUpdateDTO userUpdateDTO) {
+    public ResponseEntity<?> updateUser(String authorizationHeader, UserUpdateDTO userUpdateDTO) {
+        String jwt = authorizationHeader.substring(7);
+        String username = jwtService.extractUsername(jwt);
         User user = userRepository.findByUserName(username);
         if (user != null) {
             if (userUpdateDTO.getFullName() != null) user.setFullName(userUpdateDTO.getFullName());
@@ -120,6 +127,27 @@ public class UserService {
             return ResponseEntity.ok("Email đã được xác thực.");
         } else {
             return ResponseEntity.badRequest().body("Email chưa được xác thực.");
+        }
+    }
+
+    public ResponseEntity<?> changePassword(String authorizationHeader, UserChangePasswordDTO userChangePasswordDTO) {
+        String jwt = authorizationHeader.substring(7);
+        String username = jwtService.extractUsername(jwt);
+        try {
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, userChangePasswordDTO.getPassword()));
+            if (authentication.isAuthenticated()) {
+                User user = userRepository.findByUserName(username);
+                if (user != null) {
+                    if (userChangePasswordDTO.getPassword() != null)
+                        user.setPassword(passwordEncoder.encode(userChangePasswordDTO.getNewPassword()));
+                    userRepository.save(user);
+                    return ResponseEntity.ok("Cập nhật thành công");
+                }
+                return ResponseEntity.badRequest().body("Người dùng không tồn tại");
+            }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponseDTO(HttpStatus.UNAUTHORIZED.value(), "Tài khoản hoặc mật khẩu không chính xác", System.currentTimeMillis()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponseDTO(HttpStatus.UNAUTHORIZED.value(), "Tài khoản hoặc mật khẩu không chính xác", System.currentTimeMillis()));
         }
     }
 }
