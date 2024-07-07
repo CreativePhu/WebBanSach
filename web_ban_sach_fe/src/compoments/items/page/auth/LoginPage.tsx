@@ -93,7 +93,7 @@ const LoginPage: React.FC = () => {
                         <span className={"text-danger"}>{errorPassword}</span>
                     </div>
                     <p className={"mt-2"}>
-                        <Link className={"text-decoration-none"} to={""}>Quên mật khẩu?</Link>
+                        <Link className={"text-decoration-none"} to={"/forget-password"}>Quên mật khẩu?</Link>
                     </p>
                     {
                         !loading

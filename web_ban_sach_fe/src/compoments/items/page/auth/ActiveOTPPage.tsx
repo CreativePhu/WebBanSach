@@ -46,9 +46,9 @@ const ActiveOTPPage: React.FC = () => {
 
     const sendOTPBack = () => {
         setLoadingResend(true)
-        let token = sessionStorage.getItem("token") || ""
-        if(user) token  = localStorage.getItem("token") || ""
-        GenerateOTP(token).catch((error) => {
+        let email = sessionStorage.getItem("email") || ""
+        if(user) email = user.email
+        GenerateOTP(email).catch((error) => {
             if ((error.message.includes("Failed to fetch") || error.message.includes("Network Error"))) {
                 setError("Lỗi mạng, vui lòng kiểm tra lại kết nối internet của bạn")
             } else {

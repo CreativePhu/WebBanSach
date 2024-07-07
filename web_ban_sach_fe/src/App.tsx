@@ -19,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {PaymentPage, ProfilePage} from "./compoments/items/page";
 import {NotFoundPage} from "./compoments/items/page/Error/NotFoundPage";
 import {IsNotVerifyPage} from "./compoments/items/page/auth/IsNotVerifyPage";
+import ForgetPassword from "./compoments/items/page/auth/ForgotPassword";
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
                 <Route path={"/search/*"} element={<SearchPage/>}/>
                 <Route path={"/book-detail/*"} element={<BookDetailPage/>}/>
                 <Route path={"/register"} element={<RegisterPage/>}/>
+                <Route path={"/forget-password"} element={<ForgetPassword/>}/>
                 <Route path={"/notVerifyEmail"} element={<IsNotVerifyPage/>}/>
                 <Route path={"/active-otp/*"} element={<ActiveOTPPage />}/>
                 <Route path={"/cart"} element={<CartPage />}/>
