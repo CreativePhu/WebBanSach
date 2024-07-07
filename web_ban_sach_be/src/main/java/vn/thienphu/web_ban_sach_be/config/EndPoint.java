@@ -18,6 +18,7 @@ public class EndPoint {
             "/wards",
             "/orders",
             "/order-book",
+            "/users/generate-otp",
     };
 
     public static final String[] PUBLIC_POST_ENDPOINT = {
@@ -25,6 +26,7 @@ public class EndPoint {
             "/users/verify",
             "/users/verify/token",
             "/users/login",
+            "/users/forgot-password",
             "/orders",
     };
 
@@ -33,12 +35,12 @@ public class EndPoint {
     };
 
     public static final String[] USER_POST_ENDPOINT = {
-            "/check-is-verified/**",
+            "/users/check-is-verified/**",
             "/users/change-password",
     };
 
     public static final String[] USER_GET_ENDPOINT = {
-            "/users/generate-otp",
+
     };
 
     public static final String[] ADMIN_GET_ENDPOINT = {

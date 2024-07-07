@@ -58,7 +58,7 @@ public class UserService {
         userRepository.save(user);
         sendVerificationEmail(user.getEmail(), user.getVerificationCode());
 
-        return ResponseEntity.ok(new JwtDTO(jwtService.generateToken(user.getUserName())));
+        return ResponseEntity.ok(new UserInfoDTO(user.getUserID(), user.getUserName(), user.getFullName(), user.getPhone(), user.getEmail(), user.isVerified(), user.getCreatedAt(), user.getUpdatedAt()));
     }
 
     private String generateVerificationCode() {
@@ -107,10 +107,8 @@ public class UserService {
         return ResponseEntity.badRequest().body("Người dùng không tồn tại");
     }
 
-    public ResponseEntity<?> generateOTP(String authorizationHeader) {
-        String jwt = authorizationHeader.substring(7);
-        String username = jwtService.extractUsername(jwt);
-        User user = userRepository.findByUserName(username);
+    public ResponseEntity<?> generateOTP(String email) {
+        User user = userRepository.findByEmail(email);
         if (user != null) {
             String otp = generateVerificationCode();
             user.setVerificationCode(otp);
@@ -149,5 +147,15 @@ public class UserService {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponseDTO(HttpStatus.UNAUTHORIZED.value(), "Tài khoản hoặc mật khẩu không chính xác", System.currentTimeMillis()));
         }
+    }
+
+    public ResponseEntity<?> forgetPassword(UserForgetPasswordDTO userForgetPasswordDTO) {
+        User user = userRepository.findByEmail(userForgetPasswordDTO.getEmail());
+        if (user != null) {
+            user.setPassword(passwordEncoder.encode(userForgetPasswordDTO.getNewPassword()));
+            userRepository.save(user);
+            return ResponseEntity.ok("Cập nhật mật khẩu thành công");
+        }
+        return ResponseEntity.badRequest().body("Email không tồn tại");
     }
 }

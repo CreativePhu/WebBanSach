@@ -65,14 +65,19 @@ public class UserController {
         return userService.changePassword(authorizationHeader, userChangePasswordDTO);
     }
 
-    @GetMapping("/generate-otp")
-    private ResponseEntity<?> generateOTP(@RequestHeader("Authorization") String authorizationHeader) {
-        return userService.generateOTP(authorizationHeader);
+    @PostMapping("/generate-otp")
+    private ResponseEntity<?> generateOTP(@RequestBody GenerateOTPDTO generateOTPDTO){
+        return userService.generateOTP(generateOTPDTO.getEmail());
     }
 
     @GetMapping("/check-is-verified/{email}")
     private ResponseEntity<?> checkIsVerified(@PathVariable String email) {
         return userService.checkIsVerified(email);
+    }
+
+    @PostMapping("/forget-password")
+    private ResponseEntity<?> forgetPassword(@RequestBody UserForgetPasswordDTO userForgetPasswordDTO) {
+        return userService.forgetPassword(userForgetPasswordDTO);
     }
 
 }
