@@ -4,7 +4,7 @@ import UserInf from "../../../../data_type/Auth/UserInf";
 import {useAppDispatch, useAppSelector} from "../../../../redux/Hooks";
 import {REGEX_PHONENUMBER} from "../../../Regex";
 import {updateUserPhoneNumber} from "../../../../redux/slice/UserSlice";
-import {UpdateUser} from "../../../../api/profile/UpdateProfileUser";
+import {UpdateUserAPI} from "../../../../api/profile/UpdateUserAPI";
 
 interface UpdatePhoneNumberProps {
     isVisible: boolean;
@@ -46,7 +46,7 @@ export const UpdatePhoneNumber: React.FC<UpdatePhoneNumberProps> = ({isVisible, 
         if (validateForm()) {
             setLoading(true);
             if (user?.userName && token) {
-                UpdateUser(token, {phoneNumber}).then(() => {
+                UpdateUserAPI(token, {phoneNumber}).then(() => {
                     dispatch(updateUserPhoneNumber(phoneNumber))
                     setLoading(false);
                     onClose();

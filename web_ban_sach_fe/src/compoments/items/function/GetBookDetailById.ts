@@ -1,14 +1,16 @@
-import GetBookById from "../../api/Product/GetBookById";
 import BookDetailInf from "../../data_type/Product/BookDetailInf";
-import GetAuthorByBookId from "../../api/Product/GetAuthorByBookId";
-import GetCategoryByBookID from "../../api/Product/GetCategoryByBookID";
-import GetBookImageById from "../../api/Product/GetBookImageById";
+import {
+    FindBookByBookIdAPI,
+    GetAuthorByBookIdAPI,
+    GetBookImageByIdAPI,
+    GetCategoryByBookIdAPI
+} from "../../api/Product";
 
 export const GetBookDetailById = async (bookID: number): Promise<BookDetailInf> => {
-    const book = await GetBookById(bookID);
-    const bookAuthor = await GetAuthorByBookId(bookID);
-    const bookCategory = await GetCategoryByBookID(bookID);
-    const bookImage = await GetBookImageById(bookID);
+    const book = await FindBookByBookIdAPI(bookID);
+    const bookAuthor = await GetAuthorByBookIdAPI(bookID);
+    const bookCategory = await GetCategoryByBookIdAPI(bookID);
+    const bookImage = await GetBookImageByIdAPI(bookID);
     const bookDiscount = 10;
 
     return {

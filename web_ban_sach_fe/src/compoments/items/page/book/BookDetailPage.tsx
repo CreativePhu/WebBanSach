@@ -2,21 +2,22 @@ import React from "react";
 import BookImageInf from "../../../data_type/Product/BookImageInf";
 import BookInf from "../../../data_type/Product/BookInf";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import GetBookById from "../../../api/Product/GetBookById";
-import GetBookImageById from "../../../api/Product/GetBookImageById";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import AuthorInf from "../../../data_type/Product/AuthorInf";
-import GetAuthorByBookId from "../../../api/Product/GetAuthorByBookId";
 import CategoryInf from "../../../data_type/Product/CategoryInf";
-import GetCategoryByBookID from "../../../api/Product/GetCategoryByBookID";
 import PublisherInf from "../../../data_type/Product/PublisherInf";
-import GetPublisherByBookID from "../../../api/Product/GetPublisherByBookID";
 import formatCurrencyVND from "../../function/FormatCurrencyVND";
 import BookCartInf from "../../../data_type/Product/BookCartInf";
 import {useDispatch} from "react-redux";
 import {setCounter} from "../../../redux/slice/CounterSlice";
 import {Bounce, toast} from "react-toastify";
+import {
+    FindBookByBookIdAPI,
+    GetAuthorByBookIdAPI,
+    GetBookImageByIdAPI,
+    GetCategoryByBookIdAPI, GetPublisherByBookIdAPI
+} from "../../../api/Product";
 
 const BookDetailPage: React.FC = () => {
 
@@ -42,11 +43,11 @@ const BookDetailPage: React.FC = () => {
         if (bookId) {
             try {
                 setLoading(true)
-                const book = await GetBookById(Number(bookId));
-                const images = await GetBookImageById(Number(bookId));
-                const authors = await GetAuthorByBookId(Number(bookId));
-                const categories = await GetCategoryByBookID(Number(bookId));
-                const publisher = await GetPublisherByBookID(Number(bookId));
+                const book = await FindBookByBookIdAPI(Number(bookId));
+                const images = await GetBookImageByIdAPI(Number(bookId));
+                const authors = await GetAuthorByBookIdAPI(Number(bookId));
+                const categories = await GetCategoryByBookIdAPI(Number(bookId));
+                const publisher = await GetPublisherByBookIdAPI(Number(bookId));
                 setBookDetail(book);
                 setBookImages(images);
                 setBookAuthor(authors);

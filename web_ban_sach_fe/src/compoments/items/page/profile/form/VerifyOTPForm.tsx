@@ -1,8 +1,8 @@
 import React from "react";
-import {CheckVerifyOTP} from "../../../../api/Auth";
+import {VerifyOTPAPI} from "../../../../api/Auth";
 import {useAppSelector} from "../../../../redux/Hooks";
 import UserInf from "../../../../data_type/Auth/UserInf";
-import {UpdateUser} from "../../../../api/profile/UpdateProfileUser";
+import {UpdateUserAPI} from "../../../../api/profile/UpdateUserAPI";
 
 interface VerifyOTPFormProps {
     onClose: () => void;
@@ -33,9 +33,9 @@ export const VerifyOTPForm: React.FC<VerifyOTPFormProps> = ({onClose, modalRef, 
         }
         setLoading(true);
         try {
-            await CheckVerifyOTP({email: user!.email, verificationCode: OPT});
+            await VerifyOTPAPI({email: user!.email, verificationCode: OPT});
             try {
-                await UpdateUser(token, {email});
+                await UpdateUserAPI(token, {email});
                 onClose();
             } catch (e) {
                 console.error("Update profile error:", e);

@@ -2,9 +2,7 @@ import React from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {REGEX_EMAIL, REGEX_PASSWORD, REGEX_USERNAME} from "../../Regex";
 import UserRegisterInf from "../../../data_type/Auth/UserRegisterInf";
-import {UserRegister} from "../../../api/Auth";
-import {checkUserNameExists} from "../../../api/Auth";
-import {checkEmailExists} from "../../../api/Auth";
+import {checkEmailExistsAPI, checkUserNameExistAPI, UserRegisterAPI} from "../../../api/Auth";
 
 const RegisterPage: React.FC = () => {
 
@@ -79,14 +77,14 @@ const RegisterPage: React.FC = () => {
         if (checkValidateForm()) {
 
             setLoading(true)
-            Promise.all([checkUserNameExists(username), checkEmailExists(email)]).then((response) => {
+            Promise.all([checkUserNameExistAPI(username), checkEmailExistsAPI(email)]).then((response) => {
                 if (response[0]) setErrorUsername("Tên tài khoản đã tồn tại")
                 if (response[1]) setErrorEmail("Email đã tồn tại")
                 return (response[0] && response[1])
             }).then((result) => {
                 if (result) return Promise.reject(new Error(" "))
                 const user: UserRegisterInf = {userName: username, email, passWord: password}
-                return UserRegister(user)
+                return UserRegisterAPI(user)
             }).then((userInfo) => {
                 sessionStorage.setItem("email", userInfo.email)
                 navigate(`/active-otp?email=${email}`)

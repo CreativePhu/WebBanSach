@@ -1,9 +1,9 @@
 import React from "react";
 import {useAppSelector} from "../../../../redux/Hooks";
 import UserInf from "../../../../data_type/Auth/UserInf";
-import {UserLogin} from "../../../../api/Auth";
+import {UserLoginAPI} from "../../../../api/Auth";
 import {VerifyOTPForm} from "./VerifyOTPForm";
-import {GenerateOTP} from "../../../../api/Auth/GenerateOTP";
+import {GenerateOTPAPI} from "../../../../api/Auth/GenerateOTPAPI";
 
 interface VerifyAccountFormProps {
     onClose: () => void;
@@ -37,7 +37,7 @@ export const VerifyAccountForm: React.FC<VerifyAccountFormProps> = ({onClose, mo
         }
 
         try {
-            await UserLogin({userName: user!.userName, passWord: password});
+            await UserLoginAPI({userName: user!.userName, passWord: password});
         } catch (e) {
             setLoading(false);
             setErrorPassword("Tên tài khoản hoặc mật khẩu không chính xác");
@@ -46,7 +46,7 @@ export const VerifyAccountForm: React.FC<VerifyAccountFormProps> = ({onClose, mo
 
         try {
             if (token) {
-                await GenerateOTP(token)
+                await GenerateOTPAPI(token)
             }else{
                 throw new Error("Không tìm thấy token")
             }

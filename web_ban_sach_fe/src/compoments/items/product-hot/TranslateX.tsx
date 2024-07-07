@@ -1,7 +1,7 @@
 import React from "react";
 import BookProduct from "../Book";
 import BookInf from "../../data_type/Product/BookInf";
-import GetTop10BookNew from "../../api/Product/GetTop10BookNew";
+import {GetTop10BookNewAPI} from "../../api/Product";
 
 const TranslateX: React.FC = () => {
 
@@ -22,7 +22,7 @@ const TranslateX: React.FC = () => {
     // fetch list book
     const fetchListBook = async () => {
         try {
-            const response: BookInf[] = await GetTop10BookNew();
+            const response: BookInf[] = await GetTop10BookNewAPI();
             setListBook(response)
             setLoading(false)
         } catch (e: any) {

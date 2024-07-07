@@ -4,7 +4,7 @@ import {REGEX_EMAIL} from "../../../Regex";
 import UserInf from "../../../../data_type/Auth/UserInf";
 import {useAppSelector} from "../../../../redux/Hooks";
 import {VerifyAccountForm} from "./VerifyAccountForm";
-import {checkEmailExists} from "../../../../api/Auth";
+import {checkEmailExistsAPI} from "../../../../api/Auth";
 
 interface UpdateEmailProps {
     isVisible: boolean;
@@ -51,7 +51,7 @@ export const UpdateEmail: React.FC<UpdateEmailProps> = ({isVisible, onClose}) =>
                 check = false
                 setError("Email không hợp lệ");
             } else {
-                if (await checkEmailExists(email)) {
+                if (await checkEmailExistsAPI(email)) {
                     setError("Email đã tồn tại");
                     check = false;
                 }

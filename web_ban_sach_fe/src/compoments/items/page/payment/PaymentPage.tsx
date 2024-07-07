@@ -1,13 +1,10 @@
 import React from "react";
 import UserInf from "../../../data_type/Auth/UserInf";
 import {useAppDispatch, useAppSelector} from "../../../redux/Hooks";
-import GetProvince from "../../../api/Address/GetProvince";
 import ProvinceInf from "../../../data_type/Address/ProvinceInf";
 import DistrictInf from "../../../data_type/Address/DistrictInf";
 import WardInf from "../../../data_type/Address/WardInf";
 import PaymentDetailInf from "../../../data_type/Payment/PaymentDetailInf";
-import GetDistrict from "../../../api/Address/GetDistrict";
-import GetWard from "../../../api/Address/GetWard";
 import BookCartInf from "../../../data_type/Product/BookCartInf";
 import BookDetailInf from "../../../data_type/Product/BookDetailInf";
 import {GetBookDetailById} from "../../function";
@@ -16,9 +13,10 @@ import {DiscountProductMoney, GetImagePrimaryFromArrayImage} from "../../functio
 import {REGEX_EMAIL, REGEX_NAME, REGEX_PHONENUMBER} from "../../Regex";
 import {Link, useNavigate} from "react-router-dom";
 import PaymentRequest from "../../../data_type/Payment/PaymentRequest";
-import CreateOrder from "../../../api/Order/CreateOrder";
 import {setCounter} from "../../../redux/slice/CounterSlice";
 import {ListBookPayment} from "../../../data_type/Payment/ListBookPayment";
+import {CreateOrderAPI} from "../../../api/Order/CreateOrderAPI";
+import {GetDistrictAPI, GetProvinceAPI, GetWardAPI} from "../../../api/Address";
 
 enum PaymentMethod {
     CASH_ON_DELIVERY = 'CASH_ON_DELIVERY',
@@ -202,7 +200,7 @@ export const PaymentPage: React.FC = () => {
 
     const payment = () => {
         if (validateForm()) {
-            CreateOrder(paymentRequest).then(() => {
+            CreateOrderAPI(paymentRequest).then(() => {
                 alert("Đặt hàng thành công")
                 ressetPaymentDetail()
                 removeBookInCart(listIdBookPayment)
@@ -226,7 +224,7 @@ export const PaymentPage: React.FC = () => {
     }, [user]);
 
     React.useEffect(() => {
-        GetProvince().then(data => {
+        GetProvinceAPI().then(data => {
             setProvinces(data)
         }).catch(e => {
             console.log(e)
@@ -235,7 +233,7 @@ export const PaymentPage: React.FC = () => {
 
     React.useEffect(() => {
         if (paymentDetail.province.provinceID !== 0) {
-            GetDistrict(paymentDetail.province.provinceID).then(data => {
+            GetDistrictAPI(paymentDetail.province.provinceID).then(data => {
                 setDistricts(data)
                 if(data.length === 0) {
                     setPaymentDetail(prevPaymentDetail => ({
@@ -258,9 +256,9 @@ export const PaymentPage: React.FC = () => {
 
     React.useEffect(() => {
         if (paymentDetail.district.districtID !== 0) {
-            GetWard(paymentDetail.district.districtID).then(data => {
+            GetWardAPI(paymentDetail.district.districtID).then(data => {
                 setWards(data)
-            }).catch(e => {
+            }).catch((e:any) => {
                 console.log(e)
             })
             return

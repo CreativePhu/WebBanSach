@@ -1,9 +1,9 @@
 import React from "react";
 import BookInf from "../data_type/Product/BookInf";
 import BookImageInf from "../data_type/Product/BookImageInf";
-import GetBookImageById from "../api/Product/GetBookImageById";
 import {Link} from "react-router-dom";
 import formatCurrencyVND from "./function/FormatCurrencyVND";
+import {GetBookImageByIdAPI} from "../api/Product";
 
 interface BookProps {
     book: BookInf
@@ -21,7 +21,7 @@ const BookProduct: React.FC<BookProps> = ({book, width, height, isHover}) => {
 
     const fetchListImage = async () => {
         try {
-            const listImage: BookImageInf[] = await GetBookImageById(book.bookID);
+            const listImage: BookImageInf[] = await GetBookImageByIdAPI(book.bookID);
             const primaryImage = listImage.find((image) => image?.primary === true)
             setIsPrimaryimage(primaryImage?.bookImage || "")
             setLoading(false)

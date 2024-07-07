@@ -2,7 +2,7 @@ import React from "react";
 import {Link, useNavigate} from "react-router-dom";
 import UserInf from "../../../data_type/Auth/UserInf";
 import {useAppSelector} from "../../../redux/Hooks";
-import {GenerateOTP} from "../../../api/Auth/GenerateOTP";
+import {GenerateOTPAPI} from "../../../api/Auth/GenerateOTPAPI";
 
 export const IsNotVerifyPage: React.FC = () => {
 
@@ -13,7 +13,7 @@ export const IsNotVerifyPage: React.FC = () => {
 
     const handleVerify = () => {
         setLoading(true)
-        GenerateOTP(user!.email).then(()  => {
+        GenerateOTPAPI(user!.email).then(()  => {
             navigate(`/active-otp?email=${user!.email}`)
             setLoading(false)
 

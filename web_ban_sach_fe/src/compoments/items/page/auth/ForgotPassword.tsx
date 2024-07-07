@@ -1,8 +1,8 @@
 import React from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {REGEX_EMAIL, REGEX_PASSWORD} from "../../Regex";
-import {GenerateOTP} from "../../../api/Auth/GenerateOTP";
-import {CheckVerifyOTP} from "../../../api/Auth";
+import {GenerateOTPAPI} from "../../../api/Auth/GenerateOTPAPI";
+import {VerifyOTPAPI} from "../../../api/Auth";
 import {ForgetPasswordAPI} from "../../../api/Auth/ForgetPasswordAPI";
 
 const ForgetPassword: React.FC = () => {
@@ -94,7 +94,7 @@ const ForgetPassword: React.FC = () => {
     const GenerateOTPCode = () => {
         setLoadingOTP(true)
         setError("")
-        GenerateOTP(email).then((res) => {
+        GenerateOTPAPI(email).then((res) => {
             setCountDown(120)
             setError("Mã xác thực đã được gửi đến email của bạn")
         }).catch((error) => {
@@ -112,7 +112,7 @@ const ForgetPassword: React.FC = () => {
         e.preventDefault();
         if (checkValidateFormVerifyOTP()) {
             setLoading(true)
-            CheckVerifyOTP({email, verificationCode: otpCode}).then((res) => {
+            VerifyOTPAPI({email, verificationCode: otpCode}).then((res) => {
                 setIsShow(true)
             }).catch((error) => {
                 if ((error.message.includes("Failed to fetch") || error.message.includes("Network Error"))) {

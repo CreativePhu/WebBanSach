@@ -1,3 +1,3 @@
-export * from './GetProvince'
-export * from './GetWard'
-export * from './GetDistrict'
+export * from './GetProvinceAPI'
+export * from './GetWardAPI'
+export * from './GetDistrictAPI'

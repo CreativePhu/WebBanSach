@@ -1,10 +1,10 @@
 import React from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import {CheckVerifyOTP} from "../../../api/Auth";
+import {VerifyOTPAPI} from "../../../api/Auth";
 import {useAppDispatch, useAppSelector} from "../../../redux/Hooks";
 import {updateVerified} from "../../../redux/slice/UserSlice";
 import UserInf from "../../../data_type/Auth/UserInf";
-import {GenerateOTP} from "../../../api/Auth/GenerateOTP";
+import {GenerateOTPAPI} from "../../../api/Auth/GenerateOTPAPI";
 
 const ActiveOTPPage: React.FC = () => {
 
@@ -48,7 +48,7 @@ const ActiveOTPPage: React.FC = () => {
         setLoadingResend(true)
         let email = sessionStorage.getItem("email") || ""
         if(user) email = user.email
-        GenerateOTP(email).catch((error) => {
+        GenerateOTPAPI(email).catch((error) => {
             if ((error.message.includes("Failed to fetch") || error.message.includes("Network Error"))) {
                 setError("Lỗi mạng, vui lòng kiểm tra lại kết nối internet của bạn")
             } else {
@@ -64,7 +64,7 @@ const ActiveOTPPage: React.FC = () => {
         e.preventDefault();
         if (checkValidateForm()) {
             setLoading(true)
-            CheckVerifyOTP({email, verificationCode: codeOTP}).then(() => {
+            VerifyOTPAPI({email, verificationCode: codeOTP}).then(() => {
                 if (user) {
                     dispatch(updateVerified(true))
                 }

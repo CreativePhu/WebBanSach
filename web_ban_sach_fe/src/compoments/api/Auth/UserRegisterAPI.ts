@@ -12,7 +12,7 @@ interface UserRegisterResponseInf {
     updatedAt: Date;
 }
 
-export const UserRegister = async (body: UserRegisterInf):Promise<UserRegisterResponseInf> => {
+export const UserRegisterAPI = async (body: UserRegisterInf):Promise<UserRegisterResponseInf> => {
     const HOST = process.env.REACT_APP_HOST_BE;
     const response = await axios.post(`${HOST}/users/register`, body);
     return response.data;

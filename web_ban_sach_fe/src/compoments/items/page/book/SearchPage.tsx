@@ -1,8 +1,8 @@
 import React from "react";
 import BookInf from "../../../data_type/Product/BookInf";
 import BookProduct from "../../Book";
-import FindBookByBookTitle from "../../../api/Product/FindBookByBookTitle";
 import {useSearchParams} from "react-router-dom";
+import {FindBookByBookTitleAPI} from "../../../api/Product/FindBookByBookTitleAPI";
 
 const SearchPage: React.FC = () => {
 
@@ -20,7 +20,7 @@ const SearchPage: React.FC = () => {
     const fetchListBook = async (): Promise<void> => {
         try {
             setLoading(true)
-            const listBookReq: BookInf[] = await FindBookByBookTitle(bookTitle, page, pageSize)
+            const listBookReq: BookInf[] = await FindBookByBookTitleAPI(bookTitle, page, pageSize)
             setListBook([...listBook, ...listBookReq])
             setLoading(false)
             if (listBook.length === 0) {

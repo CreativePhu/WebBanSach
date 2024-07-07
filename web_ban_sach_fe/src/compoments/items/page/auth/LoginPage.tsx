@@ -1,7 +1,7 @@
 import React from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {UserLogin} from "../../../api/Auth";
-import {verifyToken} from "../../../api/Auth";
+import {UserLoginAPI} from "../../../api/Auth";
+import {verifyTokenAPI} from "../../../api/Auth";
 import {updateUser} from "../../../redux/slice/UserSlice";
 import {useAppDispatch} from "../../../redux/Hooks";
 import UserInf from "../../../data_type/Auth/UserInf";
@@ -42,12 +42,12 @@ const LoginPage: React.FC = () => {
         e.preventDefault();
         if (checkValidateForm()) {
             setLoading(true)
-            UserLogin({userName: username, passWord: password}).then((response) => {
+            UserLoginAPI({userName: username, passWord: password}).then((response) => {
                 const jwt: string = response.token
                 localStorage.setItem("token", jwt)
                 return jwt
             }).then((jwt: string) => {
-                return verifyToken(jwt)
+                return verifyTokenAPI(jwt)
             }).then((user: UserInf) => {
                 dispatch(updateUser(user));
                 if (user.verified) {

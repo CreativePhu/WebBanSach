@@ -1,6 +1,5 @@
 import React from "react";
 import {FullScreenOverlay} from "../../../FullScreenOverlay";
-import {UpdateUser} from "../../../../api/profile/UpdateProfileUser";
 import {REGEX_PASSWORD} from "../../../Regex";
 import {ChangePasswordAPI} from "../../../../api/Auth/ChangePasswordAPI";
 

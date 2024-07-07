@@ -197,12 +197,7 @@ function Navbar() {
                                                         </li>
                                                         <li>
                                                             <Link to={"/profile"} className="dropdown-item text-danger">Thông
-                                                                tin cá nhân</Link>
-                                                        </li>
-                                                        <li>
-                                                            <Link to={"/history-order"}
-                                                                  className="dropdown-item text-danger">Lich sử mua
-                                                                hàng</Link>
+                                                                tin tài khoản</Link>
                                                         </li>
                                                         <li>
                                                             <Link to={"/cart"} className="dropdown-item text-danger">Giỏ

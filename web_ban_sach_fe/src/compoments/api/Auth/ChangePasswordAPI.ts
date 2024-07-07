@@ -5,7 +5,7 @@ interface ChangePasswordInf {
     newPassword: string;
 }
 
-export const ChangePasswordAPI = async (token: string, body: ChangePasswordInf) => {
+export const ChangePasswordAPI = async (token: string, body: ChangePasswordInf): Promise<String> => {
     const HOST = process.env.REACT_APP_HOST_BE;
     const response = await axios.post(`${HOST}/users/change-password`, body,{
         headers: {

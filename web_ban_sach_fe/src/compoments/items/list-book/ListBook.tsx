@@ -1,7 +1,7 @@
 import React from "react";
 import BookInf from "../../data_type/Product/BookInf";
 import BookProduct from "../Book";
-import GetBooks from "../../api/Product/GetBooks";
+import {GetBooksByPageAPI} from "../../api/Product";
 
 const ListBook: React.FC = () => {
 
@@ -15,7 +15,7 @@ const ListBook: React.FC = () => {
     const fetchListBook = async ():Promise<void> => {
         try {
             setLoading(true)
-            const listBook: BookInf[] = await GetBooks(pageSize,page);
+            const listBook: BookInf[] = await GetBooksByPageAPI(pageSize,page);
             setListBook(prevState => [...prevState, ...listBook])
             setLoading(false)
             if(listBook.length === 0) {

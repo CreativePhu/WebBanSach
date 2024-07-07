@@ -4,7 +4,7 @@ import UserInf from "../../../../data_type/Auth/UserInf";
 import {useAppDispatch, useAppSelector} from "../../../../redux/Hooks";
 import {REGEX_NAME} from "../../../Regex";
 import {updateUserFullName} from "../../../../redux/slice/UserSlice";
-import {UpdateUser} from "../../../../api/profile/UpdateProfileUser";
+import {UpdateUserAPI} from "../../../../api/profile/UpdateUserAPI";
 
 interface UpdateFullNameProps {
     isVisible: boolean;
@@ -60,7 +60,7 @@ export const UpdateFullName: React.FC<UpdateFullNameProps> = ({isVisible, onClos
         if (validateForm()) {
             setLoading(true);
             if (user?.userName && token) {
-                UpdateUser(token, {fullName}).then(() => {
+                UpdateUserAPI(token, {fullName}).then(() => {
                     dispatch(updateUserFullName(fullName))
                     setLoading(false);
                     onClose();
