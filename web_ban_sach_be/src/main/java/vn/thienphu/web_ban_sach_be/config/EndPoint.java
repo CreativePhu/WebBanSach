@@ -1,7 +1,5 @@
 package vn.thienphu.web_ban_sach_be.config;
 
-import java.util.List;
-
 public class EndPoint {
 
     public static final String ALLOWED_ORIGIN = "http://localhost:3000";
@@ -16,7 +14,6 @@ public class EndPoint {
             "/districts",
             "/provinces",
             "/wards",
-            "/orders",
             "/order-book",
             "/users/generate-otp",
     };
@@ -40,7 +37,7 @@ public class EndPoint {
     };
 
     public static final String[] USER_GET_ENDPOINT = {
-
+            "/orders",
     };
 
     public static final String[] ADMIN_GET_ENDPOINT = {

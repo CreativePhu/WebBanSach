@@ -77,6 +77,8 @@ public class OrderService {
         return ResponseEntity.ok("Đặt hàng thành công");
     }
 
+
+
     private double calculateTotal(List<OrderDetail> orderDetails){
         double total = 0;
         for (OrderDetail orderDetail : orderDetails) {
