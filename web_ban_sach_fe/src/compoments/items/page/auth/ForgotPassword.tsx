@@ -224,11 +224,14 @@ const ForgetPassword: React.FC = () => {
                                             Đặt lại mật khẩu
                                         </button>
                                         :
-                                        <div className={"mt-4 w-100 d-flex justify-content-center"}>
-                                            <div className="spinner-border text-danger" role="status">
-                                                <span className="visually-hidden">Loading...</span>
-                                            </div>
-                                        </div>
+                                        <button
+                                            disabled={true}
+                                            type="submit"
+                                            className="btn btn-danger w-100 mt-4"
+                                            onClick={handleSubmit}
+                                        >
+                                            Đang xác thực...
+                                        </button>
                                 }
                                 <p className={"mt-2 d-flex justify-content-center"}>
                                     <span>Bạn chưa có tài khoản?</span>

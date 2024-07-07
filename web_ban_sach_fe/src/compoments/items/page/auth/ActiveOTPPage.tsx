@@ -20,7 +20,7 @@ const ActiveOTPPage: React.FC = () => {
     const [loading, setLoading] = React.useState<boolean>(false);
     const [loadingResend, setLoadingResend] = React.useState<boolean>(false);
     const [verifySuccess, setVerifySuccess] = React.useState<boolean>(false);
-    const [countDown, setCountDown] = React.useState<number>(30);
+    const [countDown, setCountDown] = React.useState<number>(0);
 
     React.useEffect(() => {
         const id = setInterval(() => {
@@ -55,7 +55,7 @@ const ActiveOTPPage: React.FC = () => {
                 setError(error?.response.data.message || error.message || "")
             }
         }).finally(() => {
-            setCountDown(30)
+            setCountDown(120)
             setLoadingResend(false)
         })
     }

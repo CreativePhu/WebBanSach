@@ -8,13 +8,12 @@ export const IsNotVerifyPage: React.FC = () => {
 
     const navigate = useNavigate()
     const user: UserInf | null = useAppSelector(state => state.User.value)
-    const token = localStorage.getItem("token")
 
     const [loading, setLoading] = React.useState<boolean>(false);
 
     const handleVerify = () => {
         setLoading(true)
-        GenerateOTP(token || "").then(()  => {
+        GenerateOTP(user!.email).then(()  => {
             navigate(`/active-otp?email=${user!.email}`)
             setLoading(false)
 
