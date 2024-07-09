@@ -1,5 +1,9 @@
 import axios from "axios";
-import WardInf from "../../data_type/Address/WardInf";
+
+export interface WardInf {
+    wardID: number;
+    wardName: string;
+}
 
 export const GetWardAPI = async (districtId: number): Promise<WardInf[]> => {
     const HOST = process.env.REACT_APP_HOST_BE;

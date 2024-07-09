@@ -1,9 +1,6 @@
 import React from "react";
 import UserInf from "../../../data_type/Auth/UserInf";
 import {useAppDispatch, useAppSelector} from "../../../redux/Hooks";
-import ProvinceInf from "../../../data_type/Address/ProvinceInf";
-import DistrictInf from "../../../data_type/Address/DistrictInf";
-import WardInf from "../../../data_type/Address/WardInf";
 import PaymentDetailInf from "../../../data_type/Payment/PaymentDetailInf";
 import BookCartInf from "../../../data_type/Product/BookCartInf";
 import BookDetailInf from "../../../data_type/Product/BookDetailInf";
@@ -16,7 +13,9 @@ import PaymentRequest from "../../../data_type/Payment/PaymentRequest";
 import {setCounter} from "../../../redux/slice/CounterSlice";
 import {ListBookPayment} from "../../../data_type/Payment/ListBookPayment";
 import {CreateOrderAPI} from "../../../api/Order/CreateOrderAPI";
-import {GetDistrictAPI, GetProvinceAPI, GetWardAPI} from "../../../api/Address";
+import {GetDistrictAPI, GetProvinceAPI, GetWardAPI, WardInf} from "../../../api/Address";
+import {ProvinceInf} from "../../../api/Order/GetProvinceByShippingAddressIdAPI";
+import {DistrictInf} from "../../../api/Order/GetDistrictByShippingAddressIdAPI";
 
 enum PaymentMethod {
     CASH_ON_DELIVERY = 'CASH_ON_DELIVERY',

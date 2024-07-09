@@ -5,6 +5,7 @@ import {UpdateFullNameForm} from "./AccountInformation/FormUpdate/UpdateFullName
 import {UpdatePhoneNumberForm} from "./AccountInformation/FormUpdate/UpdatePhoneNumberForm";
 import {UpdateEmailForm} from "./AccountInformation/FormUpdate/UpdateEmailForm";
 import {ChangePasswordForm} from "./AccountInformation/FormUpdate/ChangePasswordForm";
+import {OrderDetailInformationFormView} from "./OrderInformation/OrderDetail/OrderDetailInformationFormView";
 
 export const ProfilePage = () => {
 
@@ -14,6 +15,8 @@ export const ProfilePage = () => {
     const [isVisiblePhoneNumber, setIsVisiblePhoneNumber] = React.useState<boolean>(false);
     const [isVisibleEmail, setIsVisibleEmail] = React.useState<boolean>(false);
     const [isVisibleChangePassword, setIsVisibleChangePassword] = React.useState<boolean>(false);
+    const [isVisibleOrderDetail, setIsVisibleOrderDetail] = React.useState<boolean>(false);
+    const [orderID, setOrderID] = React.useState<number>(0);
 
     const onCloseFullName = () => {
         setIsVisibleFullName(false);
@@ -45,6 +48,15 @@ export const ProfilePage = () => {
 
     const openChangePassword = () => {
         setIsVisibleChangePassword(true);
+    }
+
+    const onCloseOrderDetail = () => {
+        setIsVisibleOrderDetail(false);
+    }
+
+    const openOrderDetailByID = (orderID: number) => {
+        setOrderID(orderID);
+        setIsVisibleOrderDetail(true);
     }
 
     return (
@@ -81,7 +93,7 @@ export const ProfilePage = () => {
                                         openFullName={openFullName}
                                         openPhoneNumber={openPhoneNumber}
                                         openChangePassword={openChangePassword}/> :
-                                    <OrderInformationView/>
+                                    <OrderInformationView openOrderDetail={openOrderDetailByID}/>
                             }
                         </div>
                     </div>
@@ -91,6 +103,7 @@ export const ProfilePage = () => {
             <UpdatePhoneNumberForm isVisible={isVisiblePhoneNumber} onClose={onClosePhoneNumber}/>
             <UpdateEmailForm isVisible={isVisibleEmail} onClose={onCloseEmail}/>
             <ChangePasswordForm isVisible={isVisibleChangePassword} onClose={onCloseChangePassword}/>
+            <OrderDetailInformationFormView isVisible={isVisibleOrderDetail} onClose={onCloseOrderDetail} orderID={orderID}/>
         </div>
     );
 }

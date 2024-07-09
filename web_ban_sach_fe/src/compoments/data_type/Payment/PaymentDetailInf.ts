@@ -1,6 +1,6 @@
-import ProvinceInf from "../Address/ProvinceInf";
-import DistrictInf from "../Address/DistrictInf";
-import WardInf from "../Address/WardInf";
+import {WardInf} from "../../api/Address";
+import {ProvinceInf} from "../../api/Order/GetProvinceByShippingAddressIdAPI";
+import {DistrictInf} from "../../api/Order/GetDistrictByShippingAddressIdAPI";
 
 interface PaymentDetailInf {
     fullName: string;

@@ -14,6 +14,10 @@ export interface GetOrderByUserAPIResponseInf {
 
 export const GetOrderByUserAPI = async (userName: string, size: number, page: number):Promise<GetOrderByUserAPIResponseInf[]> => {
     const HOST = process.env.REACT_APP_HOST_BE;
-    const response = await axios.get(`${HOST}/orders/search/findOrdersByUser_UserName?userName=${userName}&sort=createdAt&desc&size=${size}&page=${page}`)
+    const response = await axios.get(`${HOST}/orders/search/findOrdersByUser_UserName?userName=${userName}&sort=createdAt&desc&size=${size}&page=${page}`, {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem("token")}`
+        }
+    })
     return response.data._embedded.orders;
 }

@@ -6,7 +6,11 @@ import {GetOrderByUserAPI, GetOrderByUserAPIResponseInf} from "../../../../api/O
 import formatCurrencyVND from "../../../function/FormatCurrencyVND";
 import {formartDateFunc} from "../../../function/FormartDateFunc";
 
-export const OrderInformationView = () => {
+interface OrderInformationViewProps {
+    openOrderDetail: (orderID: number) => void;
+}
+
+export const OrderInformationView: React.FC<OrderInformationViewProps> = ({openOrderDetail}) => {
 
     const user: UserInf | null = useAppSelector(state => state.User.value)
     const [page, setPage] = React.useState<number>(0)
@@ -18,7 +22,6 @@ export const OrderInformationView = () => {
     React.useEffect(() => {
         setLoading(true)
         GetOrderByUserAPI(user!.userName, size, page).then((data) => {
-            console.log(data)
             setOrders(data)
         }).catch((err) => {
             console.log(err)
@@ -75,7 +78,13 @@ export const OrderInformationView = () => {
                                         <span>{order.orderStatus}</span>
                                     </div>
                                     <div className={"col-3"}>
-                                        <button type="button" className="btn btn-link">Chi tiết đơn hàng</button>
+                                        <button
+                                            onClick={() => openOrderDetail(1)}
+                                            type="button"
+                                            className="btn btn-link"
+                                        >
+                                            Chi tiết đơn hàng
+                                        </button>
                                     </div>
                                 </div>
                             )

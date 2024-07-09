@@ -1,5 +1,5 @@
 import axios from "axios";
-import ProvinceInf from "../../data_type/Address/ProvinceInf";
+import {ProvinceInf} from "../Order/GetProvinceByShippingAddressIdAPI";
 
 export const GetProvinceAPI = async (): Promise<ProvinceInf[]> => {
     const HOST = process.env.REACT_APP_HOST_BE;
