@@ -1,12 +1,12 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import UserInf from "../../../data_type/Auth/UserInf";
-import {useAppSelector} from "../../../redux/Hooks";
-import {GetOrderByUserAPI, GetOrderByUserAPIResponseInf} from "../../../api/Order/GetOrderByUserAPI";
-import formatCurrencyVND from "../../function/FormatCurrencyVND";
-import {formartDateFunc} from "../../function/FormartDateFunc";
+import UserInf from "../../../../data_type/Auth/UserInf";
+import {useAppSelector} from "../../../../redux/Hooks";
+import {GetOrderByUserAPI, GetOrderByUserAPIResponseInf} from "../../../../api/Order/GetOrderByUserAPI";
+import formatCurrencyVND from "../../../function/FormatCurrencyVND";
+import {formartDateFunc} from "../../../function/FormartDateFunc";
 
-export const OrderInformation = () => {
+export const OrderInformationView = () => {
 
     const user: UserInf | null = useAppSelector(state => state.User.value)
     const [page, setPage] = React.useState<number>(0)
@@ -74,8 +74,8 @@ export const OrderInformation = () => {
                                     <div className={"col-2"}>
                                         <span>{order.orderStatus}</span>
                                     </div>
-                                    <div className={"col-2"}>
-                                        <Link to={"/"} className={""}>Xem chi tiết</Link>
+                                    <div className={"col-3"}>
+                                        <button type="button" className="btn btn-link">Chi tiết đơn hàng</button>
                                     </div>
                                 </div>
                             )

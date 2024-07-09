@@ -1,6 +1,6 @@
 import React from "react";
-import UserInf from "../../../data_type/Auth/UserInf";
-import {useAppSelector} from "../../../redux/Hooks";
+import UserInf from "../../../../data_type/Auth/UserInf";
+import {useAppSelector} from "../../../../redux/Hooks";
 import {Link} from "react-router-dom";
 
 interface ProfileInfomationProps {
@@ -10,7 +10,7 @@ interface ProfileInfomationProps {
     openChangePassword: () => void;
 }
 
-export const ProfileInfomation: React.FC<ProfileInfomationProps> = ({openEmail, openPhoneNumber, openFullName, openChangePassword}) => {
+export const AccountProfileInfomationView: React.FC<ProfileInfomationProps> = ({openEmail, openPhoneNumber, openFullName, openChangePassword}) => {
 
     const user: UserInf | null = useAppSelector(state => state.User.value)
 

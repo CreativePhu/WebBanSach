@@ -41,7 +41,7 @@ public class EndPoint {
     };
 
     public static final String[] ADMIN_GET_ENDPOINT = {
-            "/users"
+            "/users",
     };
 
     public static final String[] ALLOWED_METHODS = {

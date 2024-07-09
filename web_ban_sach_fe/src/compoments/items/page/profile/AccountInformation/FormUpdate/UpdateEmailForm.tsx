@@ -1,17 +1,17 @@
 import React from "react";
-import {FullScreenOverlay} from "../../../FullScreenOverlay";
-import {REGEX_EMAIL} from "../../../Regex";
-import UserInf from "../../../../data_type/Auth/UserInf";
-import {useAppSelector} from "../../../../redux/Hooks";
+import {FullScreenOverlay} from "../../../../FullScreenOverlay";
+import {REGEX_EMAIL} from "../../../../Regex";
+import UserInf from "../../../../../data_type/Auth/UserInf";
+import {useAppSelector} from "../../../../../redux/Hooks";
 import {VerifyAccountForm} from "./VerifyAccountForm";
-import {checkEmailExistsAPI} from "../../../../api/Auth";
+import {checkEmailExistsAPI} from "../../../../../api/Auth";
 
 interface UpdateEmailProps {
     isVisible: boolean;
     onClose: () => void;
 }
 
-export const UpdateEmail: React.FC<UpdateEmailProps> = ({isVisible, onClose}) => {
+export const UpdateEmailForm: React.FC<UpdateEmailProps> = ({isVisible, onClose}) => {
 
 
     const user: UserInf | null = useAppSelector(state => state.User.value)

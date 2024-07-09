@@ -1,10 +1,10 @@
 import React from "react";
-import {ProfileInfomation} from "./ProfileInfomation";
-import {OrderInformation} from "./OrderInformation";
-import {UpdateFullName} from "./form/UpdateFullName";
-import {UpdatePhoneNumber} from "./form/UpdatePhoneNumber";
-import {UpdateEmail} from "./form/UpdateEmail";
-import {ChangePassword} from "./form/ChangePassword";
+import {AccountProfileInfomationView} from "./AccountInformation/AccountProfileInfomationView";
+import {OrderInformationView} from "./OrderInformation/OrderInformationView";
+import {UpdateFullNameForm} from "./AccountInformation/FormUpdate/UpdateFullNameForm";
+import {UpdatePhoneNumberForm} from "./AccountInformation/FormUpdate/UpdatePhoneNumberForm";
+import {UpdateEmailForm} from "./AccountInformation/FormUpdate/UpdateEmailForm";
+import {ChangePasswordForm} from "./AccountInformation/FormUpdate/ChangePasswordForm";
 
 export const ProfilePage = () => {
 
@@ -76,21 +76,21 @@ export const ProfilePage = () => {
                     <div className={"col-9 pe-0"}>
                         <div style={{minHeight: "500px"}}>
                             {
-                                activeTab ? <ProfileInfomation
+                                activeTab ? <AccountProfileInfomationView
                                         openEmail={openEmail}
                                         openFullName={openFullName}
                                         openPhoneNumber={openPhoneNumber}
                                         openChangePassword={openChangePassword}/> :
-                                    <OrderInformation/>
+                                    <OrderInformationView/>
                             }
                         </div>
                     </div>
                 </div>
             </div>
-            <UpdateFullName isVisible={isVisibleFullName} onClose={onCloseFullName}/>
-            <UpdatePhoneNumber isVisible={isVisiblePhoneNumber} onClose={onClosePhoneNumber}/>
-            <UpdateEmail isVisible={isVisibleEmail} onClose={onCloseEmail}/>
-            <ChangePassword isVisible={isVisibleChangePassword} onClose={onCloseChangePassword}/>
+            <UpdateFullNameForm isVisible={isVisibleFullName} onClose={onCloseFullName}/>
+            <UpdatePhoneNumberForm isVisible={isVisiblePhoneNumber} onClose={onClosePhoneNumber}/>
+            <UpdateEmailForm isVisible={isVisibleEmail} onClose={onCloseEmail}/>
+            <ChangePasswordForm isVisible={isVisibleChangePassword} onClose={onCloseChangePassword}/>
         </div>
     );
 }

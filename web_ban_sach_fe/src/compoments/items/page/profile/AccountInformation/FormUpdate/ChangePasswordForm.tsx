@@ -1,14 +1,14 @@
 import React from "react";
-import {FullScreenOverlay} from "../../../FullScreenOverlay";
-import {REGEX_PASSWORD} from "../../../Regex";
-import {ChangePasswordAPI} from "../../../../api/Auth/ChangePasswordAPI";
+import {FullScreenOverlay} from "../../../../FullScreenOverlay";
+import {REGEX_PASSWORD} from "../../../../Regex";
+import {ChangePasswordAPI} from "../../../../../api/Auth/ChangePasswordAPI";
 
 interface ChangePasswordProps {
     isVisible: boolean;
     onClose: () => void;
 }
 
-export const ChangePassword: React.FC<ChangePasswordProps> = ({isVisible, onClose}) => {
+export const ChangePasswordForm: React.FC<ChangePasswordProps> = ({isVisible, onClose}) => {
 
     const modalRef = React.useRef<HTMLDivElement>(null);
 

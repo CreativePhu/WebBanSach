@@ -1,4 +1,4 @@
 export * from './book'
 export * from './auth'
-export * from './payment'
-export * from './profile'
+export * from './payment/PaymentPage'
+export * from './profile/ProfilePage'

@@ -1,17 +1,17 @@
 import React from "react";
-import {FullScreenOverlay} from "../../../FullScreenOverlay";
-import UserInf from "../../../../data_type/Auth/UserInf";
-import {useAppDispatch, useAppSelector} from "../../../../redux/Hooks";
-import {REGEX_NAME} from "../../../Regex";
-import {updateUserFullName} from "../../../../redux/slice/UserSlice";
-import {UpdateUserAPI} from "../../../../api/profile/UpdateUserAPI";
+import {FullScreenOverlay} from "../../../../FullScreenOverlay";
+import UserInf from "../../../../../data_type/Auth/UserInf";
+import {useAppDispatch, useAppSelector} from "../../../../../redux/Hooks";
+import {REGEX_NAME} from "../../../../Regex";
+import {updateUserFullName} from "../../../../../redux/slice/UserSlice";
+import {UpdateUserAPI} from "../../../../../api/profile/UpdateUserAPI";
 
 interface UpdateFullNameProps {
     isVisible: boolean;
     onClose: () => void;
 }
 
-export const UpdateFullName: React.FC<UpdateFullNameProps> = ({isVisible, onClose}) => {
+export const UpdateFullNameForm: React.FC<UpdateFullNameProps> = ({isVisible, onClose}) => {
 
     const dispatch = useAppDispatch()
 

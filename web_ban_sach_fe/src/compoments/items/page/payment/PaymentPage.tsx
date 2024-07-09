@@ -209,7 +209,7 @@ export const PaymentPage: React.FC = () => {
                 alert("Đặt hàng thất bại")
             })
         }
-        document.getElementById('form-payment')?.scrollIntoView({behavior: "smooth"})
+        document.getElementById('FormUpdate-payment')?.scrollIntoView({behavior: "smooth"})
     }
 
     React.useEffect(() => {
@@ -293,7 +293,7 @@ export const PaymentPage: React.FC = () => {
                         </span>
                     </div> : null
             }
-            <div id={"form-payment"} className={"container bg-white rounded py-3 shadow-sm"}>
+            <div id={"FormUpdate-payment"} className={"container bg-white rounded py-3 shadow-sm"}>
                 <span className={"fw-semibold fs-5"}>ĐỊA CHỈ GIAO HÀNG</span>
                 <hr/>
                 <form>

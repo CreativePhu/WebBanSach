@@ -1,9 +1,9 @@
 import React from "react";
-import {useAppSelector} from "../../../../redux/Hooks";
-import UserInf from "../../../../data_type/Auth/UserInf";
-import {UserLoginAPI} from "../../../../api/Auth";
+import {useAppSelector} from "../../../../../redux/Hooks";
+import UserInf from "../../../../../data_type/Auth/UserInf";
+import {UserLoginAPI} from "../../../../../api/Auth";
 import {VerifyOTPForm} from "./VerifyOTPForm";
-import {GenerateOTPAPI} from "../../../../api/Auth/GenerateOTPAPI";
+import {GenerateOTPAPI} from "../../../../../api/Auth/GenerateOTPAPI";
 
 interface VerifyAccountFormProps {
     onClose: () => void;

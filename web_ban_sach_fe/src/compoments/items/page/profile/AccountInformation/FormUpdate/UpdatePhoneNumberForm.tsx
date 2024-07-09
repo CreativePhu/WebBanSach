@@ -1,17 +1,17 @@
 import React from "react";
-import {FullScreenOverlay} from "../../../FullScreenOverlay";
-import UserInf from "../../../../data_type/Auth/UserInf";
-import {useAppDispatch, useAppSelector} from "../../../../redux/Hooks";
-import {REGEX_PHONENUMBER} from "../../../Regex";
-import {updateUserPhoneNumber} from "../../../../redux/slice/UserSlice";
-import {UpdateUserAPI} from "../../../../api/profile/UpdateUserAPI";
+import {FullScreenOverlay} from "../../../../FullScreenOverlay";
+import UserInf from "../../../../../data_type/Auth/UserInf";
+import {useAppDispatch, useAppSelector} from "../../../../../redux/Hooks";
+import {REGEX_PHONENUMBER} from "../../../../Regex";
+import {updateUserPhoneNumber} from "../../../../../redux/slice/UserSlice";
+import {UpdateUserAPI} from "../../../../../api/profile/UpdateUserAPI";
 
 interface UpdatePhoneNumberProps {
     isVisible: boolean;
     onClose: () => void;
 }
 
-export const UpdatePhoneNumber: React.FC<UpdatePhoneNumberProps> = ({isVisible, onClose}) => {
+export const UpdatePhoneNumberForm: React.FC<UpdatePhoneNumberProps> = ({isVisible, onClose}) => {
 
     const dispatch = useAppDispatch()
 

@@ -3,7 +3,7 @@ const REGEX_PASSWORD = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@
 const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
 
-// form payment
+// FormUpdate payment
 const REGEX_NAME = /[a-zA-Z]{2,}/
 const REGEX_PHONENUMBER = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g
 
