@@ -17,7 +17,7 @@ export const AccountProfileInfomationView: React.FC<ProfileInfomationProps> = ({
     return (
         <div>
             <div className={"bg-white rounded py-3 px-3 shadow-sm"}>
-                <span className={"fw-bold fs-4"}>Thông tin người dùng</span>
+                <span className={"fw-bold fs-4 text-danger"}>Thông tin người dùng</span>
                 <div className={"d-flex flex-column justify-content-start mt-2"}>
                     <div>
                         <span className={"fw-semibold"}>Họ và tên: </span>
@@ -49,7 +49,7 @@ export const AccountProfileInfomationView: React.FC<ProfileInfomationProps> = ({
                 </div>
             </div>
             <div className={"bg-white rounded py-3 px-3 mt-3 shadow-sm"}>
-                <span className={"fw-bold fs-4"}>Tài khoản</span>
+                <span className={"fw-bold fs-4 text-danger"}>Tài khoản</span>
                 <div className={"d-flex flex-column justify-content-start mt-2"}>
                     <div>
                         <span className={"fw-semibold"}>Tên tài khoản: </span>

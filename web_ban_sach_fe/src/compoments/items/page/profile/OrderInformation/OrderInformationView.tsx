@@ -4,7 +4,8 @@ import UserInf from "../../../../data_type/Auth/UserInf";
 import {useAppSelector} from "../../../../redux/Hooks";
 import {GetOrderByUserAPI, GetOrderByUserAPIResponseInf} from "../../../../api/Order/GetOrderByUserAPI";
 import formatCurrencyVND from "../../../function/FormatCurrencyVND";
-import {formartDateFunc} from "../../../function/FormartDateFunc";
+import {formatDateFunc} from "../../../function/FormartDateFunc";
+import {ConvertOrderStatus} from "../../../function/ConvertOrderStatus";
 
 interface OrderInformationViewProps {
     openOrderDetail: (orderID: number) => void;
@@ -32,7 +33,7 @@ export const OrderInformationView: React.FC<OrderInformationViewProps> = ({openO
 
     return (
         <div className={"py-3 px-3"}>
-            <span className={"fw-bold fs-4"}>Lịch sử đặt hàng</span>
+            <span className={"fw-bold fs-1 text-danger"}>Lịch Sử Đặt Hàng</span>
             <div className={"row rounded bg-white pt-3"}>
                 <div className={"col-2 mb-3"}>
                     <span className={"fw-semibold"}>Mã đơn hàng</span>
@@ -68,23 +69,17 @@ export const OrderInformationView: React.FC<OrderInformationViewProps> = ({openO
                                         <span className={"fw-semibold"}>#{order.orderID}</span>
                                     </div>
                                     <div className={"col-2"}>
-                                        <span>{formartDateFunc(order.orderDate)}</span>
+                                        <span>{formatDateFunc(order.orderDate)}</span>
                                     </div>
                                     <div className={"col-2"}>
                                         <span
                                             className={"text-danger fw-semibold"}>{formatCurrencyVND(order.total)}</span>
                                     </div>
                                     <div className={"col-2"}>
-                                        <span>{order.orderStatus}</span>
+                                        <span>{ConvertOrderStatus(order.orderStatus)}</span>
                                     </div>
                                     <div className={"col-3"}>
-                                        <button
-                                            onClick={() => openOrderDetail(1)}
-                                            type="button"
-                                            className="btn btn-link"
-                                        >
-                                            Chi tiết đơn hàng
-                                        </button>
+                                        <span className={"text-primary cussor-pointer"} onClick={() => openOrderDetail(order.orderID)}>Chi tiết đơn hàng</span>
                                     </div>
                                 </div>
                             )

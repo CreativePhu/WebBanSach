@@ -3,8 +3,16 @@ import {FullScreenOverlay} from "../../../../FullScreenOverlay";
 import {GetOrderDetailByOrderId, OrderDetailInfResponse} from "../../../../../api/Order/GetOrderDetailByOrderId";
 import formatCurrencyVND from "../../../../function/FormatCurrencyVND";
 import {GetOrderByOrderIdAPI, OrderInfResponse} from "../../../../../api/Order/GetOrderByOrderIdAPI";
-import {formartDateFunc} from "../../../../function/FormartDateFunc";
+import {formatDateFunc} from "../../../../function/FormartDateFunc";
 import {GetAddressToStringByShippingAddressId} from "../../../../function/GetAddressByOrderIdConvertToString";
+import {
+    BookDetailByOrderDetailInfResponse,
+    GetBookByOrderDetailIdAPI
+} from "../../../../../api/Order/GetBookByOrderDetailIdAPI";
+import {Link} from "react-router-dom";
+import {ConvertPaymentMethod} from "../../../../function/ConvertPaymentMethod";
+import {ConvertOrderStatus} from "../../../../function/ConvertOrderStatus";
+import {ConvertPaymentStatus} from "../../../../function/ConvertPaymentStatus";
 
 interface OrderDetailInformationFormViewProps {
     isVisible: boolean;
@@ -15,14 +23,16 @@ interface OrderDetailInformationFormViewProps {
 export const OrderDetailInformationFormView: React.FC<OrderDetailInformationFormViewProps> = ({
                                                                                                   isVisible,
                                                                                                   onClose,
-                                                                                                  orderID
+                                                                                                  orderID,
                                                                                               }) => {
 
     const modalRef = React.useRef<HTMLDivElement>(null);
 
-    const [order, setOrder] = React.useState<OrderInfResponse|null>(null);
+    const [order, setOrder] = React.useState<OrderInfResponse | null>(null);
     const [orderDetails, setOrderDetails] = React.useState<OrderDetailInfResponse[]>([]);
+    const [books, setBooks] = React.useState<BookDetailByOrderDetailInfResponse[]>([]);
     const [address, setAddress] = React.useState<string>("");
+    const [error, setError] = React.useState<string>("");
 
     const [loading, setLoading] = React.useState<boolean>(false);
 
@@ -34,11 +44,17 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
                     setOrder(order);
                     setOrderDetails(orderDetails);
                     setAddress(address);
+                    return orderDetails;
                 }
-            ).catch((err) => {
-                    console.log(err)
-                }
-            ).finally(() => {
+            ).then((orderDetails) => {
+                return Promise.all(orderDetails.map((orderDetail) => {
+                    return GetBookByOrderDetailIdAPI(orderDetail.oderDetailID)
+                }))
+            }).then((books) => {
+                setBooks(books)
+            }).catch(() => {
+                setError("Có lỗi xảy ra, vui lòng thử lại sau!")
+            }).finally(() => {
                 setLoading(false)
             })
         }
@@ -56,6 +72,14 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
             document.removeEventListener('mousedown', handleClickOutside);
         };
     })
+
+    const sumTotal = () => {
+        let total = 0;
+        orderDetails.forEach((orderDetail) => {
+            total += orderDetail.unitPrice;
+        })
+        return total;
+    }
 
     if (orderID === 0) {
         return <></>
@@ -75,10 +99,27 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
         )
     }
 
+    if (error) {
+        return (
+            <FullScreenOverlay isVisible={isVisible}>
+                <div ref={modalRef} className={"w-50 bg-white rounded p-5 position-relative"}>
+                    <div className="d-flex justify-content-center align-items-center h-100">
+                        <span className={"text-danger"}>{error}</span>
+                    </div>
+                    <div onClick={() => {
+                        onClose()
+                    }} className={"position-absolute cussor-pointer"} style={{top: "10px", right: "20px"}}>
+                        <i className="bi bi-x fs-2"></i>
+                    </div>
+                </div>
+            </FullScreenOverlay>
+        )
+    }
+
     return (
         <FullScreenOverlay isVisible={isVisible}>
-            <div ref={modalRef} className={"w-50 bg-white rounded h-75 p-5 position-relative"}>
-                <h3>Thông Tin Đơn Hàng: #1</h3>
+            <div ref={modalRef} className={"w-50 bg-white rounded p-5 position-relative"} style={{minHeight: "700px"}}>
+                <h3 className={"fw-bold text-danger fs-2"}>Thông Tin Đơn Hàng #{order?.orderID}</h3>
                 <div className={"row"}>
                     <div className={"col-6"}>
                         <span className={"fw-semibold"}>Tên khách hàng:</span>
@@ -86,7 +127,7 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
                     </div>
                     <div className={"col-6"}>
                         <span className={"fw-semibold"}>Ngày đặt hàng:</span>
-                        <span className={"ms-2"}>{formartDateFunc(order?.orderDate)}</span>
+                        <span className={"ms-2"}>{formatDateFunc(order?.orderDate)}</span>
                     </div>
                 </div>
                 <div className={"row mt-2"}>
@@ -96,7 +137,7 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
                     </div>
                     <div className={"col-6"}>
                         <span className={"fw-semibold"}>Trạng thái:</span>
-                        <span className={"ms-2"}>{order?.orderStatus}</span>
+                        <span className={"ms-2"}>{ConvertOrderStatus(order!.orderStatus)}</span>
                     </div>
                 </div>
                 <div className={"row mt-2"}>
@@ -108,12 +149,12 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
                 <div className={"row mt-2"}>
                     <div className={"col-12"}>
                         <span className={"fw-semibold"}>Phương thức thanh toán:</span>
-                        <span className={"ms-2"}>{order?.paymentMethod}</span>
+                        <span className={"ms-2"}>{ConvertPaymentMethod(order!.paymentMethod)}</span>
                     </div>
                 </div>
-                <div className={"row mt-5"}>
+                <div className={"row mt-4"}>
                     <div className={"col-12"}>
-                        <h4>Danh sách sản phẩm:</h4>
+                        <h4 className={"text-danger"}>Danh sách sản phẩm</h4>
                         <table className={"table"}>
                             <thead>
                             <tr>
@@ -126,12 +167,19 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
                             <tbody>
                             {
                                 orderDetails.map((orderDetail, index) => {
+                                    const myBook = books[index]
                                     return (
                                         <tr key={index}>
                                             <td>{index + 1}</td>
-                                            <td>Áo thun nam</td>
+                                            <td>
+                                                <Link className={"text-decoration-none"} to={`/book-detail?bookId=${myBook?.bookID}`}>
+                                                    <span>{myBook?.bookTitle}</span>
+                                                </Link>
+                                            </td>
                                             <td>{orderDetail.quantity}</td>
-                                            <td>{formatCurrencyVND(orderDetail.unitPrice)}</td>
+                                            <td>
+                                                <span className={"text-danger fw-semibold"}>{formatCurrencyVND(myBook.bookPrice)}</span>
+                                            </td>
                                         </tr>
                                     )
                                 })
@@ -141,21 +189,19 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
                     </div>
                 </div>
                 <div className={"row"}>
-                    <div className={"col-12"}>
+                    <div className={"col-6"}>
                         <span className={"fw-semibold"}>Tổng tiền:</span>
-                        <span className={"ms-2"}>300.000đ</span>
+                        <span className={"ms-2 text-danger fw-semibold fs-4"}>{formatCurrencyVND(sumTotal())}</span>
                     </div>
-                </div>
-                <div className={"row"}>
-                    <div className={"col-12"}>
-                        <span className={"fw-semibold"}>Ghi chú:</span>
-                        <span className={"ms-2"}>Không có</span>
+                    <div className={"col-6"}>
+                        <span className={"fw-semibold"}>Thanh toán:</span>
+                        <span className={"ms-2 text-danger fw-semibold fs-4"}>{ConvertPaymentStatus(order!.paymentStatus)}</span>
                     </div>
                 </div>
                 <div onClick={() => {
                     onClose()
                 }} className={"position-absolute cussor-pointer"} style={{top: "10px", right: "20px"}}>
-                    <i className="bi bi-x fs-2"></i>
+                    <i className="bi bi-x fs-2 text-danger"></i>
                 </div>
             </div>
         </FullScreenOverlay>
