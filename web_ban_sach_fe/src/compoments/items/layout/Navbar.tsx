@@ -7,7 +7,6 @@ import BookCartInf from "../../data_type/Product/BookCartInf";
 import formatCurrencyVND from "../function/FormatCurrencyVND";
 
 function Navbar() {
-
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const cart = localStorage.getItem("cart")
@@ -51,8 +50,9 @@ function Navbar() {
         navigate("/login")
     }
 
-    const handleSearchSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault()
+    const handleSearchSubmit = (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        if (e) e.preventDefault()
+        if(searchValue === "") return
         navigate(`/search?bookTitle=${searchValue}`)
         setSearchValue("")
     }
@@ -72,36 +72,43 @@ function Navbar() {
                         <div
                             onMouseEnter={() => setIsHoverMenu(true)}
                             onMouseLeave={() => setIsHoverMenu(false)}
-                            className={`col-2 col-md-1 d-lg-none p-0 d-flex justify-content-center align-items-center border rounded cussor-pointer bg-danger ${isHoverMenu ? "opacity-75" : "opacity-100"}`}
+                            className={`col-2 col-sm-1 d-md-none p-0 d-flex justify-content-center align-items-center border rounded cussor-pointer bg-danger ${isHoverMenu ? "opacity-75" : "opacity-100"}`}
                         >
                             <i className={`bi bi-list fs-1 text-white`}></i>
                         </div>
-                        <div className={"col-10 col-md-11 col-lg-6 d-flex justify-content-center pe-0"}>
+                        <div className={"col-10 col-md-9 col-lg-6 d-flex justify-content-center pe-0"}>
                             <input className="form-control me-2" type="search"
                                    placeholder="Nhập tên sách cần tìm"
-                                   aria-label="Search" onChange={handleSearchChange} value={searchValue}/>
+                                   aria-label="Search"
+                                   onChange={handleSearchChange}
+                                   value={searchValue}
+                                   onKeyDown={(e) => {
+                                       if (e.key === 'Enter') {
+                                           handleSearchSubmit();
+                                       }
+                                   }}
+                            />
                             <button className="btn bg-danger px-4" type="submit" onClick={handleSearchSubmit}>
                                 <i className="bi bi-search" style={{color: "white"}}></i>
                             </button>
                         </div>
-                        <div
-                            className={"d-none d-lg-block col-lg-3 d-flex justify-content-end align-items-center p-0"}>
-                            <ul className="nav justify-content-end">
-                                <li
-                                    onMouseEnter={() => setIsHoverCart(true)}
-                                    onMouseLeave={() => setIsHoverCart(false)}
-                                    className="nav-item"
-                                >
-                                    <Link className="nav-link me-3 py-1 pe-0" aria-current="page" to={"/cart"}>
-                                        <button type="button"
-                                                className={"bg-white border-0 position-relative"}>
+                        <div className={"d-none d-sm-block col-lg-3 d-flex justify-content-end align-items-center p-0"}>
+                            <div className={"row"}>
+                                <div className="col-10 d-flex justify-content-end">
+                                    <Link
+                                        onMouseEnter={() => setIsHoverCart(true)}
+                                        onMouseLeave={() => setIsHoverCart(false)}
+                                        className="nav-link me-3 py-1 pe-0" aria-current="page" to={"/cart"}>
+                                        <button type="button" className={"bg-white border-0 position-relative"}>
                                             <i className="bi bi-cart-fill fs-4 text-danger"></i>
                                             <span className={`${count <= 0 ? "d-none" : ""} position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger`}>{numberCart}</span>
                                         </button>
                                     </Link>
                                     <div
-                                        className={`${isHoverCart && products.length > 0 ? "d-block" : "d-none"} position-absolute bg-white shadow p-3 mb-5 bg-body-tertiary rounded z-3`}
-                                        style={{minWidth: "380px", minHeight: "300px"}}>
+                                        onMouseEnter={() => setIsHoverCart(true)}
+                                        onMouseLeave={() => setIsHoverCart(false)}
+                                        className={`${isHoverCart && products.length > 0 ? "d-block" : "d-none"} position-absolute bg-white shadow p-3 bg-body-tertiary rounded z-3`}
+                                        style={{minWidth: "380px", minHeight: "300px", top: "62px"}}>
                                         <h6 className={"text-danger"}><i className="bi bi-cart"></i> Giỏ hàng</h6>
                                         <hr/>
                                         <div className={"d-flex flex-column"}>
@@ -149,8 +156,8 @@ function Navbar() {
                                             </div>
                                         </div>
                                     </div>
-                                </li>
-                                <li className="nav-item">
+                                </div>
+                                <div className="col-2 d-flex justify-content-end">
                                     {
                                         !showUserDropdown ?
                                             <>
@@ -167,7 +174,7 @@ function Navbar() {
                                                     onMouseEnter={() => setIsHover(true)}
                                                     onMouseLeave={() => setIsHover(false)}
                                                     className={`${isHover ? "d-block" : "d-none"} position-absolute d-flex flex-column bg-white shadow-sm p-3 mb-5 bg-body-tertiary rounded z-1`}
-                                                    style={{width: "150px"}}>
+                                                    style={{width: "150px", top: "62px"}}>
                                                     <Link onClick={() => {
                                                         setIsHover(false)
                                                     }} to={"/login"}
@@ -191,13 +198,15 @@ function Navbar() {
                                                 </button>
                                                 <ul className="dropdown-menu">
                                                     <li>
-                                                            <span className="dropdown-item text-danger fw-bold">{user?.fullName}</span>
+                                                        <span
+                                                            className="dropdown-item text-danger fw-bold">{user?.fullName}</span>
                                                     </li>
                                                     <li>
                                                         <hr className="dropdown-divider text-danger"/>
                                                     </li>
                                                     <li>
-                                                        <Link to={"/profile"} className="dropdown-item">Thông tin tài khoản</Link>
+                                                        <Link to={"/profile"} className="dropdown-item">Thông tin tài
+                                                            khoản</Link>
                                                     </li>
                                                     <li>
                                                         <Link to={"/cart"} className="dropdown-item">Giỏ hàng</Link>
@@ -215,8 +224,8 @@ function Navbar() {
                                                 </ul>
                                             </div>
                                     }
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
             </div>
