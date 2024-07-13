@@ -1,4 +1,4 @@
-export const ConvertOrderStatus = (status: string) => {
+export const ConvertOrderStatus = (status?: string) => {
     if (status === "PENDING") {
         return "Đang chờ xác nhận"
     } else if (status === "DELIVERED") {

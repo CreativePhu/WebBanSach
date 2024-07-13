@@ -137,7 +137,7 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
                     </div>
                     <div className={"col-6"}>
                         <span className={"fw-semibold"}>Trạng thái:</span>
-                        <span className={"ms-2"}>{ConvertOrderStatus(order!.orderStatus)}</span>
+                        <span className={"ms-2"}>{ConvertOrderStatus(order?.orderStatus)}</span>
                     </div>
                 </div>
                 <div className={"row mt-2"}>
@@ -149,7 +149,7 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
                 <div className={"row mt-2"}>
                     <div className={"col-12"}>
                         <span className={"fw-semibold"}>Phương thức thanh toán:</span>
-                        <span className={"ms-2"}>{ConvertPaymentMethod(order!.paymentMethod)}</span>
+                        <span className={"ms-2"}>{ConvertPaymentMethod(order?.paymentMethod)}</span>
                     </div>
                 </div>
                 <div className={"row mt-4"}>
@@ -195,7 +195,7 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
                     </div>
                     <div className={"col-6"}>
                         <span className={"fw-semibold"}>Thanh toán:</span>
-                        <span className={"ms-2 text-danger fw-semibold fs-4"}>{ConvertPaymentStatus(order!.paymentStatus)}</span>
+                        <span className={"ms-2 text-danger fw-semibold fs-4"}>{ConvertPaymentStatus(order?.paymentStatus)}</span>
                     </div>
                 </div>
                 <div onClick={() => {

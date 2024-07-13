@@ -76,7 +76,7 @@ export const OrderInformationView: React.FC<OrderInformationViewProps> = ({openO
                                             className={"text-danger fw-semibold"}>{formatCurrencyVND(order.total)}</span>
                                     </div>
                                     <div className={"col-2"}>
-                                        <span>{ConvertOrderStatus(order.orderStatus)}</span>
+                                        <span>{ConvertOrderStatus(order?.orderStatus)}</span>
                                     </div>
                                     <div className={"col-3"}>
                                         <span className={"text-primary cussor-pointer"} onClick={() => openOrderDetail(order.orderID)}>Chi tiết đơn hàng</span>
