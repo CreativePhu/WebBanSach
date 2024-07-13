@@ -20,6 +20,7 @@ import {PaymentPage, ProfilePage} from "./compoments/items/page";
 import {NotFoundPage} from "./compoments/items/page/Error/NotFoundPage";
 import {IsNotVerifyPage} from "./compoments/items/page/auth/IsNotVerifyPage";
 import ForgetPassword from "./compoments/items/page/auth/ForgotPassword";
+import {MenuNavbar} from "./compoments/items/layout/MenuNavbar";
 
 function App() {
 
