@@ -72,7 +72,7 @@ function Navbar() {
                         <div
                             onMouseEnter={() => setIsHoverMenu(true)}
                             onMouseLeave={() => setIsHoverMenu(false)}
-                            className={`col-2 col-sm-1 d-md-none p-0 d-flex justify-content-center align-items-center border rounded cussor-pointer bg-danger ${isHoverMenu ? "opacity-75" : "opacity-100"}`}
+                            className={`col-2 d-md-none p-0 d-flex justify-content-center align-items-center border rounded cussor-pointer bg-danger ${isHoverMenu ? "opacity-75" : "opacity-100"}`}
                         >
                             <i className={`bi bi-list fs-1 text-white`}></i>
                         </div>
@@ -92,9 +92,9 @@ function Navbar() {
                                 <i className="bi bi-search" style={{color: "white"}}></i>
                             </button>
                         </div>
-                        <div className={"d-none d-sm-block col-lg-3 d-flex justify-content-end align-items-center p-0"}>
+                        <div className={"d-none d-md-block col-md-3 d-flex justify-content-end align-items-center p-0"}>
                             <div className={"row"}>
-                                <div className="col-10 d-flex justify-content-end">
+                                <div className="col-9 d-flex justify-content-end">
                                     <Link
                                         onMouseEnter={() => setIsHoverCart(true)}
                                         onMouseLeave={() => setIsHoverCart(false)}
@@ -107,7 +107,7 @@ function Navbar() {
                                     <div
                                         onMouseEnter={() => setIsHoverCart(true)}
                                         onMouseLeave={() => setIsHoverCart(false)}
-                                        className={`${isHoverCart && products.length > 0 ? "d-block" : "d-none"} position-absolute bg-white shadow p-3 bg-body-tertiary rounded z-3`}
+                                        className={`${isHoverCart && products.length > 0 ? "d-none d-lg-block" : "d-none"} position-absolute bg-white shadow p-3 bg-body-tertiary rounded z-3`}
                                         style={{minWidth: "380px", minHeight: "300px", top: "62px"}}>
                                         <h6 className={"text-danger"}><i className="bi bi-cart"></i> Giỏ hàng</h6>
                                         <hr/>
@@ -157,7 +157,7 @@ function Navbar() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-2 d-flex justify-content-end">
+                                <div className="col-3 d-flex justify-content-end">
                                     {
                                         !showUserDropdown ?
                                             <>
@@ -173,7 +173,7 @@ function Navbar() {
                                                 <div
                                                     onMouseEnter={() => setIsHover(true)}
                                                     onMouseLeave={() => setIsHover(false)}
-                                                    className={`${isHover ? "d-block" : "d-none"} position-absolute d-flex flex-column bg-white shadow-sm p-3 mb-5 bg-body-tertiary rounded z-1`}
+                                                    className={`${isHover ? "d-none d-lg-block" : "d-none"} position-absolute d-flex flex-column bg-white shadow-sm p-3 mb-5 bg-body-tertiary rounded z-1`}
                                                     style={{width: "150px", top: "62px"}}>
                                                     <Link onClick={() => {
                                                         setIsHover(false)
