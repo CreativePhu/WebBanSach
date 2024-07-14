@@ -23,25 +23,35 @@ export const MenuNavbar: React.FC<MenuNavbarProps> = ({isVisible, close}) => {
                     user === null ? (
                         <ul className={"list-group mt-4"}>
                             <li className={"list-group-item bg-danger"}>
-                                <Link onClick={() => close()} to={"/"} className={"text-decoration-none text-white d-block"}>Trang Chủ</Link>
+                                <Link onClick={() => close()} to={"/"}
+                                      className={"text-decoration-none text-white d-block"}>Trang Chủ</Link>
                             </li>
                             <li className={"list-group-item bg-danger"}>
-                                <Link onClick={() => close()} to={"/login"} className={"text-decoration-none text-white d-block"}>Đăng Nhập</Link>
+                                <Link onClick={() => close()} to={"/cart"}
+                                      className={"text-decoration-none text-white d-block"}>Giỏ Hàng</Link>
                             </li>
                             <li className={"list-group-item bg-danger"}>
-                                <Link onClick={() => close()} to={"/register"} className={"text-decoration-none text-white d-block"}>Đăng Kí</Link>
+                                <Link onClick={() => close()} to={"/login"}
+                                      className={"text-decoration-none text-white d-block"}>Đăng Nhập</Link>
+                            </li>
+                            <li className={"list-group-item bg-danger"}>
+                                <Link onClick={() => close()} to={"/register"}
+                                      className={"text-decoration-none text-white d-block"}>Đăng Kí</Link>
                             </li>
                         </ul>
                     ) : (
                         <ul className={"list-group mt-4"}>
                             <li className={"list-group-item bg-danger"}>
-                                <Link onClick={() => close()} to={"/"} className={"text-decoration-none text-white d-block"}>Trang Chủ</Link>
+                                <Link onClick={() => close()} to={"/"}
+                                      className={"text-decoration-none text-white d-block"}>Trang Chủ</Link>
                             </li>
                             <li className={"list-group-item bg-danger"}>
-                                <Link onClick={() => close()} to={"/profile"} className={"text-decoration-none text-white d-block"}>Thông Tin Tài Khoản</Link>
+                                <Link onClick={() => close()} to={"/profile"}
+                                      className={"text-decoration-none text-white d-block"}>Thông Tin Tài Khoản</Link>
                             </li>
                             <li className={"list-group-item bg-danger"}>
-                                <Link onClick={() => close()} to={"/cart"} className={"text-decoration-none text-white d-block"}>Giỏ Hàng</Link>
+                                <Link onClick={() => close()} to={"/cart"}
+                                      className={"text-decoration-none text-white d-block"}>Giỏ Hàng</Link>
                             </li>
                         </ul>
                     )

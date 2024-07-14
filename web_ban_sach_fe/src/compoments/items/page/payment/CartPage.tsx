@@ -126,7 +126,7 @@ const CartPage: React.FC = () => {
                                     }
                                 }}/>
                             </div>
-                            <div className={"col-12 col-lg-5"}>
+                            <div className={"col-11 col-lg-5"}>
                                 <span className={"fw-semibold fs-"}>Chon tất cả ({products.length} sản phẩm)</span>
                             </div>
                             <div className={"col-2 d-none d-lg-block"}>
