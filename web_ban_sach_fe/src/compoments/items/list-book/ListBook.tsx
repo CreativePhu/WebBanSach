@@ -11,6 +11,19 @@ const ListBook: React.FC = () => {
     const [page, setPage] = React.useState<number>(0)
     const pageSize:number = 15
     const [hasMore, setHasMore] = React.useState<boolean>(true)
+    const [windowHeight, setWindowHeight] = React.useState<number>(window.innerHeight);
+
+    React.useEffect(() => {
+        const handleResize = () => {
+            setWindowHeight(window.innerHeight);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const fetchListBook = async ():Promise<void> => {
         try {
@@ -18,21 +31,17 @@ const ListBook: React.FC = () => {
             const listBook: BookInf[] = await GetBooksByPageAPI(pageSize,page);
             setListBook(prevState => [...prevState, ...listBook])
             setLoading(false)
-            if(listBook.length === 0) {
-                setHasMore(false)
-            }
+            if(listBook.length === 0) setHasMore(false)
         } catch (e:any) {
             setLoading(false)
             setError(e.message)
         }
     }
 
-    const handleScroll = ():void => {
-        if(window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return
-        if(hasMore) {
-            setPage(prevState => prevState + 1)
-        }
-    }
+    const handleScroll = (): void => {
+        if (windowHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
+        if (hasMore) setPage(prevState => prevState + 1)
+    };
 
     React.useLayoutEffect(() => {
         fetchListBook()

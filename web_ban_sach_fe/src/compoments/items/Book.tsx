@@ -43,7 +43,7 @@ const BookProduct: React.FC<BookProps> = ({book, width, height, isHover}) => {
         <div
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            className={`card flex-grow-0 flex-shrink-0 mb-3 me-3 border-0 ${isHover && hover ? "shadow" : "shadow-sm"}`}
+            className={`card flex-grow-0 flex-shrink-0 mb-3 me-4 mx-0 mx-lg-3 mx-xxl-0 me-xxl-3 border-0 ${isHover && hover ? "shadow" : "shadow-sm"}`}
              style={{flexBasis: "auto", width: `${width ? width : "250px"}`, boxSizing: "border-box"}}>
             <div className={"w-100 mt-3 d-flex justify-content-center align-items-center"}
                  style={{height: `${height ? height : "190px"}`}}>

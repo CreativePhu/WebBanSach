@@ -83,7 +83,7 @@ function Navbar() {
                             <i className={`bi bi-list fs-1 text-white`}></i>
                         </button>
                     </div>
-                    <div className={"col-10 col-md-9 col-lg-6 d-flex justify-content-center pe-0"}>
+                    <div className={"col-10 col-md-9 col-lg-6 d-flex justify-content-center px-0"}>
                         <input className="form-control me-2" type="search"
                                placeholder="Nhập tên sách cần tìm"
                                aria-label="Search"
@@ -101,7 +101,7 @@ function Navbar() {
                     </div>
                     <div className={"d-none d-md-block col-md-3 d-flex justify-content-end align-items-center p-0"}>
                         <div className={"row"}>
-                            <div className="col-9 pe-5 pe-sm-0 d-flex justify-content-end">
+                            <div className="col-9 pe-0 pe-sm-4 d-flex justify-content-end">
                                 <Link
                                     onMouseEnter={() => setIsHoverCart(true)}
                                     onMouseLeave={() => setIsHoverCart(false)}
