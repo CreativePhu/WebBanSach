@@ -37,11 +37,14 @@ public class EndPoint {
     };
 
     public static final String[] USER_GET_ENDPOINT = {
-            "/orders",
+            "/orders/**",
+            "/shipping-addresses/**",
+            "/order-details/**",
     };
 
     public static final String[] ADMIN_GET_ENDPOINT = {
             "/users",
+            "/orders",
     };
 
     public static final String[] ALLOWED_METHODS = {
