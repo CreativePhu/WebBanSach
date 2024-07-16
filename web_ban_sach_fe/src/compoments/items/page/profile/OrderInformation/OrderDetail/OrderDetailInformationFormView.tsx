@@ -118,41 +118,41 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
 
     return (
         <FullScreenOverlay isVisible={isVisible}>
-            <div ref={modalRef} className={"w-50 bg-white rounded p-5 position-relative"} style={{minHeight: "700px"}}>
+            <div ref={modalRef} className={"w-auto bg-white rounded p-3 p-sm-5 position-relative overflow-y-scroll"} style={{maxHeight: "100vh"}}>
                 <h3 className={"fw-bold text-danger fs-2"}>Thông Tin Đơn Hàng #{order?.orderID}</h3>
-                <div className={"row"}>
-                    <div className={"col-6"}>
+                <div className={"row d-flex flex-column flex-xl-row"}>
+                    <div className={"col-12 col-xl-6"}>
                         <span className={"fw-semibold"}>Tên khách hàng:</span>
                         <span className={"ms-2"}>{order?.customerName}</span>
                     </div>
-                    <div className={"col-6"}>
+                    <div className={"col-12 col-xl-6"}>
                         <span className={"fw-semibold"}>Ngày đặt hàng:</span>
                         <span className={"ms-2"}>{formatDateFunc(order?.orderDate)}</span>
                     </div>
                 </div>
-                <div className={"row mt-2"}>
-                    <div className={"col-6"}>
+                <div className={"row d-flex flex-column flex-xl-row"}>
+                    <div className={"col-12 col-xl-6"}>
                         <span className={"fw-semibold"}>Số điện thoại:</span>
                         <span className={"ms-2"}>{order?.customerPhone}</span>
                     </div>
-                    <div className={"col-6"}>
+                    <div className={"col-12 col-xl-6"}>
                         <span className={"fw-semibold"}>Trạng thái:</span>
                         <span className={"ms-2"}>{ConvertOrderStatus(order?.orderStatus)}</span>
                     </div>
                 </div>
-                <div className={"row mt-2"}>
+                <div className={"row"}>
                     <div className={"col-12"}>
                         <span className={"fw-semibold"}>Địa chỉ nhận hàng:</span>
                         <span className={"ms-2"}>{address}</span>
                     </div>
                 </div>
-                <div className={"row mt-2"}>
+                <div className={"row"}>
                     <div className={"col-12"}>
                         <span className={"fw-semibold"}>Phương thức thanh toán:</span>
                         <span className={"ms-2"}>{ConvertPaymentMethod(order?.paymentMethod)}</span>
                     </div>
                 </div>
-                <div className={"row mt-4"}>
+                <div className={"row mt-3"}>
                     <div className={"col-12"}>
                         <h4 className={"text-danger"}>Danh sách sản phẩm</h4>
                         <table className={"table"}>
@@ -188,12 +188,12 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
                         </table>
                     </div>
                 </div>
-                <div className={"row"}>
-                    <div className={"col-6"}>
+                <div className={"row d-flex flex-column flex-md-row"}>
+                    <div className={"col-12 col-md-6"}>
                         <span className={"fw-semibold"}>Tổng tiền:</span>
                         <span className={"ms-2 text-danger fw-semibold fs-4"}>{formatCurrencyVND(sumTotal())}</span>
                     </div>
-                    <div className={"col-6"}>
+                    <div className={"col-12 col-md-6"}>
                         <span className={"fw-semibold"}>Thanh toán:</span>
                         <span className={"ms-2 text-danger fw-semibold fs-4"}>{ConvertPaymentStatus(order?.paymentStatus)}</span>
                     </div>
