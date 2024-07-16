@@ -35,16 +35,16 @@ export const OrderInformationView: React.FC<OrderInformationViewProps> = ({openO
         <div className={"py-3 px-3"}>
             <span className={"fw-bold fs-1 text-danger"}>Lịch Sử Đặt Hàng</span>
             <div className={"row rounded bg-white pt-3"}>
-                <div className={"col-2 mb-3"}>
-                    <span className={"fw-semibold"}>Mã đơn hàng</span>
+                <div className={"col-3 col-sm-2 mb-3"}>
+                    <span className={"fw-semibold"}>Mã hóa đơn</span>
                 </div>
-                <div className={"col-2"}>
+                <div className={"col-4 col-sm-2 text-sm-center"}>
                     <span className={"fw-semibold"}>Ngày đặt</span>
                 </div>
-                <div className={"col-2"}>
+                <div className={"col-4 col-sm-3 text-sm-center"}>
                     <span className={"fw-semibold"}>Tổng tiền</span>
                 </div>
-                <div className={"col-2"}>
+                <div className={"col-3 d-none d-sm-block"}>
                     <span className={"fw-semibold"}>Trạng thái</span>
                 </div>
             </div>
@@ -65,21 +65,23 @@ export const OrderInformationView: React.FC<OrderInformationViewProps> = ({openO
                             return (
                                 <div key={index} className={"row rounded bg-white"}>
                                     <hr/>
-                                    <div className={"col-2 mb-3"}>
+                                    <div className={"col-3 col-sm-2 mb-3"}>
                                         <span className={"fw-semibold"}>#{order.orderID}</span>
                                     </div>
-                                    <div className={"col-2"}>
+                                    <div className={"col-4 col-sm-2 text-sm-center"}>
                                         <span>{formatDateFunc(order.orderDate)}</span>
                                     </div>
-                                    <div className={"col-2"}>
+                                    <div className={"col-4 col-sm-3 text-sm-center"}>
                                         <span
                                             className={"text-danger fw-semibold"}>{formatCurrencyVND(order.total)}</span>
                                     </div>
-                                    <div className={"col-2"}>
+                                    <div className={"col-3 d-none d-sm-block"}>
                                         <span>{ConvertOrderStatus(order?.orderStatus)}</span>
                                     </div>
-                                    <div className={"col-3"}>
-                                        <span className={"text-primary cussor-pointer"} onClick={() => openOrderDetail(order.orderID)}>Chi tiết đơn hàng</span>
+                                    <div className={"col-1 col-sm-2 px-0 px-sm-1"}>
+                                        <span className={"text-primary cussor-pointer"} onClick={() => openOrderDetail(order.orderID)}>
+                                            <i className="bi bi-three-dots"></i>
+                                        </span>
                                     </div>
                                 </div>
                             )

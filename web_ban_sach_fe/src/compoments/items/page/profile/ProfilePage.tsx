@@ -9,8 +9,8 @@ import {OrderDetailInformationFormView} from "./OrderInformation/OrderDetail/Ord
 
 export const ProfilePage = () => {
 
-    const active = "rounded-5 bg-danger text-white";
-    const unActive = "rounded-5 bg-light text-danger";
+    const active = "bg-danger text-white";
+    const unActive = "bg-light text-danger";
     const [activeTab, setActiveTab] = React.useState<boolean>(true);
     const [isVisibleFullName, setIsVisibleFullName] = React.useState<boolean>(false);
     const [isVisiblePhoneNumber, setIsVisiblePhoneNumber] = React.useState<boolean>(false);
@@ -65,13 +65,13 @@ export const ProfilePage = () => {
         <div className={"container-fluid bg-light py-4"}>
             <div className={"container"}>
                 <div className={"row d-flex justify-content-lg-between"}>
-                    <div className={"col-3 p-0"}>
-                        <div className={"bg-white rounded-4 shadow-sm"} style={{minHeight: "250px"}}>
+                    <div className={"col-12 col-md-3 p-0"}>
+                        <div className={"bg-white rounded-4 shadow-sm"}>
                             <ul className={"list-unstyled w-100"}>
                                 <li>
                                     <div
                                         onClick={() => setActiveTab(true)}
-                                        className={`cussor-pointer d-flex justify-content-start align-items-center py-2 px-4 ${activeTab ? active : unActive}`}>
+                                        className={`cussor-pointer d-flex justify-content-start align-items-center py-2 px-4 rounded ${activeTab ? active : unActive}`}>
                                         <i className="bi bi-person-circle fs-4"></i>
                                         <span className={"fs-6 fw-semibold ms-2"}>Thông Tin Tài Khoản</span>
                                     </div>
@@ -79,7 +79,7 @@ export const ProfilePage = () => {
                                 <li>
                                     <div
                                         onClick={() => setActiveTab(false)}
-                                        className={`cussor-pointer d-flex justify-content-start align-items-center py-2 px-4 ${!activeTab ? active : unActive}`}>
+                                        className={`cussor-pointer d-flex justify-content-start align-items-center py-2 px-4 rounded ${!activeTab ? active : unActive}`}>
                                         <i className="bi bi-bag-check-fill fs-4"></i>
                                         <span className={"fs-6 fw-semibold ms-2"}>Hóa Đơn</span>
                                     </div>
@@ -87,7 +87,7 @@ export const ProfilePage = () => {
                             </ul>
                         </div>
                     </div>
-                    <div className={"col-9 pe-0"}>
+                    <div className={"col-12 col-md-9 p-0 pe-md-0 ps-md-2"}>
                         <div style={{minHeight: "500px"}}>
                             {
                                 activeTab ? <AccountProfileInfomationView
