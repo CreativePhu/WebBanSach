@@ -33,7 +33,7 @@ export const OrderInformationView: React.FC<OrderInformationViewProps> = ({openO
 
     return (
         <div className={"py-3 px-3"}>
-            <span className={"fw-bold fs-1 text-danger"}>Lịch Sử Đặt Hàng</span>
+            <p className={"fw-bold fs-1 text-danger text-center"}>Lịch Sử Đặt Hàng</p>
             <div className={"row rounded bg-white pt-3"}>
                 <div className={"col-3 col-sm-2 mb-3"}>
                     <span className={"fw-semibold"}>Mã hóa đơn</span>

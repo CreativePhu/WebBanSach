@@ -7,7 +7,7 @@ interface EventProps {
 
 const Event: React.FC<EventProps> = ({listImage}) => {
     return (
-        <div id={"event"} className={"container mt-4 bg-white rounded-3 py-4 shadow-sm"}>
+        <div id={"event"} className={"container-fluid container-lg mt-4 bg-white rounded-3 py-4 shadow-sm"}>
             <div className={"overflow-x-scroll d-flex flex-row justify-content-xl-around justify-content-lg-around hidden-scrollbar"}>
                 {
                     listImage.map((image, index) => {

@@ -6,7 +6,7 @@ const ProductHot: React.FC = () => {
     return (
         <div id={"book-hot"} className={"container-fluid mt-4 py-4"}
              style={{minHeight: "450px", background: "url(/images/background/flash_sale.png) no-repeat center center", backgroundColor: "#ff6c6b"}}>
-            <div className={"container d-flex justify-content-between align-items-center py-1 px-3 bg-white rounded-3"}>
+            <div className={"container-fluid container-lg d-flex justify-content-between align-items-center py-1 px-3 bg-white rounded-3"}>
                 <span className={"d-flex flex-row align-items-center"}>
                     <i className="bi bi-journal-bookmark-fill fs-2 text-danger"></i>
                     <span className={"ms-2 fs-4 fw-bold text-danger"}>Sách mới</span>

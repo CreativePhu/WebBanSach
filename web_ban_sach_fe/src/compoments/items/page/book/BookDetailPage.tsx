@@ -207,7 +207,7 @@ const BookDetailPage: React.FC = () => {
                                             navigate("/payment")
                                         }
                                     }}
-                                    className={"btn btn-danger fw-bold fs-4 px-4 ms-md-3 mt-3 mt-md-0 mt-lg-0"}>
+                                    className={"btn btn-danger fw-bold fs-4 px-4 ms-md-3 mt-3 mt-sm-0 mt-lg-0 ms-0 ms-sm-2"}>
                                     Mua ngay
                                 </button>
                             </div>

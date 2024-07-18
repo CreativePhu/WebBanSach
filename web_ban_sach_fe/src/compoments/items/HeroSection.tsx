@@ -13,7 +13,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({listImage, listImage1, listIma
     const [images2, setImages2] = React.useState<string[]>(listImage2)
 
     return (
-        <div id={"hero-section"} className="container">
+        <div id={"hero-section"} className={"container-fluid container-lg"}>
             <div className={"row"}>
                 <div className={"col-lg-12 col-xl-8 pe-0 ps-0"}>
                     <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">

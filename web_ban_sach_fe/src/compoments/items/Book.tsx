@@ -10,9 +10,10 @@ interface BookProps {
     width?: string
     height?: string
     isHover?: boolean
+    className?: string
 }
 
-const BookProduct: React.FC<BookProps> = ({book, width, height, isHover}) => {
+const BookProduct: React.FC<BookProps> = ({book, width, height, isHover, className}) => {
 
     const [isPrimaryImage, setIsPrimaryimage] = React.useState<string | undefined>("")
     const [loading, setLoading] = React.useState<boolean>(true)
@@ -43,7 +44,7 @@ const BookProduct: React.FC<BookProps> = ({book, width, height, isHover}) => {
         <div
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            className={`card flex-grow-0 flex-shrink-0 mb-3 me-4 mx-0 mx-lg-3 mx-xxl-0 me-xxl-3 border-0 ${isHover && hover ? "shadow" : "shadow-sm"}`}
+            className={`card flex-grow-0 flex-shrink-0 mb-3 me-4 mx-0 me-lg-3 border-0 ${isHover && hover ? "shadow" : "shadow-sm"} ${className}`}
              style={{flexBasis: "auto", width: `${width ? width : "250px"}`, boxSizing: "border-box"}}>
             <div className={"w-100 mt-3 d-flex justify-content-center align-items-center"}
                  style={{height: `${height ? height : "190px"}`}}>

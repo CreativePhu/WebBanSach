@@ -60,7 +60,7 @@ const TranslateX: React.FC = () => {
     }
 
     return (
-        <div className={"container mt-4 p-0 position-relative"}>
+        <div className={"container-fluid container-lg mt-4 p-0 position-relative"}>
             <div className={"overflow-x-scroll hidden-scrollbar"}>
                 <div ref={scrollContainerRef}
                      className={"d-flex flex-row transition-product-hot"}
@@ -83,7 +83,7 @@ const TranslateX: React.FC = () => {
                             </div>
                         ) : (
                             listBook.map((book, index) => (
-                                <BookProduct key={index} book={book} width={"250px"}/>
+                                <BookProduct key={index} book={book} width={"250px"} className={"mb-sm-0"}/>
                             ))
                         )
                     }

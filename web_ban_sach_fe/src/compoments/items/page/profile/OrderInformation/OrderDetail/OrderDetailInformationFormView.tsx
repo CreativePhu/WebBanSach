@@ -88,7 +88,7 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
     if (loading) {
         return (
             <FullScreenOverlay isVisible={isVisible}>
-                <div className={"w-50 bg-white rounded h-75 p-5 position-relative"}>
+                <div className={"w-auto bg-white rounded h-auto p-5 position-relative"}>
                     <div className="d-flex justify-content-center align-items-center h-100">
                         <div className="spinner-border text-primary" role="status">
                             <span className="visually-hidden">Loading...</span>
@@ -102,14 +102,14 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
     if (error) {
         return (
             <FullScreenOverlay isVisible={isVisible}>
-                <div ref={modalRef} className={"w-50 bg-white rounded p-5 position-relative"}>
+                <div ref={modalRef} className={"w-auto bg-white rounded p-5 position-relative"}>
                     <div className="d-flex justify-content-center align-items-center h-100">
                         <span className={"text-danger"}>{error}</span>
                     </div>
                     <div onClick={() => {
                         onClose()
                     }} className={"position-absolute cussor-pointer"} style={{top: "10px", right: "20px"}}>
-                        <i className="bi bi-x fs-2"></i>
+                        <i className="bi bi-x fs-2 text-danger"></i>
                     </div>
                 </div>
             </FullScreenOverlay>
@@ -118,7 +118,7 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
 
     return (
         <FullScreenOverlay isVisible={isVisible}>
-            <div ref={modalRef} className={"w-auto bg-white rounded p-3 p-sm-5 position-relative overflow-y-scroll"} style={{maxHeight: "100vh"}}>
+            <div ref={modalRef} className={"w-auto bg-white rounded p-3 p-sm-5 position-relative overflow-y-scroll hidden-scrollbar"} style={{maxHeight: "100vh"}}>
                 <h3 className={"fw-bold text-danger fs-2"}>Thông Tin Đơn Hàng #{order?.orderID}</h3>
                 <div className={"row d-flex flex-column flex-xl-row"}>
                     <div className={"col-12 col-xl-6"}>
@@ -158,10 +158,10 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
                         <table className={"table"}>
                             <thead>
                             <tr>
-                                <th>STT</th>
-                                <th>Sản phẩm</th>
-                                <th>Số lượng</th>
-                                <th>Giá</th>
+                                <th className={"text-center"}>STT</th>
+                                <th className={"text-center"}>Sản phẩm</th>
+                                <th className={"text-center"}>Số lượng</th>
+                                <th className={"text-center"}>Giá</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -170,14 +170,14 @@ export const OrderDetailInformationFormView: React.FC<OrderDetailInformationForm
                                     const myBook = books[index]
                                     return (
                                         <tr key={index}>
-                                            <td>{index + 1}</td>
-                                            <td>
+                                            <td className={"text-center"}>{index + 1}</td>
+                                            <td className={"text-center"}>
                                                 <Link className={"text-decoration-none"} to={`/book-detail?bookId=${myBook?.bookID}`}>
                                                     <span>{myBook?.bookTitle}</span>
                                                 </Link>
                                             </td>
-                                            <td>{orderDetail.quantity}</td>
-                                            <td>
+                                            <td className={"text-center"}>{orderDetail.quantity}</td>
+                                            <td className={"text-center"}>
                                                 <span className={"text-danger fw-semibold"}>{formatCurrencyVND(myBook.bookPrice)}</span>
                                             </td>
                                         </tr>
