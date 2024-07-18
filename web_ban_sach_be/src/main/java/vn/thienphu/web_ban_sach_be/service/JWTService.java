@@ -33,26 +33,21 @@ public class JWTService {
         Map<String, Object> claims = new HashMap<>();
         User user = userRepository.findByUserName(username);
         boolean isAdmin = false;
-        boolean isCustomer = false;
-        boolean isStaff = false;
+        boolean isUser = false;
 
         if(user != null && !user.getRoles().isEmpty()){
             for (Role role : user.getRoles()) {
                 if(role.getRoleName().equals("ROLE_ADMIN")){
                     isAdmin = true;
                 }
-                if(role.getRoleName().equals("ROLE_CUSTOMER")){
-                    isCustomer = true;
-                }
-                if(role.getRoleName().equals("ROLE_STAFF")){
-                    isStaff = true;
+                if(role.getRoleName().equals("ROLE_USER")){
+                    isUser = true;
                 }
             }
         }
 
         claims.put("isAdmin", isAdmin);
-        claims.put("isCustomer", isCustomer);
-        claims.put("isStaff", isStaff);
+        claims.put("isUser", isUser);
 
         return createToken(claims, username);
     }

@@ -31,6 +31,7 @@ public class Discount {
     @Column(name = "end_date", nullable = false)
     private Date endDate;
 
-    @ManyToMany(mappedBy = "discounts")
-    private List<Book> books;
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false)
+    private Book books;
 }

@@ -59,11 +59,6 @@ public class Book {
     @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
     private List<BookImage> bookImages;
 
-    @ManyToMany
-    @JoinTable(
-            name = "book_discount",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "discount_id")
-    )
+    @OneToMany
     private List<Discount> discounts;
 }

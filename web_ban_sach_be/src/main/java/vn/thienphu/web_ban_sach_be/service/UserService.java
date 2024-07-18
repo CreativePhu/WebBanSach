@@ -51,7 +51,7 @@ public class UserService {
         }
 
         User user = new User(0, userRegisterDTO.getUserName(), passwordEncoder.encode(userRegisterDTO.getPassWord()), userRegisterDTO.getUserName(), null, userRegisterDTO.getEmail(), false, generateVerificationCode(), new Date(), new Date());
-        Role role = roleRepository.findByRoleName("CUSTOMER");
+        Role role = roleRepository.findByRoleName("USER");
         user.addRole(role);
         role.addUser(user);
 

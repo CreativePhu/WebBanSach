@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -54,9 +53,9 @@ public class AuthenConfig {
         http.authorizeHttpRequests(configurer -> configurer
                 .requestMatchers(HttpMethod.GET, EndPoint.PUBLIC_GET_ENDPOINT).permitAll()
                 .requestMatchers(HttpMethod.POST, EndPoint.PUBLIC_POST_ENDPOINT).permitAll()
-                .requestMatchers(HttpMethod.PATCH, EndPoint.USER_PATCH_ENDPOINT).hasAnyAuthority("CUSTOMER", "ADMIN")
-                .requestMatchers(HttpMethod.POST, EndPoint.USER_POST_ENDPOINT).hasAnyAuthority("CUSTOMER", "ADMIN")
-                .requestMatchers(HttpMethod.GET, EndPoint.USER_GET_ENDPOINT).hasAnyAuthority("CUSTOMER", "ADMIN")
+                .requestMatchers(HttpMethod.PATCH, EndPoint.USER_PATCH_ENDPOINT).hasAnyAuthority("USER", "ADMIN")
+                .requestMatchers(HttpMethod.POST, EndPoint.USER_POST_ENDPOINT).hasAnyAuthority("USER", "ADMIN")
+                .requestMatchers(HttpMethod.GET, EndPoint.USER_GET_ENDPOINT).hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers(HttpMethod.GET, EndPoint.ADMIN_GET_ENDPOINT).hasAuthority("ADMIN")
                 .anyRequest().permitAll()
         );
